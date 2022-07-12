@@ -12,7 +12,7 @@ for i in range(1, len(numbers)) :
         if numbers[j] < numbers[j - 1] :
             numbers[j], numbers[j - 1] = numbers[j - 1], numbers[j]
 
-second = -1
+second = 0
 for i in range(len(numbers) - 1, -1, -1) :
     if numbers[i - 1] != numbers[i] :
         second = i - 1
