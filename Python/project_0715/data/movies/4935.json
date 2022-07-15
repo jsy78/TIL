@@ -1,0 +1,58 @@
+{
+  "adult": false,
+  "backdrop_path": "/vwBa7djy1oxfxUjc7YtVgGNsjrT.jpg",
+  "belongs_to_collection": null,
+  "budget": 24000000,
+  "genres": [
+    {
+      "id": 14,
+      "name": "판타지"
+    },
+    {
+      "id": 16,
+      "name": "애니메이션"
+    },
+    {
+      "id": 12,
+      "name": "모험"
+    }
+  ],
+  "homepage": "",
+  "id": 4935,
+  "imdb_id": "tt0347149",
+  "original_language": "ja",
+  "original_title": "ハウルの動く城",
+  "overview": "19세기 말 마법과 과학이 공존하고 있는 세계 앵거리. 소피는 돌아가신 아버지의 모자상점에서 쉴틈없이 일하는 18살 소녀이다. 어느 날 오랫만에 마을로 나간 소피는 우연히 하울을 만나게 된다. 하울은 왕실 마법사로서 핸섬하지만 조금 겁이 많은 청년이다. 황무지 마녀는 두 사람의 사이를 오해, 주문을 걸어 소피를 90살의 늙은 할머니로 만들어 버린다. 가족을 걱정한 소피는 집을 나오게 되고 황무지를 헤매다가 하울이 사는 성에서 가정부로 낯선 생활을 시작한다. 4개의 다리로 걷는 기괴한 움직이는 성 안에서 하울과 소피의 기묘한 사랑과 모험이 시작되는데...",
+  "popularity": 44.83,
+  "poster_path": "/xiz6TiSduvR1U3VLfWVlBEdT9fO.jpg",
+  "production_companies": [
+    {
+      "id": 10342,
+      "logo_path": "/eS79pslnoKbWg7t3PMA9ayl0bGs.png",
+      "name": "Studio Ghibli",
+      "origin_country": "JP"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "JP",
+      "name": "Japan"
+    }
+  ],
+  "release_date": "2004-11-19",
+  "revenue": 236049757,
+  "runtime": 119,
+  "spoken_languages": [
+    {
+      "english_name": "Japanese",
+      "iso_639_1": "ja",
+      "name": "日本語"
+    }
+  ],
+  "status": "Released",
+  "tagline": "소녀가 마법에 걸린 순간 마법사의 성문이 열렸다",
+  "title": "하울의 움직이는 성",
+  "video": false,
+  "vote_average": 8.4,
+  "vote_count": 6001
+}

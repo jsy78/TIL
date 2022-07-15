@@ -1,0 +1,76 @@
+{
+  "adult": false,
+  "backdrop_path": "/7prYzufdIOy1KCTZKVWpjBFqqNr.jpg",
+  "belongs_to_collection": null,
+  "budget": 0,
+  "genres": [
+    {
+      "id": 16,
+      "name": "애니메이션"
+    },
+    {
+      "id": 12,
+      "name": "모험"
+    },
+    {
+      "id": 14,
+      "name": "판타지"
+    },
+    {
+      "id": 10751,
+      "name": "가족"
+    },
+    {
+      "id": 28,
+      "name": "액션"
+    },
+    {
+      "id": 18,
+      "name": "드라마"
+    }
+  ],
+  "homepage": "https://movies.disney.com/raya-and-the-last-dragon",
+  "id": 527774,
+  "imdb_id": "tt5109280",
+  "original_language": "en",
+  "original_title": "Raya and the Last Dragon",
+  "overview": "인간과 드래곤이 평화롭게 공존하던 신비의 땅, 쿠만드라 왕국. 악의 세력 드룬이 들이닥치자, 드래곤들은 인간을 구하기 위해 스스로를 희생하고 사라진다. 500년 후 부활한 드룬이 세상을 공포에 빠뜨리자, 전사 라야는 분열된 쿠만드라를 구하기 위해 전설 속 마지막 드래곤을 찾아 모험을 떠난다. 라야는 험난한 여정을 겪으며 세상을 구하기 위해서는 전설 속 드래곤보다 더 중요한 것이 있다는 것을 깨닫게 되는데…",
+  "popularity": 4783.538,
+  "poster_path": "/hGo2Pb4duC9V9i5etZrENoI1iBQ.jpg",
+  "production_companies": [
+    {
+      "id": 2,
+      "logo_path": "/wdrCwmRnLFJhEoH8GSfymY85KHT.png",
+      "name": "Walt Disney Pictures",
+      "origin_country": "US"
+    },
+    {
+      "id": 6125,
+      "logo_path": "/tVPmo07IHhBs4HuilrcV0yujsZ9.png",
+      "name": "Walt Disney Animation Studios",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "2021-03-03",
+  "revenue": 0,
+  "runtime": 112,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Released",
+  "tagline": "진정한 힘이 깨어난다",
+  "title": "라야와 마지막 드래곤",
+  "video": false,
+  "vote_average": 8.6,
+  "vote_count": 840
+}

@@ -1,0 +1,66 @@
+{
+  "adult": false,
+  "backdrop_path": "/hQQTE285UQB1lLY1XiioQ77LYnC.jpg",
+  "belongs_to_collection": null,
+  "budget": 0,
+  "genres": [
+    {
+      "id": 16,
+      "name": "애니메이션"
+    },
+    {
+      "id": 35,
+      "name": "코미디"
+    },
+    {
+      "id": 10749,
+      "name": "로맨스"
+    },
+    {
+      "id": 18,
+      "name": "드라마"
+    },
+    {
+      "id": 14,
+      "name": "판타지"
+    }
+  ],
+  "homepage": "https://ao-buta.com/",
+  "id": 572154,
+  "imdb_id": "tt10472884",
+  "original_language": "ja",
+  "original_title": "青春ブタ野郎はゆめみる少女の夢を見ない",
+  "overview": "하늘과 바다가 반짝이는 마을 \"후지사와\"에 사는 고등학생 아즈사가와 사쿠타는 같은 학교 선배이자 연인인 사쿠라지마 마이와 설레는 일상을 보내고 있다. 하지만 어느 날 첫사랑인 마키노하라 쇼코가 등장하면서 그 일상은 완전히 뒤바뀌어 버린다. 알 수 없는 이유로 '중학생'과 '어른', 두 명이 존재하는 쇼코와 부득이한 동거를 하면서 사쿠타와 마이의 관계가 삐걱거리기 시작한다. 그러던 중 '중학생 쇼코'가 위중한 병을 앓고 있다는 것을 알고 사쿠타의 가슴 흉터는 다시 벌어지는데...",
+  "popularity": 124.144,
+  "poster_path": "/hqNkm15rQI6049Pg3XPSE8PMW98.jpg",
+  "production_companies": [
+    {
+      "id": 121589,
+      "logo_path": "/kZvTniBgpTzAThHCa0OZ1FJtRjy.png",
+      "name": "CloverWorks",
+      "origin_country": "JP"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "JP",
+      "name": "Japan"
+    }
+  ],
+  "release_date": "2019-06-15",
+  "revenue": 0,
+  "runtime": 89,
+  "spoken_languages": [
+    {
+      "english_name": "Japanese",
+      "iso_639_1": "ja",
+      "name": "日本語"
+    }
+  ],
+  "status": "Released",
+  "tagline": "",
+  "title": "청춘 돼지는 꿈꾸는 소녀의 꿈을 꾸지 않는다",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 229
+}

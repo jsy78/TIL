@@ -1,0 +1,79 @@
+{
+  "adult": false,
+  "backdrop_path": "/lXhgCODAbBXL5buk9yEmTpOoOgR.jpg",
+  "belongs_to_collection": {
+    "id": 119,
+    "name": "반지의 제왕 시리즈",
+    "poster_path": "/p4UokEk2XnjjRTdXGe6DLYXlbI1.jpg",
+    "backdrop_path": "/bccR2CGTWVVSZAG0yqmy3DIvhTX.jpg"
+  },
+  "budget": 94000000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "모험"
+    },
+    {
+      "id": 14,
+      "name": "판타지"
+    },
+    {
+      "id": 28,
+      "name": "액션"
+    }
+  ],
+  "homepage": "http://www.lordoftherings.net",
+  "id": 122,
+  "imdb_id": "tt0167260",
+  "original_language": "en",
+  "original_title": "The Lord of the Rings: The Return of the King",
+  "overview": "사우론이 인간들의 마지막 요새인 곤도르를 향해 야욕을 드러내고 있는 한편, 아라곤은 쇠락해가고 있는 곤도르의 재건을 위해 왕위 계승을 신중하게 결정지어야만 하는 상황. 이제 중간대륙의 미래는 그의 어깨에 달려있는 것. 사우론이 이끄는 어둠의 군대와의 마지막 전투를 위해 간달프는 곤도르에 흩어져 있던 병사들을 모으고, 로한의 왕 세오덴에게 도움을 받기도 하지만 사우론의 군대에 비하면 열세를 면치 못한다. 그러나 그들은 중간대륙을 사우론의 야욕으로부터 지키려는 사명감과, 마지막 반지 운반자에게 임무를 끝낼 기회를 주기 위해 어둠의 군대를 향해 돌진하게 되는데...",
+  "popularity": 57.36,
+  "poster_path": "/tAXXuEAKLk2mOEIJzwajJQEnVZu.jpg",
+  "production_companies": [
+    {
+      "id": 12,
+      "logo_path": "/iaYpEp3LQmb8AfAtmTvpqd4149c.png",
+      "name": "New Line Cinema",
+      "origin_country": "US"
+    },
+    {
+      "id": 11,
+      "logo_path": "/6FAuASQHybRkZUk08p9PzSs9ezM.png",
+      "name": "WingNut Films",
+      "origin_country": "NZ"
+    },
+    {
+      "id": 5237,
+      "logo_path": null,
+      "name": "The Saul Zaentz Company",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "NZ",
+      "name": "New Zealand"
+    },
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "2003-12-01",
+  "revenue": 1118888979,
+  "runtime": 199,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Released",
+  "tagline": "곤도르의 진정한 왕이 돌아왔다",
+  "title": "반지의 제왕: 왕의 귀환",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 17278
+}

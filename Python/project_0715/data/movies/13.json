@@ -1,0 +1,64 @@
+{
+  "adult": false,
+  "backdrop_path": "/tlEFuIlaxRPXIYVHXbOSAMCfWqk.jpg",
+  "belongs_to_collection": null,
+  "budget": 55000000,
+  "genres": [
+    {
+      "id": 35,
+      "name": "코미디"
+    },
+    {
+      "id": 18,
+      "name": "드라마"
+    },
+    {
+      "id": 10749,
+      "name": "로맨스"
+    }
+  ],
+  "homepage": "",
+  "id": 13,
+  "imdb_id": "tt0109830",
+  "original_language": "en",
+  "original_title": "Forrest Gump",
+  "overview": "불편한 다리, 남들보다 조금 떨어지는 지능을 가진 포레스트 검프는 헌신적인 어머니의 보살핌과 첫사랑 제니와의 만남으로 편견과 괴롭힘 속에서도 따뜻한 마음을 지니고 성장한다. 또래들의 괴롭힘을 피해 도망치던 포레스트는 누구보다 빠르게 달릴 수 있는 자신의 재능을 깨닫는다. 그의 재능을 알아 본 대학에서 그를 미식축구 선수로 발탁하고, 졸업 후에도 뛰어난 신체능력으로 군에 들어가 무공훈장을 수여받는 등 탄탄한 인생 가도에 오르게 된 포레스트. 하지만 어머니가 병에 걸려 죽음을 맞이하고, 첫사랑 제니 역시 그의 곁을 떠나가며 다시 한 번 인생의 전환점을 맞이하게 되는데...",
+  "popularity": 44.854,
+  "poster_path": "/xdJxoq0dtkchOkUz5UVKuxn7a2V.jpg",
+  "production_companies": [
+    {
+      "id": 4,
+      "logo_path": "/fycMZt242LVjagMByZOLUGbCvv3.png",
+      "name": "Paramount",
+      "origin_country": "US"
+    },
+    {
+      "id": 21920,
+      "logo_path": null,
+      "name": "The Steve Tisch Company",
+      "origin_country": ""
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "1994-07-06",
+  "revenue": 677387716,
+  "runtime": 142,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Released",
+  "tagline": "인생은 초콜릿 상자와 같은 거야. 네가 무엇을 고를지 아무도 모른단다",
+  "title": "포레스트 검프",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 20120
+}

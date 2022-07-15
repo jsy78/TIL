@@ -1,0 +1,81 @@
+{
+  "adult": false,
+  "backdrop_path": "/xMIyotorUv2Yz7zpQz2QYc8wkWB.jpg",
+  "belongs_to_collection": null,
+  "budget": 60000000,
+  "genres": [
+    {
+      "id": 14,
+      "name": "판타지"
+    },
+    {
+      "id": 18,
+      "name": "드라마"
+    },
+    {
+      "id": 80,
+      "name": "범죄"
+    }
+  ],
+  "homepage": "http://thegreenmile.warnerbros.com/",
+  "id": 497,
+  "imdb_id": "tt0120689",
+  "original_language": "en",
+  "original_title": "The Green Mile",
+  "overview": "미국 루이지애나의 콜드 마운틴 교도소. 폴은 사형수 감방의 간수장으로 일하고 있다. 그의 일은 사형수들을 감독하고, 그린 마일이라 불리는 초록색 복도를 거쳐 그들을 사형 집행장까지 안내하는 것. 폴은 그들이 죽음을 맞이하는 순간까지 평화롭게 지낼 수 있도록 최선을 다한다. 어느 날 존 커피라는 사형수가 이송되어 온다. 그는 쌍둥이 여자아이를 살해한 흉악범. 하지만 순진한 눈망울에 겁을 잔뜩 집어먹은 그의 모습에 폴은 당혹감을 느낀다. 게다가 그는 초자연적 능력으로 폴의 지병을 깨끗하게 치료해주기까지 한다. 존을 전기 의자로 데려가야 할 날이 다가오면서 폴은 그가 무죄라는 확신을 갖게 되는데...",
+  "popularity": 40.887,
+  "poster_path": "/yuSpRhrTIJa5JN8oESrfD2bndp1.jpg",
+  "production_companies": [
+    {
+      "id": 97,
+      "logo_path": "/7znWcbDd4PcJzJUlJxYqAlPPykp.png",
+      "name": "Castle Rock Entertainment",
+      "origin_country": "US"
+    },
+    {
+      "id": 3982,
+      "logo_path": "/bli7HkPOXOEWsDwDK0W7XXfeUU2.png",
+      "name": "Darkwoods Productions",
+      "origin_country": "US"
+    },
+    {
+      "id": 174,
+      "logo_path": "/ky0xOc5OrhzkZ1N6KyUxacfQsCk.png",
+      "name": "Warner Bros. Pictures",
+      "origin_country": "US"
+    },
+    {
+      "id": 33,
+      "logo_path": "/8lvHyhjr8oUKOOy2dKXoALWKdp0.png",
+      "name": "Universal Pictures",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "1999-12-10",
+  "revenue": 286801374,
+  "runtime": 189,
+  "spoken_languages": [
+    {
+      "english_name": "French",
+      "iso_639_1": "fr",
+      "name": "Français"
+    },
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Released",
+  "tagline": "",
+  "title": "그린 마일",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 11926
+}

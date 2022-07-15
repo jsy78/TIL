@@ -1,0 +1,81 @@
+{
+  "adult": false,
+  "backdrop_path": "/6aNKD81RHR1DqUUa8kOZ1TBY1Lp.jpg",
+  "belongs_to_collection": null,
+  "budget": 20000000,
+  "genres": [
+    {
+      "id": 35,
+      "name": "코미디"
+    },
+    {
+      "id": 18,
+      "name": "드라마"
+    }
+  ],
+  "homepage": "",
+  "id": 637,
+  "imdb_id": "tt0118799",
+  "original_language": "it",
+  "original_title": "La vita è bella",
+  "overview": "로마에 갓 상경한 시골 총각 귀도는 운명처럼 만난 여인 도라에게 첫눈에 반한다. 넘치는 재치와 유머로 약혼자가 있던 그녀를 사로잡은 귀도는 가정을 꾸리며 분신과도 같은 아들 조수아를 얻는다. 조수아의 다섯 살 생일, 갑작스레 들이닥친 군인들은 귀도와 조수아를 수용소 행 기차에 실어버리고, 소식을 들은 도라 역시 기차에 따라 오른다. 귀도는 아들을 달래기 위해 무자비한 수용소 생활을 단체게임이라 속이고 1,000점을 따는 우승자에게는 진짜 탱크가 주어진다고 말한다. 하루하루가 지나 어느덧 전쟁이 끝났다는 말을 들은 귀도는 조수아를 창고에 숨겨둔 채 아내를 찾아 나서는데...",
+  "popularity": 35.057,
+  "poster_path": "/yjOqQsQHdsEZfAosZERqHiwjaty.jpg",
+  "production_companies": [
+    {
+      "id": 370,
+      "logo_path": null,
+      "name": "Melampo Cinematografica",
+      "origin_country": "IT"
+    },
+    {
+      "id": 14,
+      "logo_path": "/m6AHu84oZQxvq7n1rsvMNJIAsMu.png",
+      "name": "Miramax",
+      "origin_country": "US"
+    },
+    {
+      "id": 113521,
+      "logo_path": "/fF4xLqMQ0C6Laql7HpzRnvn8hfi.png",
+      "name": "StudioCanal",
+      "origin_country": "GB"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "IT",
+      "name": "Italy"
+    }
+  ],
+  "release_date": "1997-12-20",
+  "revenue": 230098753,
+  "runtime": 116,
+  "spoken_languages": [
+    {
+      "english_name": "Czech",
+      "iso_639_1": "cs",
+      "name": "Český"
+    },
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "english_name": "Italian",
+      "iso_639_1": "it",
+      "name": "Italiano"
+    },
+    {
+      "english_name": "German",
+      "iso_639_1": "de",
+      "name": "Deutsch"
+    }
+  ],
+  "status": "Released",
+  "tagline": "깐느가 그랑프리를 헌사한 이탈리아 영화천재의 걸작",
+  "title": "인생은 아름다워",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 9943
+}

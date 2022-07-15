@@ -1,0 +1,58 @@
+{
+  "adult": false,
+  "backdrop_path": "/dIWwZW7dJJtqC6CgWzYkNVKIUm8.jpg",
+  "belongs_to_collection": null,
+  "budget": 0,
+  "genres": [
+    {
+      "id": 10749,
+      "name": "로맨스"
+    },
+    {
+      "id": 16,
+      "name": "애니메이션"
+    },
+    {
+      "id": 18,
+      "name": "드라마"
+    }
+  ],
+  "homepage": "https://www.funimationfilms.com/movie/yourname/",
+  "id": 372058,
+  "imdb_id": "tt5311514",
+  "original_language": "ja",
+  "original_title": "君の名は。",
+  "overview": "시골에 사는 소녀 미츠하(가미시라이시 모네)는 어느 날 잠에서 깬 후 자신의 몸이 남자로 바뀐 걸 알게 된다. 같은 시간, 도쿄에 사는 소년 타키(가미키 류노스케) 역시 이 기이한 상황을 겪고 있다. 낯선 가족, 낯선 친구들, 낯선 풍경들... 서로에게 이어진 끈을 알게 된 둘은 둘만의 규칙을 정하고 점차 상황을 받아들이기 시작한다. 서로에게 남긴 메모를 확인하며  점점 친구가 되어가는 타키와 미츠하. 언제부턴가 더 이상 몸이 바뀌지 않자  자신들이 특별하게 이어져있었음을 깨달은  타키는 미츠하를 만나러 가는데...",
+  "popularity": 104.077,
+  "poster_path": "/wx1Dxr4UyvN18SyC5GsVWWWtYja.jpg",
+  "production_companies": [
+    {
+      "id": 3756,
+      "logo_path": "/t38uPdbKmyBB8brKKeTFWIwojRz.png",
+      "name": "CoMix Wave Films",
+      "origin_country": "JP"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "JP",
+      "name": "Japan"
+    }
+  ],
+  "release_date": "2016-08-26",
+  "revenue": 357986087,
+  "runtime": 106,
+  "spoken_languages": [
+    {
+      "english_name": "Japanese",
+      "iso_639_1": "ja",
+      "name": "日本語"
+    }
+  ],
+  "status": "Released",
+  "tagline": "아직 만난 적 없는 너를, 찾고 있어",
+  "title": "너의 이름은",
+  "video": false,
+  "vote_average": 8.6,
+  "vote_count": 7181
+}

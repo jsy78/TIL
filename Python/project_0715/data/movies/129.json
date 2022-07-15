@@ -1,0 +1,58 @@
+{
+  "adult": false,
+  "backdrop_path": "/Ab8mkHmkYADjU7wQiOkia9BzGvS.jpg",
+  "belongs_to_collection": null,
+  "budget": 19000000,
+  "genres": [
+    {
+      "id": 16,
+      "name": "애니메이션"
+    },
+    {
+      "id": 10751,
+      "name": "가족"
+    },
+    {
+      "id": 14,
+      "name": "판타지"
+    }
+  ],
+  "homepage": "http://movies.disney.com/spirited-away",
+  "id": 129,
+  "imdb_id": "tt0245429",
+  "original_language": "ja",
+  "original_title": "千と千尋の神隠し",
+  "overview": "평범한 열 살 짜리 소녀 치히로 식구는 이사 가던 중 길을 잘못 들어 낡은 터널을 지나가게 된다. 터널 저편엔 폐허가 된 놀이공원이 있었고 그곳엔 이상한 기운이 흘렀다. 인기척 하나 없는 이 마을의 낯선 분위기에 불길한 기운을 느낀 치히로는 부모님에게 돌아가자고 조르지만 부모님은 호기심에 들떠 마을 곳곳을 돌아다니기 시작한다. 어느 음식점에 도착한 치히로의 부모님은 그 곳에 차려진 음식들을 보고 즐거워하며 허겁지겁 먹어대다가 돼지로 변해버린다. 겁에 질려 당황하는 치히로에게 낯선 소년 하쿠가 나타나 빨리 이곳을 나가라고 소리치는데...",
+  "popularity": 64.563,
+  "poster_path": "/u1L4qxIu5sC2P082uMHYt7Ifvnj.jpg",
+  "production_companies": [
+    {
+      "id": 10342,
+      "logo_path": "/eS79pslnoKbWg7t3PMA9ayl0bGs.png",
+      "name": "Studio Ghibli",
+      "origin_country": "JP"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "JP",
+      "name": "Japan"
+    }
+  ],
+  "release_date": "2001-07-20",
+  "revenue": 274925095,
+  "runtime": 124,
+  "spoken_languages": [
+    {
+      "english_name": "Japanese",
+      "iso_639_1": "ja",
+      "name": "日本語"
+    }
+  ],
+  "status": "Released",
+  "tagline": "금지된 세계의 문이 열렸다",
+  "title": "센과 치히로의 행방불명",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 11021
+}

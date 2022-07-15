@@ -1,0 +1,74 @@
+{
+  "adult": false,
+  "backdrop_path": "/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg",
+  "belongs_to_collection": null,
+  "budget": 11363000,
+  "genres": [
+    {
+      "id": 35,
+      "name": "코미디"
+    },
+    {
+      "id": 53,
+      "name": "스릴러"
+    },
+    {
+      "id": 18,
+      "name": "드라마"
+    }
+  ],
+  "homepage": "https://www.parasite-movie.com/",
+  "id": 496243,
+  "imdb_id": "tt6751668",
+  "original_language": "ko",
+  "original_title": "기생충",
+  "overview": "전원 백수로 살 길 막막하지만 사이는 좋은 기택 가족. 장남 기우에게 명문대생 친구가 연결시켜 준 고액 과외 자리는 모처럼 싹튼 고정수입의 희망이다. 온 가족의 도움과 기대 속에 박 사장 집으로 향하는 기우. 글로벌 IT기업의 CEO인 박 사장의 저택에 도착하자 젊고 아름다운 사모님 연교와 가정부 문광이 기우를 맞이한다. 큰 문제 없이 박 사장의 딸 다혜의 과외를 시작한 기우. 그러나 이렇게 시작된 두 가족의 만남 뒤로, 걷잡을 수 없는 사건이 기다리고  있는데.....",
+  "popularity": 129.919,
+  "poster_path": "/eJ0kCMcqKLBUaHhB9PfOMFu2uim.jpg",
+  "production_companies": [
+    {
+      "id": 4399,
+      "logo_path": "/7bWmbWfxFNSGTCjLHkHn3UjspZS.png",
+      "name": "Barunson E&A",
+      "origin_country": "KR"
+    },
+    {
+      "id": 7036,
+      "logo_path": "/javbyY0ZCvlFJtly3tpZqf2NwLX.png",
+      "name": "CJ Entertainment",
+      "origin_country": "KR"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "KR",
+      "name": "South Korea"
+    }
+  ],
+  "release_date": "2019-05-30",
+  "revenue": 257591776,
+  "runtime": 131,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "english_name": "German",
+      "iso_639_1": "de",
+      "name": "Deutsch"
+    },
+    {
+      "english_name": "Korean",
+      "iso_639_1": "ko",
+      "name": "한국어/조선말"
+    }
+  ],
+  "status": "Released",
+  "tagline": "행복은 나눌수록 커지잖아요",
+  "title": "기생충",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 10847
+}

@@ -1,0 +1,61 @@
+{
+  "adult": false,
+  "backdrop_path": "/7jTgJ24UPkWeb5zzH7ihs554xVy.jpg",
+  "belongs_to_collection": null,
+  "budget": 2000000,
+  "genres": [
+    {
+      "id": 35,
+      "name": "코미디"
+    }
+  ],
+  "homepage": "",
+  "id": 914,
+  "imdb_id": "tt0032553",
+  "original_language": "en",
+  "original_title": "The Great Dictator",
+  "overview": "세계대전에서 패배한 토매니아국에 힌켈이라는 독재자가 나타나 악명을 떨친다. 한편, 힌켈과 닮은꼴 외모의 이발사 찰리는 국가의 유태인 탄압정책으로 인해 곤경에 처하지만 병사로 참전했던 전쟁에서 우연히 구해줬던 슐츠 장교의 도움을 받아 위기를 모면한다. 독재자 힌켈의 악행은 갈수록 도를 더해가고, 찰리는 유태인 수용소에 끌려가게 되지만 기지를 부려 탈옥에 성공한다. 하지만 이발사와 똑같은 얼굴을 한 힌켈이 탈옥범으로 오해 받아 감옥에 잡혀 들어가게 되는데…",
+  "popularity": 19.006,
+  "poster_path": "/uw26mSTaA10hg2yuQfNaFLSeY3h.jpg",
+  "production_companies": [
+    {
+      "id": 71975,
+      "logo_path": null,
+      "name": "Roy Export Company Establishment",
+      "origin_country": ""
+    },
+    {
+      "id": 60,
+      "logo_path": "/oJXpAs4I3W46e4dkaOEzCa4yBko.png",
+      "name": "United Artists",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "1940-10-23",
+  "revenue": 11000000,
+  "runtime": 125,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "english_name": "Esperanto",
+      "iso_639_1": "eo",
+      "name": "Esperanto"
+    }
+  ],
+  "status": "Released",
+  "tagline": "평화를 사랑하는 평범한 유태인 이발사 vs 세계 정복을 꿈꾸는 악명 높은 독재자 힌켈",
+  "title": "위대한 독재자",
+  "video": false,
+  "vote_average": 8.4,
+  "vote_count": 2161
+}

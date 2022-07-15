@@ -1,0 +1,75 @@
+{
+  "adult": false,
+  "backdrop_path": "/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg",
+  "belongs_to_collection": {
+    "id": 230,
+    "name": "대부 시리즈",
+    "poster_path": "/9Baumh5J9N1nJUYzNkm0xsgjpwY.jpg",
+    "backdrop_path": "/3WZTxpgscsmoUk81TuECXdFOD0R.jpg"
+  },
+  "budget": 6000000,
+  "genres": [
+    {
+      "id": 18,
+      "name": "드라마"
+    },
+    {
+      "id": 80,
+      "name": "범죄"
+    }
+  ],
+  "homepage": "http://www.thegodfather.com/",
+  "id": 238,
+  "imdb_id": "tt0068646",
+  "original_language": "en",
+  "original_title": "The Godfather",
+  "overview": "시실리에서 이민온 뒤, 정치권까지 영향력을 미치는 거물로 자리잡은 돈 꼴레오네는 갖가지 고민을 호소하는 사람들의 문제를 해결해주며 대부라 불리운다. 한편 솔로소라는 인물은 꼴레오네가와 라이벌인 탓타리아 패밀리와 손잡고 새로운 마약 사업을 제안한다. 돈 꼴레오네가 마약 사업에 참여하지 않기로 하자, 돈 꼴레오네를 저격해 그는 중상을 입고 사경을 헤매게 된다. 그 뒤, 돈 꼴레오네의 아들 소니는 조직력을 총 동원해 다른 패밀리들과 피를 부르는 전쟁을 시작하는데... 가족의 사업과 상관없이 대학에 진학한 뒤 인텔리로 지내왔던 막내 아들 마이클은 아버지가 총격을 당한 뒤, 아버지를 구하기 위해 위험천만한 협상 자리에 나선다.",
+  "popularity": 38.679,
+  "poster_path": "/cOwVs8eYA4G9ZQs7hIRSoiZr46Q.jpg",
+  "production_companies": [
+    {
+      "id": 4,
+      "logo_path": "/fycMZt242LVjagMByZOLUGbCvv3.png",
+      "name": "Paramount",
+      "origin_country": "US"
+    },
+    {
+      "id": 10211,
+      "logo_path": null,
+      "name": "Alfran Productions",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "1972-03-14",
+  "revenue": 245066411,
+  "runtime": 175,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "english_name": "Italian",
+      "iso_639_1": "it",
+      "name": "Italiano"
+    },
+    {
+      "english_name": "Latin",
+      "iso_639_1": "la",
+      "name": "Latin"
+    }
+  ],
+  "status": "Released",
+  "tagline": "영화사상 최고의 걸작",
+  "title": "대부",
+  "video": false,
+  "vote_average": 8.7,
+  "vote_count": 13938
+}

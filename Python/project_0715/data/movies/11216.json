@@ -1,0 +1,66 @@
+{
+  "adult": false,
+  "backdrop_path": "/zoVeIgKzGJzpdG6Gwnr7iOYfIMU.jpg",
+  "belongs_to_collection": null,
+  "budget": 0,
+  "genres": [
+    {
+      "id": 18,
+      "name": "드라마"
+    },
+    {
+      "id": 10749,
+      "name": "로맨스"
+    }
+  ],
+  "homepage": "",
+  "id": 11216,
+  "imdb_id": "tt0095765",
+  "original_language": "it",
+  "original_title": "Nuovo Cinema Paradiso",
+  "overview": "어린 시절 영화가 세상의 전부였던 소년 토토는 학교 수업을 마치면 마을 광장에 있는 낡은 시네마 천국이라는 극장으로 달려가 영사 기사 알프레도와 친구로 지내며 어깨너머로 영사기술을 배운다. 어느 날 관객들을 위해 광장에서 야외 상영을 해주던 알프레도가 그만 화재 사고로 실명하게 되고, 토토가 그의 뒤를 이어 시네마 천국의 영상기사로 일하게 된다. 실명한 후에도 토토의 친구이자 아버지로 든든한 정신적 지주가 되어준 알프레도는 청년이 된 토토가 사랑하는 여자 엘레나의 부모님의 반대로 좌절하자 넓은 세상으로 나가서 더 많은 것을 배우라며 권유하는데...",
+  "popularity": 13.817,
+  "poster_path": "/r782z4H7GzkyNaf3hAtBB4pVkOj.jpg",
+  "production_companies": [
+    {
+      "id": 67486,
+      "logo_path": "/lQrBjILcFLcPLZwVxySuc38y7H.png",
+      "name": "Rai 3",
+      "origin_country": "IT"
+    },
+    {
+      "id": 7110,
+      "logo_path": null,
+      "name": "Les Films Ariane",
+      "origin_country": "FR"
+    },
+    {
+      "id": 119518,
+      "logo_path": null,
+      "name": "Cristaldifilm",
+      "origin_country": ""
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "IT",
+      "name": "Italy"
+    }
+  ],
+  "release_date": "1988-11-17",
+  "revenue": 11990401,
+  "runtime": 124,
+  "spoken_languages": [
+    {
+      "english_name": "Italian",
+      "iso_639_1": "it",
+      "name": "Italiano"
+    }
+  ],
+  "status": "Released",
+  "tagline": "영화가 세상의 전부인 소년 토토와 낡은 마을 극장의 영사기사 알프레도의 애틋한 우정",
+  "title": "시네마 천국",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 2782
+}

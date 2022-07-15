@@ -1,0 +1,76 @@
+{
+  "adult": false,
+  "backdrop_path": "/w7RDIgQM6bLT7JXtH4iUQd3Iwxm.jpg",
+  "belongs_to_collection": null,
+  "budget": 8000000,
+  "genres": [
+    {
+      "id": 53,
+      "name": "스릴러"
+    },
+    {
+      "id": 80,
+      "name": "범죄"
+    }
+  ],
+  "homepage": "",
+  "id": 680,
+  "imdb_id": "tt0110912",
+  "original_language": "en",
+  "original_title": "Pulp Fiction",
+  "overview": "펌프킨와 허니 버니가 레스토랑에서 강도 행각을 벌이기 시작한다. 빈센트와 그 동료 쥴스는 두목의 금가방을 찾기 위해 다른 건달이 사는 아파트를 찾아간다. 마르셀러스는 부치에게 돈을 주며 상대 선수에게 져 주라고 하지만 부치는 상대 선수를 때려 눕히고 도망치다, 어릴 때 아버지에게 물려받은 시계를 찾기 위해 아파트로 향한다. 아무런 상관 없이 보이는 이 사건들이 서로 얽히고 섥히면서 예상치 못한 인과관계가 만들어지는데...",
+  "popularity": 44.638,
+  "poster_path": "/6lXRHGoEbnnBUKsuqpL9JxD4DzT.jpg",
+  "production_companies": [
+    {
+      "id": 14,
+      "logo_path": "/m6AHu84oZQxvq7n1rsvMNJIAsMu.png",
+      "name": "Miramax",
+      "origin_country": "US"
+    },
+    {
+      "id": 59,
+      "logo_path": "/yH7OMeSxhfP0AVM6iT0rsF3F4ZC.png",
+      "name": "A Band Apart",
+      "origin_country": "US"
+    },
+    {
+      "id": 216,
+      "logo_path": null,
+      "name": "Jersey Films",
+      "origin_country": ""
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "1994-09-10",
+  "revenue": 214179088,
+  "runtime": 154,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "english_name": "Spanish",
+      "iso_639_1": "es",
+      "name": "Español"
+    },
+    {
+      "english_name": "French",
+      "iso_639_1": "fr",
+      "name": "Français"
+    }
+  ],
+  "status": "Released",
+  "tagline": "쿠엔틴 타란티노만의 블랙 코미디",
+  "title": "펄프 픽션",
+  "video": false,
+  "vote_average": 8.5,
+  "vote_count": 20707
+}
