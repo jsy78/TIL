@@ -4,7 +4,7 @@
 
   - 한 클래스의 모든 인스턴스라도 똑같은 값을 가지고 있는 속성
   - 클래스 선언 내부에서 정의
-  - <classname>.<name>으로 접근 및 할당
+  - `<classname>.<name>`으로 접근 및 할당
 
   ```python
   class Circle :
