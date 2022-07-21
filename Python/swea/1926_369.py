@@ -6,8 +6,4 @@ for i in range(1, N+1) :
     for c in s :
         if c in '369' :
             cnt += 1
-    if cnt == 0 :
-        print(s, end='')
-    else :
-        print('-'*cnt, end='')
-    print(' ', end='')
+    print(s, end=' ') if cnt == 0 else print('-'*cnt, end=' ')
