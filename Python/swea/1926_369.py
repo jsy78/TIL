@@ -9,6 +9,5 @@ for i in range(1, N+1) :
     if cnt == 0 :
         print(s, end='')
     else :
-        for j in range(cnt):
-            print('-', end='')
+        print('-'*cnt, end='')
     print(' ', end='')
