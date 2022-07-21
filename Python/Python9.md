@@ -83,6 +83,37 @@
 
 
 
+## 어노테이션
+
+- 단순 메모로서 사용법에 대한 힌트를 제공
+
+  - 동적 타입 언어인 파이썬을 정적 타입으로 확정시켜주는 것이 아님
+
+- 변수 어노테이션
+
+  ```python
+  a: int
+  a = 3
+  print(a, type(a))
+  # 3 <class 'int'>
+  a = 'a'
+  print(a, type(a))
+  # a <class 'str'>
+  ```
+
+- 함수 어노테이션
+
+  ```python
+  def add(x: int, y: int) -> int :
+      return x + y
+  print(add(7, 4))
+  # 11
+  print(add('hi', 'hello'))
+  # hihello
+  ```
+
+  
+
 # 파이썬 버전별 업데이트
 
 ## 모듈 심화
