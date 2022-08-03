@@ -12,10 +12,10 @@
 
 ## 2022-08
 
-| <span style="color: red">일</span> |                      월                       |                      화                       |  수  |  목  |  금  | <span style="color: blue">토</span> |
-| :--------------------------------: | :-------------------------------------------: | :-------------------------------------------: | :--: | :--: | :--: | :---------------------------------: |
-|                                    | [1<br/>Algorithm](./Algorithm/Algorithm06.md) | [2<br/>Algorithm](./Algorithm/Algorithm07.md) |  3   |  4   |  5   | <span style="color: blue">6</span>  |
-| <span style="color: red">7</span>  |                       8                       |                       9                       |  10  |  11  |  12  | <span style="color: blue">13</span> |
-| <span style="color: red">14</span> |                      15                       |                      16                       |  17  |  18  |  19  | <span style="color: blue">20</span> |
-| <span style="color: red">21</span> |                      22                       |                      23                       |  24  |  25  |  26  | <span style="color: blue">27</span> |
-| <span style="color: red">28</span> |                      29                       |                      30                       |  31  |      |      |                                     |
+| <span style="color: red">일</span> |                      월                       |                      화                       |                      수                       |  목  |  금  | <span style="color: blue">토</span> |
+| :--------------------------------: | :-------------------------------------------: | :-------------------------------------------: | :-------------------------------------------: | :--: | :--: | :---------------------------------: |
+|                                    | [1<br/>Algorithm](./Algorithm/Algorithm06.md) | [2<br/>Algorithm](./Algorithm/Algorithm07.md) | [3<br/>Algorithm](./Algorithm/Algorithm08.md) |  4   |  5   | <span style="color: blue">6</span>  |
+| <span style="color: red">7</span>  |                       8                       |                       9                       |                      10                       |  11  |  12  | <span style="color: blue">13</span> |
+| <span style="color: red">14</span> |                      15                       |                      16                       |                      17                       |  18  |  19  | <span style="color: blue">20</span> |
+| <span style="color: red">21</span> |                      22                       |                      23                       |                      24                       |  25  |  26  | <span style="color: blue">27</span> |
+| <span style="color: red">28</span> |                      29                       |                      30                       |                      31                       |      |      |                                     |
