@@ -86,7 +86,11 @@
 
 ## 너비 우선 탐색 (BFS)
 
-![breadth-first-search-in-graph-data-structure](https://www.simplilearn.com/ice9/free_resources_article_thumb/Graph Data Structure - Soni/breadth-first-search-in-graph-data-structure.png)
+![breadth-first-search-in-graph-data-structure](https://www.simplilearn.com/ice9/free_resources_article_thumb/Graph%20Data%20Structure%20-%20Soni/breadth-first-search-in-graph-data-structure.png)
+
+> 시작 정점으로부터 인접한 정점들을 우선적으로 깊게 탐색하고,  
+>
+> 더 이상 인접한 곳이 없다면 다음으로 넘어가 다른 정점을 탐색하며 결국 모든 정점을 방문하는 순회 방법
 
 - 그래프의 너비를 우선으로 탐색
 - **큐**의 개념을 활용
