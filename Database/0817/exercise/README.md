@@ -230,7 +230,7 @@ BMI  waist
 > 각 시도별 평균 신장, 평균 체중, 평균 BMI 출력
 
 ```sql
-SELECT sido, AVG(height), AVG(weight), AVG(weight)*10000/(AVG(height)*AVG(height)) AS BMI FROM healthcare GROUP BY sido;
+SELECT sido, AVG(height), AVG(weight), AVG(weight/(height*height*0.0001)) AS BMI FROM healthcare GROUP BY sido;
 ```
 
 ```
