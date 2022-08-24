@@ -303,3 +303,125 @@ filter는 조건에 맞는 데이터가 2개 이상 존재할 경우 사용해�
 director = Director.objects.get(name='김철수')
 director.delete()
 ```
+
+
+### 15. Queryset 메소드 `get` 과 `values`를 활용해서  `Director` 테이블에서 `id` 가 1인 데이터를 출력하는 코드를 작성하세요.
+
+> 코드 작성
+> 
+
+```python
+dic = Director.objects.get(id=1).values()
+for k in dic:
+    print(f'{k}: {dic[k]}')
+```
+
+```
+id: 1
+name: 봉준호
+debut: 1993-01-01 00:00:00
+country: KOR
+```
+
+### 16. Queryset 메소드 `filter`와 `values`를 활용해서  `Director` 테이블에서 `country`가 KOR인 데이터를 모두 출력하는 코드를 작성하세요.
+
+> 코드 작성
+> 
+
+```python
+lst = Director.objects.filter(country='KOR').values()
+for dic in lst:
+    for k in dic :
+    	print(f'{k}: {dic[k]}')
+    print()
+```
+
+```
+id: 1
+name: 봉준호
+debut: 1993-01-01 00:00:00
+country: KOR
+
+id: 2
+name: 김한민
+debut: 1999-01-01 00:00:00
+country: KOR
+
+id: 3
+name: 최동훈
+debut: 2004-01-01 00:00:00
+country: KOR
+
+id: 4
+name: 이정재
+debut: 2022-01-01 00:00:00
+country: KOR
+
+id: 5
+name: 이경규
+debut: 1992-01-01 00:00:00
+country: KOR
+
+id: 6
+name: 한재림
+debut: 2005-01-01 00:00:00
+country: KOR
+```
+
+### 17. Queryset 메소드 `all` 과 `values`를 활용해서  `Director` 테이블의 모든 데이터를 출력하는 코드를 작성하세요.
+
+> 코드 작성
+> 
+
+```python
+lst = Director.objects.all().values()
+for dic in lst:
+    for k in dic:
+        print(f'{k}: {dic[k]}')
+    print()
+
+####
+lst = Director.objects.all().values()
+for dic in lst:
+    key_list = [*dic] # dic의 키 값 리스트
+    for k in key_list:
+        print(f'{k}: {dic[k]}')
+    print()
+```
+
+```
+id: 1
+name: 봉준호
+debut: 1993-01-01 00:00:00
+country: KOR
+
+id: 2
+name: 김한민
+debut: 1999-01-01 00:00:00
+country: KOR
+
+id: 3
+name: 최동훈
+debut: 2004-01-01 00:00:00
+country: KOR
+
+id: 4
+name: 이정재
+debut: 2022-01-01 00:00:00
+country: KOR
+
+id: 5
+name: 이경규
+debut: 1992-01-01 00:00:00
+country: KOR
+
+id: 6
+name: 한재림
+debut: 2005-01-01 00:00:00
+country: KOR
+
+id: 7
+name: Joseph Kosinski
+debut: 1999-01-01 00:00:00
+country: USA
+```
