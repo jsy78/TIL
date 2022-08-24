@@ -75,6 +75,13 @@ Director.objects.create(name='김철수', debut=datetime.date(2022, 1, 1), count
 > 
 
 ```python
+lst = ['액션', '드라마', '사극', '범죄', '스릴러', 'SF', '무협', '첩보', '재난']
+for t in lst :
+    genre = Genre()
+    genre.title = t
+    genre.save()
+####
+
 genre = Genre()
 genre.title = '액션'
 genre.save()
