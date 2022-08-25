@@ -350,6 +350,11 @@ director_ = Director.objects.get(name='봉준호')
 movies = Movie.objects.filter(director=director_).order_by('opening_date')
 for movie in movies :
     print(f'{movie.director.name} {movie.genre.title} {movie.title} {movie.opening_date} {movie.running_time} {movie.screening}')
+####
+director = Director.objects.get(name='봉준호')
+movies = director.movie_set.all().order_by('opening_date')
+for movie in movies :
+    print(f'{movie.director.name} {movie.genre.title} {movie.title} {movie.opening_date} {movie.running_time} {movie.screening}')
 ```
 
 ### 15. `봉준호` 감독 영화 중 두 번째로 개봉한 영화를 조회해서 출력하는 코드를 작성하세요.
@@ -367,6 +372,10 @@ for movie in movies :
 ```python
 director_ = Director.objects.get(name='봉준호')
 movie = Movie.objects.filter(director=director_).order_by('opening_date')[1]
+print(f'{movie.director.name} {movie.genre.title} {movie.title} {movie.opening_date} {movie.running_time} {movie.screening}')
+####
+director = Director.objects.get(name='봉준호')
+movie = director.movie_set.all().order_by('opening_date')[1]
 print(f'{movie.director.name} {movie.genre.title} {movie.title} {movie.opening_date} {movie.running_time} {movie.screening}')
 ```
 
