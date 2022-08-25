@@ -145,7 +145,7 @@ class Album(models.Model):
   SELECT ... WHERE headline ILIKE 'Lennon%';
   ```
 
-- endswith (대소문자 구분 안함)
+- endswith 
 
   ```python
   Entry.objects.filter(headline__endswith='Lennon')
@@ -155,7 +155,7 @@ class Album(models.Model):
   SELECT ... WHERE headline LIKE '%Lennon';
   ```
 
-- iendwith
+- iendwith (대소문자 구분 안함)
 
   ```python
   Entry.objects.filter(headline__iendswith='Lennon')
