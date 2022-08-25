@@ -311,26 +311,7 @@ director = Director.objects.get(name='김철수')
 director.delete()
 ```
 
-
-### 15. Queryset 메소드 `get` 과 `values`를 활용해서  `Director` 테이블에서 `id` 가 1인 데이터를 출력하는 코드를 작성하세요.
-
-> 코드 작성
-> 
-
-```python
-dic = Director.objects.get(id=1).values()
-for k in dic:
-    print(f'{k}: {dic[k]}')
-```
-
-```
-id: 1
-name: 봉준호
-debut: 1993-01-01 00:00:00
-country: KOR
-```
-
-### 16. Queryset 메소드 `filter`와 `values`를 활용해서  `Director` 테이블에서 `country`가 KOR인 데이터를 모두 출력하는 코드를 작성하세요.
+### 15. Queryset 메소드 `filter`와 `values`를 활용해서  `Director` 테이블에서 `country`가 KOR인 데이터를 모두 출력하는 코드를 작성하세요.
 
 > 코드 작성
 > 
@@ -375,7 +356,7 @@ debut: 2005-01-01 00:00:00
 country: KOR
 ```
 
-### 17. Queryset 메소드 `all` 과 `values`를 활용해서  `Director` 테이블의 모든 데이터를 출력하는 코드를 작성하세요.
+### 16. Queryset 메소드 `all` 과 `values`를 활용해서  `Director` 테이블의 모든 데이터를 출력하는 코드를 작성하세요.
 
 > 코드 작성
 > 
