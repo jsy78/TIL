@@ -6,6 +6,7 @@ Programmers : [SQL Practice](https://school.programmers.co.kr/learn/challenges?t
 
 LeetCode : [Problems - LeetCode](https://leetcode.com/problemset/database/?difficulty=EASY&page=1)
 
-Google Form : [LINK](https://forms.gle/hRKnzQk19Ngo9Wy8A)
+Google Form 
 
-![SOL](./0826/DB_TEST.jpg)
+![https://forms.gle/hRKnzQk19Ngo9Wy8A](0826/DB_TEST.jpg)
+
