@@ -1,0 +1,36 @@
+/* 아래에 CSS를 작성해주세요. */
+p {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.card {
+  box-sizing: border-box;
+  width: 300px;
+}
+.image {
+  width: 300px;
+}
+.company {
+  font-size: 15px;
+  color: gray;
+}
+.product {
+  font-size: 15px;
+}
+.sale {
+  font-size: 25px;
+  color: aqua;
+}
+.price {
+  font-size: 25px;
+}
+.star {
+  font-size: 15px;
+}
+.review {
+  font-size: 15px;
+  color: gray;
+}

@@ -1,0 +1,40 @@
+/* 아래에 CSS를 작성해주세요. */
+.box1 {
+  margin-right: auto;
+  margin-left: auto;
+  border: 20px;
+  padding: 10px;
+  text-align: center;
+}
+.top {
+  font-size: 12px;
+}
+.box2 {
+  box-sizing: border-box;
+  margin-right: auto;
+  margin-left: auto;
+  width: 900px;
+}
+.card {
+  float: left;
+}
+.card-image {
+  margin: 10px;
+  box-sizing: border-box;
+  width: 300px;
+  border-radius: 1rem;
+}
+.card-text {
+  margin: 10px;
+  box-sizing: border-box;
+  width: 300px;
+}
+.card-title {
+  font-size: 10px;
+}
+.card-subtitle {
+  font-size: 15px;
+}
+.card-detail {
+  font-size: 1px;
+}

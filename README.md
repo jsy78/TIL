@@ -18,7 +18,7 @@
 | <span style="color: red">7</span>  | [8<br/>Algorithm](./Algorithm/Algorithm10.md) | [9<br/>Algorithm](./Algorithm/Algorithm11.md) | [10<br/>Algorithm](./Algorithm/Algorithm12.md) | [11<br/>Algorithm](./Algorithm/Algorithm13.md) | [12<br/>Algorithm<br/>Test](./Algorithm/swea/0812_coding_test) | <span style="color: blue">13</span> |
 | <span style="color: red">14</span> | <span style="color: red">15<br/>광복절</span> |  [16<br/>Database](./Database/Database01.md)  |  [17<br/>Database](./Database/Database02.md)   |  [18<br/>Database](./Database/Database03.md)   |         [19<br/>Database](./Database/Database04.md)          | <span style="color: blue">20</span> |
 | <span style="color: red">21</span> |  [22<br/>Database](./Database/Database05.md)  |  [23<br/>Database](./Database/Database06.md)  |  [24<br/>Database](./Database/Database07.md)   |  [25<br/>Database](./Database/Database08.md)   |     [26<br/>Database<br/>Test](./Database/Database09.md)     | <span style="color: blue">27</span> |
-| <span style="color: red">28</span> |         [29<br/>Web](./Web/Web01.md)          |                      30                       |                       31                       |                                                |                                                              |                                     |
+| <span style="color: red">28</span> |         [29<br/>Web](./Web/Web01.md)          |         [30<br/>Web](./Web/Web02.md)          |                       31                       |                                                |                                                              |                                     |
 
 ## 2022-09
 
