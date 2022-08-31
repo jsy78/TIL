@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .parent {
+      width: 10rem;
+      height: 5rem;
+      border: 1px solid red;
+    }
+    .child {
+      width: 10rem;
+      height: 1rem;
+      background-color: bisque;
+    }
+    .relative {
+      position: relative;
+      top: 4rem;
+    }
+    .absolute {
+      position: absolute;
+      top: 4rem;
+    }
+    .parent-relative {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <!-- 기본 -->
+  <div class="parent">
+    <div class="child"></div>
+  </div>
+  <div class="parent">
+    <div class="child relative"></div>
+    <div class="child"></div>
+  </div>
+  <!-- absolute -->
+  <div class="parent parent-relative">
+    <div class="child absolute">1</div>
+    <div class="child"></div>
+  </div>
+</body>
+</html>

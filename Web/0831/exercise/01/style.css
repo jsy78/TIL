@@ -1,0 +1,40 @@
+/* 아래에 CSS를 작성해주세요. */
+* {
+  box-sizing: border-box;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.top {
+  font-size: 12px;
+}
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.card {
+  margin: 10px;
+  width: 300px;
+}
+.card-image {
+  width: 300px;
+  border-radius: 1rem;
+}
+.card-text {
+  width: 300px;
+}
+.card-title {
+  font-size: 10px;
+  width: 300px;
+}
+.card-subtitle {
+  font-size: 15px;
+  width: 300px;
+}
+.card-detail {
+  font-size: 1px;
+  width: 300px;
+}
