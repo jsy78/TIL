@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  min-width: 1280px;
+  color: #333333;
+}
+.nav { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding: 1.5rem;
+  height: 1rem;
+  background-color: white;
+  border-bottom: solid 0.1rem black;
+}
+
+.nav-list {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nav-item {
+  margin: 0 1rem;
+}
+
+.nav-link {
+  padding: 0.5rem;
+  text-decoration: none;
+}
+
+.nav-link:visited {
+  padding: 0.5rem;
+  color: black;
+}
+
+.nav-link:hover {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  color: white;
+  background-color: black;
+}
+
+.banner {
+  display: flex;
+  justify-content: center;
+  background-image: url(../assets/apparel.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+  width: 100%;
+  height: 700px;
+}
+
+.article {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.about {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 2rem 0;
+  width: 1280px;
+}
+
+.about-img {
+  width: 500px;
+  border-radius: 1rem;
+  margin: 0 1rem;  
+}
+
+.about-text {
+  margin: 0 1rem;  
+}
+
+.about-text-h2 {
+  text-align: center;
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.about-text-p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.more {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 2rem 0;
+  width: 1280px;
+}
+
+.more-h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.more-item-list {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  list-style: none;
+}
+
+.more-item {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.more-item-img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+}
+
+.more-item-title {
+  margin-bottom: 1rem;
+}
+
+.more-item-detail {
+  margin-bottom: 1rem;
+}
+
+.top-button {
+  position: fixed;
+  margin: 1rem;
+  bottom: 0;
+  right: 0;
+}
+
+.product {
+  width: 1280px;
+  height: 100%;
+  margin: 2rem auto;
+}
+
+.product-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  width: 1280px;
+  height: 100%;
+}
+
+.product-card {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  padding: 0.2rem;
+  border: 0.1rem solid black;
+  margin: 0.5rem;
+  width: 400px;
+  height: auto;
+}
+
+.card-img {
+  margin-bottom: 0.2rem;
+}
+
+.card-title {
+  text-align: center;
+  margin-bottom: 0.2rem;
+}
+
+.card-detail {
+  line-height: 1.5rem;
+}

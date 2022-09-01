@@ -52,7 +52,7 @@
   - 색상, 채도, 명도를 통해 특정 색을 표현하는 방식
 - a는 alpha(투명도)
 
-![https://ibb.co/PwrpFZ6](https://i.ibb.co/dGf9j05/6.png)
+![https://ibb.co/VqgCjRm](https://i.ibb.co/jryw6mR/6.png)
 
 ### CSS 문서 표현
 
