@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  min-width: 1280px;
+  color: #333333;
+  height: 10000px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 3rem;
+  padding: 1rem;
+  background-color: white;
+}
+
+.logo {
+  font-size: large;
+  font-weight: bold;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-list {
+  display: flex;
+}
+
+.nav-item {
+  width: 6rem;
+  text-align: center;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 700px;
+  background-image: url('../assets/apparel.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.banner-title {
+  margin: 2rem;
+  color: black;
+  font-size: 5rem;
+  font-weight: bolder;
+}
+
+/* 본문 영역 */
+.container {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.about {
+  display: flex;
+  margin: 3rem;
+}
+
+.about-img {
+  width: 500px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 3rem;
+}
+
+.section-title {
+  margin: 1rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.more-list {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.more-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.title-line {
+  width: 5rem;
+  border: 1px solid mediumseagreen;
+}
