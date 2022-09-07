@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="my-5 text-center">회원 가입</h1>
+    <form>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">이메일 주소</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required autofocus>
+        <div id="emailHelp" class="form-text">가입할 이메일 주소를 입력해주세요.</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">비밀번호</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" required>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">비밀번호 확인</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" required>
+        <div class="form-text">비밀번호가 일치하여야 합니다.</div>
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">프로필 이미지</label>
+        <input class="form-control" type="file" id="formFile" accept="image/*" required>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">동의</label>
+      </div>
+      <button type="submit" class="btn btn-primary">가입 신청</button>
+    </form>
+  </div>
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
