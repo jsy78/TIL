@@ -32,7 +32,7 @@
 
 ### 02_home.html
 
-![Untitled](./README.assets/Untitled 2.png)
+![Untitled](./README.assets/Untitled-2.png)
 
 - 01_nav_footer.html에서 작성한 Navigation bar & Modal & Footer 코드를 적절한 위치에 사용합니다.
 - Carousel을 활용하여 이미지가 자동으로 전환될 수 있도록 합니다.
@@ -41,24 +41,24 @@
 - 영화 목록의 카드 배치는 반응형으로 합니다.
     - Viewport의 가로 크기가 576px 미만일 경우 한 행에 1개씩 표시됩니다.
       
-        ![Untitled](./README.assets/Untitled 3.png)
+        ![Untitled](./README.assets/Untitled-3.png)
         
     - Viewport의 가로 크기가 576px 이상일 경우 한 행에 2개 이상 표시됩니다.(자유롭게 설정 가능)
       
-        ![Untitled](./README.assets/Untitled 4.png)
+        ![Untitled](./README.assets/Untitled-4.png)
         
-        ![Untitled](./README.assets/Untitled 5.png)
+        ![Untitled](./README.assets/Untitled-5.png)
         
 
 ### 03_community.html
 
 - 992px 이상
   
-    ![Untitled](./README.assets/Untitled 6.png)
+    ![Untitled](./README.assets/Untitled-6.png)
     
 - 992px 미만
   
-    ![Untitled](./README.assets/Untitled 7.png)
+    ![Untitled](./README.assets/Untitled-7.png)
     
 - 01_nav_footer.html에서 작성한 Navigation bar & Modal & Footer 코드를 적절한 위치에 사용합니다.
 - Community 페이지는 크게 게시판 목록과 게시판으로 이루어져 있으며 반응형입니다.
