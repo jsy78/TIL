@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS only -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Moviesite</title>
+</head>
+<body>
+  <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+      <img class="navbar-brand" src="./images/logo.png" alt="logo" style="width: 4rem;">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./02_home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./03_community.html">Community</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+          </li>
+        </ul>
+      </div>
+      <div class="modal fade" id="loginModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="loginModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="inputEmail" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="inputPassword" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="inputPassword">
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="check">
+                  <label class="form-check-label" for="check">Check me out</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <section calss="py-3">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="row g-3">
+        <div class="col-12 col-xl-3">
+          <img class="img-fluid" src="./images/movie1.jpg" alt="">
+        </div>
+        <div class="col-12 col-xl-9">
+          <h2>쇼생크 탈출</h2>
+          <p>The Shawshank Redemption, 1994</p>
+          <p><span class="fw-bold">개요</span> 드라마 | 미국 | 142분 | 2016 .02.24 재개봉, 1995 .01.28 개봉 </p>
+          <p><span class="fw-bold">감독</span> 프랭크 다라폰트</p>
+          <p><span class="fw-bold">등급</span> [국내] 15세 관람가 [해외] R</p>
+          <div class="row">
+            <div class="col-12 col-xl-4">
+              <div class="d-flex align-items-center">
+                <span class="fw-bold me-2">관람객</span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="fw-bold fs-4 ms-2">9.88</span>
+              </div>
+            </div>
+            <div class="col-12 col-xl-8">
+              <div class="d-flex align-items-center">
+                <span class="fw-bold me-2">기자, 평론가</span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star text-warning"></span>
+                <span class="fw-bold fs-4 ms-2">8.50</span>
+              </div>
+            </div>
+            <div class="col-12 col-xl-4">
+              <div class="d-flex align-items-center">
+                <span class="fw-bold me-2">네티즌</span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-half text-warning"></span>
+                <span class="fw-bold fs-4 ms-2">9.46</span>
+              </div>
+            </div>
+            <div class="col-12 col-xl-8">
+              <div class="d-flex align-items-center">
+                <span class="fw-bold me-2">내 평점</span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star-fill text-warning"></span>
+                <span class="bi-star text-warning"></span>
+                <span class="fw-bold fs-4 ms-2">8.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h3 class="mb-3">줄거리</h3>
+      <hr>
+      <p class="fw-bold">두려움은 너를 죄수로 가두고 희망은 너를 자유롭게 하리라</p>
+      <p>
+        촉망 받던 은행 부지점장 ‘앤디(팀 로빈슨 分)’는 아내와 그 애인을 살해한 혐의로 종신형을 받고 쇼생크 교도소에 수감된다.
+        강력범들이 수감된 이곳에서 재소자들은 짐승 취급 당하고, 혹여 간수 눈에 잘못 보였다가는 개죽음 당하기 십상이다.
+        처음엔 적응 못하던 ‘앤디’는 교도소 내 모든 물건을 구해주는 ‘레드(모건 프리먼 分)’와 친해지며 교도소 생활에 적응하려 하지만, 악질 재소자에게 걸려 강간까지 당한다.
+        그러던 어느 날, 간수장의 세금 면제를 도와주며 간수들의 비공식 회계사로 일하게 되고, 마침내는 소장의 검은 돈까지 관리해주게 된다.
+        덕분에 교도소 내 도서관을 열 수 있게 되었을 무렵, 신참내기 ‘토미(길 벨로우스 分)’로부터 ‘앤디’의 무죄를 입증할 기회를 얻지만, 노튼 소장은 ‘앤디’를 독방에 가두고 ‘토미’를 무참히 죽여버리는데...
+      </p>
+      <details class="mb-3">
+        <summary class="fw-bold">제작 노트</summary>
+        <p>
+          Hot Issue 01 <br><br>
+
+          아카데미가 놓친 최고의 영화 <쇼생크 탈출>! <br>
+          2015 Hollywood Report, 2005 BBC, <br>
+          2004 Radio Times 조사 1위! <br><br>
+          
+          해마다 많은 이슈를 낳으며 전 세계인들의 이목을 집중시키는 ‘아카데미 시상식’. 할리우드의 영향력이 더 컸던 1990년대까지만 하더라도 아카데미 수상 여부는 그 어떤 영화제 수상보다 큰 반향을 일으켰다. 1995년, <쇼생크 탈출>은 ‘제67회 아카데미 시상식’에서 작품상, 남우주연상, 각색상, 촬영상, 음향상, 편집상, 음악상의 7개 부문에 노미네이트되는 기염을 토했다. 하지만, 당시 아카데미 심사위원회가 <포레스트 검프>, <라이온 킹> <펄프 픽션> 등의 작품에 손을 들어주며 <쇼생크 탈출>은 무관의 제왕으로 남아야 했다. 하지만 관객들은 그때는 물론 지금도 <쇼생크 탈출>에게 손을 들어주고 있다. 주기적으로 열리는 ‘아카데미가 놓친 최고의 영화’ 리서치에서 <블레이드 러너>, <식스 센스> 등의 작품과 함께 항상 <쇼생크 탈출>이 상위권에 랭크인 되고 있으며, 2004년 라디오 타임스, 2005년 BBC, 2011년 examiner.com, 2015년 할리우드 리포트 조사에서 1위를 차지하기도 했다.
+          지난해 美 국립영화등기부에 등록되며 다시금 후손에게 남기고 싶은 작품으로 인정받은 <쇼생크 탈출>. 자유와 희망을 갈구하는 사람들이 있는 한 <쇼생크 탈출>은 아카데미를 넘어선 영원한 명작으로 남을 것이다. <br><br>
+          
+          Hot Issue 02<br><br>
+          
+          관객이 뽑은 내 인생 최고의 영화!
+          韓 역대 영화 평점 순위 1위! 다음 네티즌 평가
+          美 최고의 영화 1위! IMDb 네티즌이 평가
+          
+          할리우드를 대표하는 평론가 ‘로저 에버트’는 자신의 저서 《위대한 영화》에서 <쇼생크 탈출>에 대해 “다시 보면 볼수록 더 좋은 영화”로 소개하고 있다. 비단 할리우드 최고의 비평가가 아니더라도 영화를 먼저 본 많은 관객들이 <쇼생크 탈출>을 최고의 영화로 추천하고 있다. 미국의 유명한 영화정보 사이트 ‘IMDb’에서는 <대부>시리즈를 제치고 네티즌이 평가한 영화 랭킹에서 1위를 차지하고 있으며, ‘로튼 토마토’에서도 90만 명 가까운 네티즌들이 98%의 ‘like it’을 해주고 있다. 비단 미국뿐만이 아니다. 우리나라 네티즌들도 <쇼생크 탈출>을 최고의 영화로 꼽고 있다. 국내 포털 사이트 ‘다음’에서는 네티즌이 평가한 역대 영화 평점 1위(외화)를 차지하고 있고, ‘네이버’에서도 <레옹>, <터미네이터2>와 함께 네티즌 평점 9.38로 영화 랭킹 최상위권을 차지하고 있다. 영화 어플 사이트 ’왓챠’에서도 45만 명 넘는 회원들의 참여해 5점 만점 중 평균 4.4점의 높은 평점을 주었다.
+          이런 <쇼생크 탈출>에 대한 관객들의 애정은 한국과 미국을 넘어 전 세계적이다. ‘소신극적구원(肖申克的救?)’으로 개봉한 중국의 v.qq사이트에서 10점 만점 중 9.6점을 받고 있으며, ‘쇼생크의 하늘에(ショ?シャンクの空に)’로 개봉한 일본의 야후재팬에서도 네티즌 평점 5점 만점 중 4.57점을 받고 있다. 역시 명작은 국경을 넘고 시대를 초월한다.
+        </p>
+      </details>
+      <hr>
+      <h3 class="mb-3">배우/제작진</h3>
+      <hr>
+      <div class="row g-1 mb-3">
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="card h-100">
+            <img src="./images/감독.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="fs-6">프랭크 다라본트</p>
+              <p class="card-text text-danger ">감독</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="card h-100">
+            <img src="./images/주연1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="fs-6">팀 로빈스</p>
+              <p class="card-text fs-6"><span class="text-danger">주연</span> 엔디 듀프레인 역</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="card h-100">
+            <img src="./images/주연2.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="fs-6">모건 프리먼</p>
+              <p class="card-text fs-6"><span class="text-danger">주연</span> 엘리스 보이드 레드 레딩 역</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="card h-100">
+            <img src="./images/조연 1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="fs-6">밥 거튼</p>
+              <p class="card-text fs-6"><span class="text-danger">조연</span> 워든 노튼 역</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="card h-100">
+            <img src="./images/조연2.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="fs-6">윌리엄 샌들러</p>
+              <p class="card-text fs-6"><span class="text-danger">조연</span> 헤이우드 역</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+          <div class="card h-100">
+            <img src="./images/조연3.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="fs-6">클랜시 브라운</p>
+              <p class="card-text fs-6"><span class="text-danger">조연</span> 캡틴 헤들리 역</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h3 class="mb-3">동영상</h3>
+      <hr>
+      <div class="row g-1">
+        <div class="col-12 col-xl-4">
+          <div class="card">
+            <iframe height="300px" src="https://www.youtube.com/embed/Do0slRSdnVM"></iframe>
+          </div>
+        </div>
+        <div class="col-12 col-xl-4 ">
+          <div class="card">
+            <iframe height="300px" src="https://www.youtube.com/embed/YGwhQLmUWoo"></iframe>
+          </div>
+        </div>
+        <div class="col-12 col-xl-4">
+          <div class="card">
+            <iframe height="300px" src="https://www.youtube.com/embed/mSKfbb7XrNU"></iframe>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h3 class="mb-3">네티즌 평점</h3>
+      <hr>
+      <div class="mx-3">
+        <div class="d-flex align-items-center">
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="fw-bold fs-4 ms-2">10.00</span>         
+        </div>
+        <p>
+          자유에 대한 갈망이라던가 희망이라던가 다 마음에 들었는데 난 좀 다른 부분도 생각한게 
+          결국엔 앤디가 자유를 갖기에 가장 준비된 사람이기에 가능했던 일이라 생각한다. 
+          나도 그러기 위해 노력해야지!!
+        </p>
+        <p>
+          빛나는효숙(wich****) | 2013.07.28 02:03
+        </p>
+      </div>
+      <hr>
+      <div class="mx-3">
+        <div class="d-flex align-items-center">
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-half text-warning"></span>
+          <span class="fw-bold fs-4 ms-2">9.50</span>         
+        </div>
+        <p>
+          단점은 단 하나 제목 번역이 스포일러라는 점
+        </p>
+        <p>
+          vela**** | 2014.06.25 13:07
+        </p>
+      </div>
+      <hr>
+      <div class="mx-3">
+        <div class="d-flex align-items-center">
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-fill text-warning"></span>
+          <span class="bi-star-half text-warning"></span>
+          <span class="bi-star text-warning"></span>
+          <span class="fw-bold fs-4 ms-2">8.50</span>         
+        </div>
+        <p>
+          자유를 이미 가진 사람에게 자유가 무언지 알게 해주는 영화다.
+          두 남자가 감옥에서 벗어나 극적인 반전이 이루어 졌기 때문에 
+          자유를 향한 절박함은 우리와 달랐지만 덧 없이 보낸 세월을 두고 용기를 가질 수 있는건 모두의...
+        </p>
+        <p>
+          최대섭(newf****) | 2016.01.18 11:23
+        </p>
+      </div>
+      <hr>
+    </div>
+  </section>
+  <footer class="py-3">
+    <div class="container-fluid">
+      <p class="m-0 text-center"> Website Project by 2-5</p>
+    </div>
+  </footer>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>
