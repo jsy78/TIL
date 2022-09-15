@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .red { 
+      color: red;
+    }
+    .blue {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="red text-center my-5">안녕하세요</h1>
+  <script>
+    // a tag 조작
+    const a = document.createElement('a')
+    a.innerText = '실라버스'
+    const body = document.querySelector('body')
+    body.appendChild(a)
+    a.setAttribute('href', 'https://syllaverse.com')
+    console.log(a.getAttribute('href'))
+
+    // h1 tag 조작 (클래스)
+    const h1 = document.querySelector('h1')
+    console.log(h1.classList)
+  </script>
+</body>
+</html>

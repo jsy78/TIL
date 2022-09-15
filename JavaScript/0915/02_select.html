@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1 id="title">JS 기초</h1>
+  <h2>DOM 조작</h2>
+  <p class="text">querySelector</p>
+  <p class="text">querySelectorAll</p>
+
+  <script>
+    // 선택자를 활용해 선택할 때 
+    // 하나를 선택한다. => querySelector
+    // 모든 결과를 선택한다. => querySelectorAll
+
+    console.log(document.querySelector('#title'))
+    // <h1 id="title">JS 기초</h1>
+    console.log(document.querySelectorAll('.text'))
+    // NodeList(2) [p.text, p.text]
+    console.log(document.querySelector('.text'))
+    // <p class="text">querySelector</p>
+  </script>
+</body>
+</html>

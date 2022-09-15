@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <!-- JS 코드를 작성하는 영역 -->
+  <script>
+    console.log('hello, js!')
+    // h1 요소(element)를 만들고
+    const title = document.createElement('h1')
+    // 텍스트를 추가하고
+    title.innerText = 'JS 기초' 
+    // 선택자로 body태그를 가져와서
+    const body = document.querySelector('body')
+    // body태그에 자식 요소로 추가
+    body.appendChild(title)
+  </script>
+</body>
+</html>
