@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h1>정말 <span>중요한</span> 내용</h1>
+  </div>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste cum et molestiae natus esse molestias nisi porro numquam amet mollitia ea adipisci, assumenda veritatis odit quasi libero sed. Est amet quae repudiandae facere et maxime provident natus molestias quos, incidunt quisquam in dolore eligendi ea veniam iste omnis placeat optio distinctio, cumque autem repellat eos necessitatibus voluptates? Mollitia laborum saepe, recusandae tenetur inventore a iste obcaecati et repellat quia voluptas magnam totam cum blanditiis magni pariatur optio labore illo in, quis esse. Impedit eveniet qui, nihil exercitationem necessitatibus culpa dolores repudiandae ab, maxime tempore voluptates eaque assumenda, obcaecati suscipit harum laudantium vitae provident. Nam pariatur ut corrupti rem maiores ad illo in sit atque voluptatum omnis quis sunt expedita, doloremque qui voluptatem? Provident doloribus reiciendis eveniet rem deserunt nobis dolor incidunt est, ratione repellendus inventore voluptatum delectus eaque quaerat vel qui, recusandae, quisquam aliquam ut hic facilis aspernatur! At architecto cumque tenetur necessitatibus porro? Sint optio soluta quidem itaque voluptates repudiandae sed dolore laborum atque? Eaque fuga ea dolore amet cumque corporis ut repudiandae impedit nesciunt. Velit hic neque adipisci quidem dolores ut molestias illo distinctio error eos voluptas voluptates in, aut fuga sunt laudantium doloremque obcaecati excepturi qui reiciendis ipsum labore facilis? Numquam voluptates nihil repellat cupiditate consequatur porro enim excepturi nisi sequi dolore doloribus ipsa provident commodi autem eveniet odio, eius fugiat suscipit iusto delectus id animi odit debitis necessitatibus. Quisquam blanditiis voluptatum asperiores expedita excepturi voluptatem tempora eaque quas eum, suscipit temporibus officia rerum, ea sit sapiente dolor vel maiores dicta, hic non harum quam iure. Omnis, ducimus tenetur? Dicta repudiandae fugit facilis eveniet hic! Earum sit reiciendis obcaecati architecto nulla temporibus unde possimus dolorum, cupiditate quibusdam, praesentium, tenetur repudiandae harum distinctio perspiciatis alias ut facere porro odio repellendus. Ut perspiciatis inventore deleniti accusantium aliquid temporibus sint!</p>
+  <script>
+    const h1 = document.querySelector('h1')
+    h1.addEventListener('copy', function(event) {
+      // event의 기본 동작을 막고,
+      event.preventDefault()
+      console.log('삐빅 복사를 할 수 없습니다.')
+    })
+    
+    h1.addEventListener('click', function(event) {
+      event.preventDefault()
+      console.log(event.button)
+    })
+  </script>
+</body>
+</html>

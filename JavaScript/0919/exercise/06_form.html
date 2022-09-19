@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form action="">
+    <input type="password" name="password" id="password">
+    <input type="password" name="password_confirmation" id="password_confirmation">
+    <button type="button" id="btn">버튼!</button>
+  </form>
+  <p id="check"></p>
+  <script>
+    const password = document.querySelector('#password')
+    const password_confirmation = document.querySelector('#password_confirmation')
+    const btn = document.querySelector('#btn')
+    const check = document.querySelector('#check')
+
+    btn.addEventListener('click', function(event) {
+      if (password.value.length < 8) {
+        check.innerText = '8자리 미만입니다.'
+      }
+      else {
+        if (password.value === password_confirmation.value) {
+          check.innerText = '일치합니다.'
+        }
+        else {
+          alert('일치하지 않습니다.')
+          check.innerText = '일치하지 않습니다.'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

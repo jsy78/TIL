@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script> 
+    const fruits = ['딸기', '바나나', '멜론']
+    // 1.
+    fruits.forEach(function(fruit) {
+      // 반복시키면서 뭐 할건지.........
+      console.log(fruit)
+    })
+    // 익명('딸기', 0, ['딸기', '바나나', '멜론']) 
+    // 익명('바나나', 1, ['딸기', '바나나', '멜론'])
+    // 익명('멜론', 2, ['딸기', '바나나', '멜론'])
+
+    // 1-1. 
+    fruits.forEach(function(fruit, i, array) {
+      console.log(fruit, i, array)
+    })
+    // 익명('딸기', 0, ['딸기', '바나나', '멜론']) 
+    // 익명('바나나', 1, ['딸기', '바나나', '멜론'])
+    // 익명('멜론', 2, ['딸기', '바나나', '멜론'])
+
+    // 3. 
+    const print = function(a) {
+      console.log(a)
+    }
+    fruits.forEach(print)
+
+
+    // 2. array function
+    fruits.forEach( fruit => console.log(fruit) )
+
+
+    const myObj = {
+      name: 'tak'
+    }
+  </script>
+</body>
+</html>

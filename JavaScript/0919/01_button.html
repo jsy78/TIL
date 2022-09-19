@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn">버튼</button>
+  <p id="counter">0</p>
+  
+  <script>
+    // 초기값
+   let countNumber = 0
+
+    // ID가 btn인 요소를 선택
+    const btn = document.querySelector('#btn')
+    console.log(btn)
+    // btn이 클릭 되었을 때마다 함수가 실행됨
+    btn.addEventListener('click', function() {
+      console.log('버튼 클릭!')
+      // countNumber를 증가시키고
+      countNumber += 1
+      // id가 counter인의 내용을 변경 시킨다. 
+      const counter = document.querySelector('#counter')
+      counter.innerText = countNumber
+    })
+  </script>
+</body>
+</html>
