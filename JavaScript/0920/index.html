@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로젝트</title>
+  <style>
+    h1 {
+      text-align: center;
+    }
+
+    .form {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem 0;
+    }
+    
+    .form > input {
+      margin-bottom: 1rem;
+    }
+
+    .form > button {
+      margin-bottom: 1rem;
+    }
+
+    .ball {
+      width: 6rem;
+      height: 6rem;
+      margin: .5rem;
+      background-color: yellowgreen;
+      border-radius: 50%;
+      /* 컨텐츠 중앙, 수직 정렬 */
+      text-align: center;
+      line-height: 6rem;
+      /* 폰트 정리 */
+      font-size: xx-large;
+      font-weight: bold;
+    }
+
+    .plus{
+      width: 6rem;
+      height: 6rem;
+      margin: .5rem;
+      /* 컨텐츠 중앙, 수직 정렬 */
+      text-align: center;
+      line-height: 6rem;
+      /* 폰트 정리 */
+      font-size: xx-large;
+      font-weight: bold;
+    }
+
+    .ball-container {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>로또 추천 번호</h1>
+  <form class="form" id="lotto-form" action="">
+    <input type="number" class="input" name="lotto-num" id="lotto-num">
+    <button type="submit" class="button" id="lotto-btn">행운 번호 받기</button>
+  </form>
+  
+  <div id="result"></div>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script>
+    // 1~10, 11~20, 21~30, 31~40, 41~45
+    // yello, blue, red, grey, green
+    const colors = ["#dede1d", "#2091f5", "#f55220", "#9fa6a1", "#41d96f"];
+    const form = document.querySelector('#lotto-form')
+    form.addEventListener('submit', function(event) {
+      // form 기본 동작 취소
+      event.preventDefault()
+      // form 데이터 받아오기
+      const formData = new FormData(form)
+      if (formData.get('lotto-num') < 1) {
+        alert('1 이상의 숫자를 입력해주세요.')
+        return
+      }
+      // 결과 영역 초기화
+      const result = document.querySelector('#result')
+      while (result.hasChildNodes()) {
+        result.removeChild(result.firstChild)
+      }
+      for (let i = 0; i < formData.get('lotto-num'); i++) {
+        // 컨테이너를 만든다
+        let ballContainer = document.createElement('div')
+        ballContainer.classList.add('ball-container')
+        // 번호 7개 무작위 추출
+        let randoms = _.sampleSize(_.range(1, 46), 7)
+        // 1~6번째 번호를 꺼내와서 정렬
+        let numbers = randoms.splice(0, 6)
+        numbers.sort((a, b) => a - b)
+        // 보너스 번호 넣기
+        numbers.push(randoms[0])
+        // 공 만들기
+        for (let i = 0; i < 6; i++) {
+          let ball = document.createElement('div')
+          ball.classList.add('ball')
+          ball.innerText = numbers[i]
+          if (numbers[i] >= 1 && numbers[i] <= 10) {
+            ball.style.backgroundColor = colors[0]
+          }
+          else if (numbers[i] >= 11 && numbers[i] <= 20) {
+            ball.style.backgroundColor = colors[1]
+          }
+          else if (numbers[i] >= 21 && numbers[i] <= 30) {
+            ball.style.backgroundColor = colors[2]
+          }
+          else if (numbers[i] >= 31 && numbers[i] <= 40) {
+            ball.style.backgroundColor = colors[3]
+          }
+          else if (numbers[i] >= 41 && numbers[i] <= 45) {
+            ball.style.backgroundColor = colors[4]
+          }
+          // 컨테이너에 붙인다
+          ballContainer.appendChild(ball)
+        }
+        // + 기호 생성 및 붙이기
+        let plus = document.createElement('div')
+        plus.classList.add('plus')
+        plus.innerText = '+'
+        ballContainer.appendChild(plus)
+  
+        // 보너스 번호 생성 및 붙이기
+        let bonus = document.createElement('div')
+        bonus.classList.add('ball')
+        bonus.innerText = numbers[6]
+        if (numbers[6] >= 1 && numbers[6] <= 10) {
+          bonus.style.backgroundColor = colors[0]
+        }
+        else if (numbers[6] >= 11 && numbers[6] <= 20) {
+          bonus.style.backgroundColor = colors[1]
+        }
+        else if (numbers[6] >= 21 && numbers[6] <= 30) {
+          bonus.style.backgroundColor = colors[2]
+        }
+        else if (numbers[6] >= 31 && numbers[6] <= 40) {
+          bonus.style.backgroundColor = colors[3]
+        }
+        else if (numbers[6] >= 41 && numbers[6] <= 45) {
+          bonus.style.backgroundColor = colors[4]
+        }
+        // 컨테이너에 붙인다
+        ballContainer.appendChild(bonus)
+  
+        // 컨테이너를 결과 영역에 붙인다. 
+        result.appendChild(ballContainer)
+      }
+    })
+// 로또 공은 5가지 색깔로 되어 있습니다.
+// 1번부터 10번까지는 노란색입니다.
+// 11번 부터 20번까지는 파란색입니다.
+// 21번부터 30번까지는 빨간색입니다.
+// 31번부터 40번까지는 검은색입니다.
+// 41번부터 45번까지는 초록색입니다.
+  </script>
+</body>
+</html>
