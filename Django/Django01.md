@@ -150,6 +150,7 @@
    # django-admin startproject [project_name] [start_path]
    # Project 이름에는 Python이나 Django에서 사용 중인 키워드 및 `-`(하이픈) 사용 불가
    # '.' (dot)을 붙이지 않을 경우 현재 디렉토리에 프로젝트 디렉토리를 새로 생성하게 됨
+   $ code .  # vscode로 열기
    ```
 
 4. Django 서버 실행
@@ -162,6 +163,15 @@
 5. 접속 테스트
 
    http://localhost:8000
+
+6. 서버 및 가상 환경 끄기
+
+   ```bash
+   $ ^C  # Ctrl + C, server 종료하기
+   $ deactivate  # 가상환경 끄기
+   ```
+
+   
 
 ### 프로젝트 구조
 
