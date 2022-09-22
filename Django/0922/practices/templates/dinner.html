@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS only -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <title>오늘의 저녁</title>
+</head>
+<body>
+  <h2 class="text-center my-4">오늘의 저녁 메뉴 추천</h2>
+  <div class="container d-flex flex-column justify-content-center align-items-center">
+    <i class="bi bi-caret-down-fill d-flex justify-content-center display-5"></i>
+    <div id="roulette" class="border border-2 border-dark rounded-circle bg-transparent d-flex justify-content-center align-items-center" style="width: 20rem; height: 20rem;">
+      <!-- line -->
+      <div class="border border-2 border-dark bg-dark position-absolute" style="width: 20rem; transform: rotate(0deg);"></div>
+      <div class="border border-2 border-dark bg-dark position-absolute" style="width: 20rem; transform: rotate(30deg);"></div>
+      <div class="border border-2 border-dark bg-dark position-absolute" style="width: 20rem; transform: rotate(60deg);"></div>
+      <div class="border border-2 border-dark bg-dark position-absolute" style="width: 20rem; transform: rotate(90deg);"></div>
+      <div class="border border-2 border-dark bg-dark position-absolute" style="width: 20rem; transform: rotate(120deg);"></div>
+      <div class="border border-2 border-dark bg-dark position-absolute" style="width: 20rem; transform: rotate(150deg);"></div>
+      <!-- fill -->
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(0deg); background-color: rgb(220, 235, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(30deg); background-color: rgb(180, 220, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(60deg); background-color: rgb(140, 205, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(90deg); background-color: rgb(100, 180, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(120deg); background-color: rgb(60, 165, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(150deg); background-color: rgb(20, 150, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(180deg); background-color: rgb(220, 235, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(210deg); background-color: rgb(180, 220, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(240deg); background-color: rgb(140, 205, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(270deg); background-color: rgb(100, 180, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(300deg); background-color: rgb(60, 165, 255);"></div>
+      <div class="position-absolute rounded-circle" style="width: 19.8rem; height: 19.75rem; clip-path: polygon(0 21.25%, 50% 50%, 0 50%, 0 0); transform: rotate(330deg); background-color: rgb(20, 150, 255);"></div>
+      <!-- menu -->
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(15deg); z-index: 1;">{{ menus.0 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(45deg); z-index: 1;">{{ menus.1 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(75deg); z-index: 1;">{{ menus.2 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(105deg); z-index: 1;">{{ menus.3 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(135deg); z-index: 1;">{{ menus.4 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(165deg); z-index: 1;">{{ menus.5 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(195deg); z-index: 1;">{{ menus.6 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(225deg); z-index: 1;">{{ menus.7 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(255deg); z-index: 1;">{{ menus.8 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(285deg); z-index: 1;">{{ menus.9 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(315deg); z-index: 1;">{{ menus.10 }}</div>
+      <div class="position-absolute fw-bold fs-6 text-center" style="width: 18rem; height: 18rem; transform: rotate(345deg); z-index: 1;">{{ menus.11 }}</div>
+    </div>
+    <button type="button" id="trigger" class="btn btn-secondary my-5">돌리기</button>
+    <div id="result" class="d-flex flex-column justify-content-center align-items-center">
+
+    </div>
+  </div>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.2/web-animations.min.js" integrity="sha512-oAY57i8MXmaOP7pAylNLnULAM4QLV3uGnvnXVY4zF229/zFzTvG2/5YIgH8iN8oZR2hnbkiDPd4JCJGaH4oG6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>   
+    const roulette = document.querySelector('#roulette')
+    const button = document.querySelector('#trigger')
+    
+    button.addEventListener('click', function () {
+      button.classList.toggle('disabled')
+      const result = document.querySelector('#result')
+      while (result.hasChildNodes()) {
+        result.removeChild(result.firstChild)
+      }
+      const BASE_ROTATE_DEG = 3600
+      const selectedIdx = Math.floor(Math.random() * 11 + 1);
+      console.log(selectedIdx)
+      const additionalDeg = 15 * (2 * (1 - selectedIdx) + 1);
+      console.log(additionalDeg)
+      const totalDeg = BASE_ROTATE_DEG + additionalDeg;
+      console.log(totalDeg)
+      const loopAnimation = [
+        { transform: 'rotate(0deg)' },
+        { transform: `rotate(${totalDeg}deg)` }
+      ]
+      const loopAnimationOptions = {
+        fill: "forwards",
+        duration: 3000,
+        easing: "ease-in-out"
+      }
+      roulette.animate(loopAnimation, loopAnimationOptions)
+
+      setTimeout(function() {
+        const title = document.createElement('h2')
+        title.classList.add('mt-3')
+
+        const img = document.createElement('img')
+        img.classList.add('img-fluid') 
+        img.classList.add('rounded')
+        img.classList.add('my-3')       
+        img.setAttribute('width', '50%');
+        img.setAttribute('height', '50%');
+
+        if (selectedIdx === 0) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.10 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.10 }}.jpg');
+          img.setAttribute('alt', '{{ menus.10 }}');
+        }
+        else if (selectedIdx === 1) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.11 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.11 }}.jpg');
+          img.setAttribute('alt', '{{ menus.11 }}');
+        }
+        else if (selectedIdx === 2) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.0 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.0 }}.jpg');
+          img.setAttribute('alt', '{{ menus.0 }}');
+        }
+        else if (selectedIdx === 3) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.1 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.1 }}.jpg');
+          img.setAttribute('alt', '{{ menus.1 }}');
+        }
+        else if (selectedIdx === 4) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.2 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.2 }}.jpg');
+          img.setAttribute('alt', '{{ menus.2 }}');
+        }
+        else if (selectedIdx === 5) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.3 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.3 }}.jpg');
+          img.setAttribute('alt', '{{ menus.3 }}');
+        }
+        else if (selectedIdx === 6) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.4 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.4 }}.jpg');
+          img.setAttribute('alt', '{{ menus.4 }}');
+        }
+        else if (selectedIdx === 7) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.5 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.5 }}.jpg');
+          img.setAttribute('alt', '{{ menus.5 }}');
+        }
+        else if (selectedIdx === 8) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.6 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.6 }}.jpg');
+          img.setAttribute('alt', '{{ menus.6 }}');
+        }
+        else if (selectedIdx === 9) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.7 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.7 }}.jpg');
+          img.setAttribute('alt', '{{ menus.7 }}');
+        }
+        else if (selectedIdx === 10) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.8 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.8 }}.jpg');
+          img.setAttribute('alt', '{{ menus.8 }}');
+        }
+        else if (selectedIdx === 11) {
+          title.innerText = '오늘의 저녁 추천 메뉴는 {{ menus.9 }} 입니다'
+          img.setAttribute('src', '/static/{{ menus.9 }}.jpg');
+          img.setAttribute('alt', '{{ menus.9 }}');
+        }
+        result.appendChild(title)
+        result.appendChild(img)
+        button.classList.toggle('disabled')
+      }, 3000)
+    })
+
+  </script>
+</body>
+</html>
