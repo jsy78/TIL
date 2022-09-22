@@ -13,8 +13,8 @@
 
 ## 클라이언트와 서버
 
-| CLIENT | requests<br/>→<br/>←<br/>responses | SERVER |
-| :----: | :--------------------------------: | :----: |
+| CLIENT | requests<br/>-----------------><br/><-----------------<br/>responses | SERVER |
+| :----: | :----------------------------------------------------------: | :----: |
 
 - 클라이언트
   - 웹 사용자의 인터넷에 연결된 장치 (예를 들어 wi-fi에 연결된 컴퓨터 또는 모바일)
@@ -134,7 +134,19 @@
    $ source server-venv/Scripts/activate
    ```
 
-2. Django LTS 버전 설치 및 패키지 목록 생성
+2. pip 버전 업그레이드
+
+   ```bash
+   $ sudo python -m pip install --upgrade pip
+   # for Mac, Windows
+   
+   $ pip install --upgrade pip
+   # for Linux
+   
+   $ pip --version
+   ```
+
+3. Django LTS 버전 설치 및 패키지 목록 생성
 
    ```bash
    (server-venv)
@@ -142,7 +154,7 @@
    $ pip freeze > requirements.txt
    ```
 
-3. Django 프로젝트 생성
+4. Django 프로젝트 생성
 
    ```bash
    (server-venv)
@@ -153,18 +165,18 @@
    $ code .  # vscode로 열기
    ```
 
-4. Django 서버 실행
+5. Django 서버 실행
 
    ```bash
    (server-venv)
    $ python manage.py runserver
    ```
 
-5. 접속 테스트
+6. 접속 테스트
 
    http://localhost:8000
 
-6. 서버 및 가상 환경 끄기
+7. 서버 및 가상 환경 끄기
 
    ```bash
    $ ^C  # Ctrl + C, server 종료하기

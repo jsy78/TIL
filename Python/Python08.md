@@ -38,7 +38,7 @@
   p2 = Person('Choi')
   ```
 
-  | ![image-20220720155554051](Python8.assets/image-20220720155554051.png) |
+  | ![https://ibb.co/WgQsgfb](https://i.ibb.co/J5NC5Hf/image-20220720155554051.png) |
   | :----------------------------------------------------------: |
   | Person class : 클래스 이름 공간<br/>Person instance : 인스턴스별 이름 공간 |
 
@@ -57,11 +57,11 @@
   # Kim
   ```
   
-  | ![image-20220720160427961](Python8.assets/image-20220720160427961.png) |
+  | ![https://ibb.co/PDG9PWm](https://i.ibb.co/5KhnSjM/image-20220720160427961.png) |
   | :----------------------------------------------------------: |
   |    인스턴스 이름 공간에 name이 없어 클래스 이름 공간 탐색    |
   
-  | ![image-20220720160600792](Python8.assets/image-20220720160600792.png) |
+  | ![https://ibb.co/Yb451T4](https://i.ibb.co/wYZnPrZ/image-20220720160600792.png) |
   | :----------------------------------------------------------: |
   |             Person instance : 인스턴스 이름 공간             |
   
