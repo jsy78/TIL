@@ -297,3 +297,7 @@ def dinner(request):
 </body>
 </html>
 ```
+
+## 참고 사이트
+
+- [Built-in template tags and filters | Django documentation | Django (djangoproject.com)](https://docs.djangoproject.com/en/4.1/ref/templates/builtins/)
