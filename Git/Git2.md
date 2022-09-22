@@ -2,7 +2,7 @@
 
 | (1통)                | add | (2통) | commit | (로컬 저장소) | push or pull | (원격 저장소) |
 | :------------------: | :--:    | :--: | :--: | :--:|:--: | :--:|
-| Working Directory | → |Staging Area| → | Local Repository | ↔ | Remote Repository |
+| Working Directory | \-----> |Staging Area| \-----> | Local Repository | <\-----> | Remote Repository |
 
 - git status (파일, 폴더 상태)와 git log (커밋 기록)를 수시로 확인하자.
 - git restore [file name]을 사용해 특정 파일 HEAD Commit으로 복구할 수 있다.
