@@ -1,279 +1,299 @@
 # Django
 
-## Framework
+## 요청과 응답
 
-- Frame(뼈대, 틀) + Work(일하다)
-  - 일정한 뼈대, 틀을 가지고 일하다
-  - 제공받은 도구들과 뼈대, 규약을 가지고 무언가를 만드는 일
-  - 특정 프로그램을 개발하기 위한 여러 도구들과 규약을 제공하는 것
-- 서비스 개발에 필요한 기능들을 미리 구현해서 모아 놓은 것
+![https://ibb.co/nMQ6SMW](https://i.ibb.co/gZtmCZn/1.png)
 
-- '소프트웨어 프레임워크'는 복잡한 문제를 해결하거나 서술하는 데 사용되는 기본 개념 구조
-- 소프트웨어의 생산성과 품질을 높임
+- Django에서의 코드 작성은 URL → View → Template 순으로 작성
+- URL → View → Template
+  - 데이터의 흐름 순서
 
-## 클라이언트와 서버
 
-| CLIENT | requests<br/>-----------------><br/><-----------------<br/>responses | SERVER |
-| :----: | :----------------------------------------------------------: | :----: |
+### URLs
 
-- 클라이언트
-  - 웹 사용자의 인터넷에 연결된 장치 (예를 들어 wi-fi에 연결된 컴퓨터 또는 모바일)
-  - Chrome 또는 Firefox와 같은 웹 브라우저
-  - 서비스를 요청하는 주체
-- 서버
-  - 웹 페이지, 사이트 또는 앱을 저장하는 컴퓨터
-  - 클라이언트가 웹 페이지에 접근하려고 할 때 서버에서 클라이언트 컴퓨터로 웹 페이지 데이터를 응답해 사용자의 웹 브라우저에 표시됨
-  - 요청에 대해 서비스를 응답하는 주체
-- 상호작용 예시
-  - Google 홈페이지에 접속
-  - 인터넷에 연결된 전세계 어딘가에 있는 구글 컴퓨터에게 ‘Google 홈페이지.html’ 파일을 달라고 요청하는 것
-  - 구글 컴퓨터는 우리의 요청을 받고 ‘Google 홈페이지.html’ 파일을 인터넷을 통해서 우리 컴퓨터에게 응답해줌
-  - 그렇게 전달받은 Google 홈페이지.html 파일을 웹 브라우저가 우리가 볼 수 있도록 해석해주는 것
-  - 여기서 'Google 홈페이지.html'을 달라고 요청한 컴퓨터, 웹 브라우저는 클라이언트
-  - 'Google 홈페이지.html' 파일을 제공한 컴퓨터, 프로그램을 서버
-  -  어떠한 자원(resource)를 달라고 요청(request)하는 쪽을 클라이언트라고 하고 자원을 제공해주는 쪽을 서버(server)라고 함
+```python
+# urls.py
 
-## 웹 브라우저와 웹 페이지
+from django.contrib import admin
+from django.urls import path
+from articles import views
 
-- 웹 브라우저
-  - 웹에서 페이지를 찾아 보여주고, 사용자가 하이퍼링크를 통해 다른 페이지로 이동할 수 있도록 하는 프로그램
-  - 웹 페이지 파일을 우리가 보는 화면으로 바꿔주는(렌더링, rendering) 프로그램
-- 웹 브라우저 예시
-  - 우리가 보고 있는 웹 페이지는 사실 HTML 문서 파일 하나
-  - 웹 페이지 코드를 받으면 우리가 보는 화면처럼 바꿔주는 것이 바로 웹 브라우저
-  - HTML / CSS / JS 등의 코드를 읽어 실제 사람이 볼 수 있는 화면으로 만들어 줌
-- 웹 페이지
-  - 웹에 있는 문서, 우리가 보는 화면 각각 한 장 한 장이 웹 페이지
-  -  정적 웹 페이지, 동적 웹 페이지가 있음
-- 정적 웹 페이지
-  - Static Web page
-  - 있는 그대로를 제공하는 것(served as-is)을 의미
-  - 한 번 작성된 HTML 파일의 내용이 변하지 않 고 모든 사용자에게 동일한 모습으로 전달되는 것
-    - 서버에 미리 저장된 HTML 파일 그대로 전달된 웹 페이지
-    - 같은 상황에서 모든 사용자에게 동일한 정보를 표시
-- 동적 웹 페이지
-  - Dynamic Web page
-  - 사용자의 요청에 따라 웹 페이지에 추가적인 수정이 되어 클라이언트에게 전달되는 웹 페이지
-  - 웹 페이지의 내용을 바꿔주는 주체는 서버
-    - 서버에서 동작하고 있는 프로그램이 웹 페이지를 변경해줌
-    - 사용자의 요청을 받아서 적절한 응답을 만들어주는 프로그램을 쉽게 만들 수 있게 도와주는 프레임워크가 존재함
-      - ex) **Django**, Spring Boot, Express 등
-  - 다양한 서버 사이드 프로그래밍 언어(python, java, c++ 등) 사용 가능
-  - 파일을 처리하고 데이터베이스와의 상호작용이 이루어짐
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('index/', views.index), # <- Trailing Slash
+]
 
-## IP와 도메인
-
-- 네트워크에 연결된 모든 컴퓨터에는 IP 주소 (IP는 인터넷 프로토콜)라는 고유한 주소가 있음
-- IPv4 주소는 점으로 구분 된 네 개의 숫자로 구성된 주소
-  - 기억하기 어렵다는 단점이 있음
-- IP 주소를 사람이 기억하기 쉽도록 도메인 이름을 지정해 매핑할 수 있음
-  - ex) 'google.com'은 IP 주소로 '173.194.121.32'
-
-## HTTP
-
-- Hyper Text Transper Protocol
-- HTML 문서와 같은 리소스들을 가져올 수 있도록 해주는 프로토콜
-- 웹에서 이루어지는 모든 데이터 교환의 기초이며, 클라이언트-서버 프로토콜이기도 함
-- 브라우저인 클라이언트에 의해 전송되는 메시지는 요청(requests)이라고 부름
-  - HTTP 메소드 (GET, POST, OPTIONS, HEAD)
-  - 가져오려는 리소스의 경로, 프로토콜 (http://), 도메인 (en-US), TCP 포트 (en-US), URL
-  - HTTP 프로토콜의 버전
-  - 서버에 대한 추가 정보를 전달하는 선택적 헤더들
-  - POST와 같은 몇 가지 메서드를 위한 본문
-- 서버에서 응답으로 전송되는 메시지를 응답(responses)이라고 부름
-  - HTTP 프로토콜의 버전
-  - 요청의 성공 여부와, 그 이유를 나타내는 상태 코드
-  - 상태 코드의 짧은 설명을 나타내는 상태 메시지 (영향력 없음)
-  - HTTP 헤더들
-  - 선택 사항으로, 가져온 리소스가 포함되는 본문
-
-## Django 구조 (MTV Design Pattern)
-
-- 각기 다른 기능을 가진 다양한 응용 소프트웨어를 개발할 때 공통적인 설계 문제가 존재
-- 이를 처리하는 해결책 사이에도 공통점이 있다는 것을 발견, 이러한 유사점을 패턴이라 함
-- 클라이언트-서버 구조도 소프트웨어 디자인 패턴 중 하나
-- 특정 문맥에서 공통적으로 발생하는 문제에 대해 재사용 가능한 해결책을 제시
-
-### MVC 소프트웨어 디자인 패턴
-
-- 데이터 및 논리 제어를 구현하는데 널리 사용되는 소프트웨어 디자인 패턴
-- Model - View – Controller
-  - Model : 데이터와 관련된 로직을 관리
-  - View : 레이아웃과 화면을 처리
-  - Controller : 명령을 model과 view 부분으로 연결
-- 각 부분을 독립적으로 개발할 수 있어, 하나를 수정하고 싶을 때 모두 건들지 않아도 됨
-
-### MTV 소프트웨어 디자인 패턴
-
-![https://ibb.co/ZNjcQJJ](https://i.ibb.co/wYkpnLL/1.png)
-
-- Model - Template – View
-  - Model
-    - MVC 패턴에서 Model의 역할에 해당
-    - 데이터와 관련된 로직을 관리
-    - 응용프로그램의 데이터 구조를 정의하고 데이터베이스의 기록을 관리
-  - Template
-    - MVC 패턴에서 View의 역할에 해당
-    - 레이아웃과 화면을 처리
-    - 화면상의 사용자 인터페이스 구조와 레이아웃을 정의
-  - View
-    - MVC 패턴에서 Controller의 역할에 해당
-    - Model & Template과 관련한 로직을 중간 처리해서 응답을 반환
-    - 클라이언트의 요청에 대해 처리를 분기하는 역할
-    - 데이터가 필요하다면 model에 접근해서 데이터를 가져오고, 가져온 데이터를 template로 보내 화면을 구성하고, 구성된 화면을 응답으로 만들어 클라이언트에게 반환
-
-## 개발 환경 설정
-
-1. 가상 환경 생성 및 실행
-
-   ```bash
-   $ mkdir [folder_name]
-   $ cd [folder_name]
-   $ python -m venv server-venv
-   # python -m venv [venv_name]
-   $ source server-venv/Scripts/activate
-   ```
-
-2. pip 버전 업그레이드
-
-   ```bash
-   $ sudo python -m pip install --upgrade pip
-   # for Mac, Windows
-   
-   $ pip install --upgrade pip
-   # for Linux
-   
-   $ pip --version
-   ```
-
-3. Django LTS 버전 설치 및 패키지 목록 생성
-
-   ```bash
-   (server-venv)
-   $ pip install django==3.2.13
-   $ pip freeze > requirements.txt
-   ```
-
-4. Django 프로젝트 생성
-
-   ```bash
-   (server-venv)
-   $ django-admin startproject firstpjt .
-   # django-admin startproject [project_name] [start_path]
-   # Project 이름에는 Python이나 Django에서 사용 중인 키워드 및 `-`(하이픈) 사용 불가
-   # '.' (dot)을 붙이지 않을 경우 현재 디렉토리에 프로젝트 디렉토리를 새로 생성하게 됨
-   $ code .  # vscode로 열기
-   ```
-
-5. Django 서버 실행
-
-   ```bash
-   (server-venv)
-   $ python manage.py runserver
-   ```
-
-6. 접속 테스트
-
-   http://localhost:8000
-
-7. 서버 및 가상 환경 끄기
-
-   ```bash
-   $ ^C  # Ctrl + C, server 종료하기
-   $ deactivate  # 가상환경 끄기
-   ```
-
-   
-
-### 프로젝트 구조
-
-- `__init__.py`
-  - Python에게 이 디렉토리를 하나의 Python 패키지로 다루도록 지시
-  - 별도로 추가 코드를 작성하지 않음
-- `asgi.py`
-  - Asynchronous Server Gateway Interface
-  - Django 애플리케이션이 비동기식 웹 서버와 연결 및 소통하는 것을 도움
-- `settings.py`
-  - Django 프로젝트 설정을 관리
-- `urls.py`
-  - 사이트의 url과 적절한 views의 연결을 지정
-
-- `wsgi.py`
-  - Web Server Gateway Interface
-  - Django 애플리케이션이 웹 서버와 연결 및 소통하는 것을 도움
-
-- `manage.py`
-
-  - Django 프로젝트와 다양한 방법으로 상호작용 하는 커맨드라인 유틸리티
-
-  ```bash
-  # manage.py Usage
-  $ python manage.py <command> [options]
-  ```
-
-### 애플리케이션(앱) 생성
-
-```bash
-$ python manage.py startapp articles
-# 일반적으로 애플리케이션 이름은 ‘복수형’으로 작성하는 것을 권장
 ```
 
-### 애플리케이션 구조
+### Views
 
-- `admin.py`
+```python
+# articles/views.py
 
-  - 관리자용 페이지를 설정 하는 곳
+def index(request): 
+    return render(request, 'index.html')
+```
 
-- `apps.py`
+- HTTP 요청을 수신하고 HTTP 응답을 반환하는 함수 작성
+- Template에게 HTTP 응답 서식을 맡김
 
-  - 앱의 정보가 작성된 곳
-  - 별도로 추가 코드를 작성하지 않음
+#### render()
 
-- `models.py`
+`render(request, template_name, context)`
 
-  - 애플리케이션에서 사용하는 Model을 정의하는 곳
-  - MTV 패턴의 M에 해당
+- 주어진 템플릿을 주어진 컨텍스트 데이터와 결합하고 렌더링 된 텍스트와 함께 HttpResponse(응답) 객체를 반환하는 함수
+- request
+  - 응답을 생성하는 데 사용되는 요청 객체
+- template_name
+  - 템플릿의 전체 이름 또는 템플릿 이름의 경로
+- context
+  - 템플릿에서 사용할 데이터 (딕셔너리 타입으로 작성)
 
-- `tests.py`
+### Templates
 
-  - 프로젝트의 테스트 코드를 작성하는 곳
+```html
+<!-- articles/templates/index.html -->
 
-- `views.py`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 생략 -->
+</head>
+<body>
+  <h1>만나서 반가워요!</h1>
+</body>
+</html>
+```
 
-  - view 함수들이 정의 되는 곳
-  - MTV 패턴의 V에 해당
+- 실제 내용을 보여주는데 사용되는 파일
+- 파일의 구조나 레이아웃을 정의
+- Template 파일의 기본 경로
+  - app 폴더 안의 templates 폴더
+  - app_name/templates/
+- **템플릿 폴더 이름은 반드시 templates라고 지정해야 함**!
 
-- 프로젝트에서 앱을 사용하기 위해서는 반드시 INSTALLED_APPS 리스트에 반드시 추가해야 함
+### Settings
 
-  ```python
-  # settings.py
-  INSTALLED_APPS = [
-      # Local apps
-      'articles',
-      
-      # Third party apps
-      'haystack',
-  
-      # Django apps
-      'django.contrib.admin',
-      'django.contrib.auth',
-      'django.contrib.contenttypes',
-      'django.contrib.sessions',
-      'django.contrib.sites',
-  ]
-  # 반드시 생성 후 등록
-  ```
+```python
+# settings.py
 
-  - INSTALLED_APPS :  Django installation에 활성화 된 모든 앱을 지정하는 문자열 목록
+LANGUAGE_CODE = 'ko-kr'
+TIME_ZONE = 'Asia/Seoul'
+```
 
-### 프로젝트와 애플리케이션
+- LANGUAGE_CODE
+  - 모든 사용자에게 제공되는 번역을 결정
+  - 이 설정이 적용되려면 USE_I18N이 활성화(True)되어 있어야 함
+  - [Using Language Identifiers (RFC 3066) (i18nguy.com)](http://www.i18nguy.com/unicode/language-identifiers.html)
+- TIME_ZONE
+  - 데이터베이스 연결의 시간대를 나타내는 문자열 지정
+  - USE_TZ가 True이고 이 옵션이 설정된 경우 데이터베이스에서 날짜 시간을 읽으면, UTC 대신 새로 설정한 시간대의 인식 날짜&시간이 반환 됨
+  - USE_TZ이 False인 상태로 이 값을 설정하는 것은 error가 발생하므로 주의
+  - [List of tz database time zones - Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+- USE_I18N
+  - Django의 번역 시스템을 활성화해야 하는지 여부를 지정
+- USE_L10N
+  - 데이터의 지역화된 형식(localized formatting)을 기본적으로 활성화할지 여부를 지정
+  - True일 경우, Django는 현재 locale의 형식을 사용하여 숫자와 날짜를 표시
+- USE_TZ
+  - datetimes가 기본적으로 시간대를 인식하는지 여부를 지정
+  - True일 경우 Django는 내부적으로 시간대 인식 날짜 / 시간을 사용
 
-- 프로젝트
-  - "collection of apps"
-  - 프로젝트는 앱의 집합
-  - 프로젝트에는 여러 앱이 포함될 수 있음
-  - 앱은 여러 프로젝트에 있을 수 있음
-- 애플리케이션
-  - 앱은 실제 요청을 처리하고 페이지를 보여주는 등의 역할을 담당
-  - 일반적으로 앱은 하나의 역할 및 기능 단위로 작성하는 것을 권장함
+## Django Template
 
+> “데이터 표현을 제어하는 도구이자 표현에 관련된 로직”
+
+- Django Template을 이용한 HTML 정적 부분과 동적 컨텐츠 삽입
+- 데이터 표현을 제어하는 도구이자 표현에 관련된 로직을 담당
+
+### Django Template Language (DTL)
+
+- Django template에서 사용하는 built-in template system
+- 조건, 반복, 변수 치환, 필터 등의 기능을 제공
+  - Python처럼 일부 프로그래밍 구조(if, for 등)를 사용할 수 있지만 Python 코드로 실행되는 것은 아님
+  - Django 템플릿 시스템은 Python이 HTML에 포함 된 것이 아니니 주의
+- 프로그래밍적 로직이 아닌 프레젠테이션을 표현하기 위한 것임을 명심할 것
+
+#### DTL Syntax
+
+##### Variable
+
+`{{ variable }}`
+
+- 변수명은 영어, 숫자와 밑줄(_)의 조합으로 구성될 수 있으나 밑줄로는 시작 할 수 없음
+  - 공백이나 구두점 문자 또한 사용할 수 없음
+- dot(.)를 사용하여 변수 속성에 접근할 수 있음
+- render()의 세번째 인자로 {'key': value} 와 같이 딕셔너리 형태로 넘겨주며,  여기서 정의한 key에 해당하는 문자열이 template에서 사용 가능한 변수명이 됨
+
+##### Filters
+
+`{{ variable|filter }}`
+
+- 표시할 변수를 수정할 때 사용
+  - ex) `{ name|lower }}` : name 변수를 모두 소문자로 출력
+- 60개의 built-in template filters를 제공
+- chained가 가능하며 일부 필터는 인자를 받기도 함
+  - ex) `{{ name|truncatewords:30 }}`
+
+##### Tags
+
+`{% tag %}`
+
+- 출력 텍스트를 만들거나, 반복 또는 논리를 수행하여 제어 흐름을 만드는 등 변수보다 복잡한 일들을 수행
+- 일부 태그는 시작과 종료 태그가 필요
+  - ex) `{% if %}{% endif %}`
+- 약 24개의 built-in template tags를 제공
+
+##### Comments
+
+`{# #}`
+
+```html
+{% comment %} 
+여러 줄
+주석
+{% endcomment %}
+```
+
+- Django template에서 라인의 주석을 표현하기 위해 사용
+- 한 줄 주석에만 사용할 수 있음 (줄 바꿈이 허용되지 않음)
+- 여러 줄 주석은 `{% comment %}`와 `{% endcomment %}` 사이에 입력
+
+#### Variable 예시 1
+
+```python
+# urls.py
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('index/', views.index),
+    path('greeting/', views.greeting),
+]
+```
+
+```python
+# articles/views.py
+
+def greeting(request):
+    return render(request, 'greeting.html', {'name': 'Alice'})
+```
+
+```html
+<!-- articles/templates/greeting.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+…
+</head>
+<body>
+  <p>안녕하세요 저는 {{ name }} 입니다.</p>
+</body>
+</html>
+```
+
+#### Variable 예시 2
+
+```python
+# views.py
+
+def greeting(request):
+    foods = ['apple', 'banana', 'coconut',]
+    info = {
+        'name': 'Alice'
+    }
+    context = {
+        'foods': foods,
+        'info': info,
+    }
+    return render(request, 'greeting.html', context)
+```
+
+```html
+<!-- articles/templates/greeting.html -->
+
+<p>저는 {{ foods.0 }}을 가장 좋아합니다.</p>
+<p>안녕하세요 저는 {{ info.name }} 입니다.</p>
+<!-- dot-lookup (dot-notaion)으로 배열의 인덱스 및 딕셔너리의 키 값에 접근 할 수 있음 -->
+
+<a href="/index/">뒤로</a>
+```
+
+- context 데이터가 많아질 경우를 생각하면 위와 같이 작성하는 것이 바람직
+- context라는 이름은 다른 이름으로도 사용 가능하지만 관행적으로 context를 사용
+
+#### Filters 예시
+
+```python
+# urls.py
+
+urlpatterns = [
+    ...,
+    path('dinner/', views.dinner),
+]
+```
+
+```python
+# articles/views.py
+import random
+from django.shortcuts import render
+...
+
+def dinner(request):
+    foods = ['족발', '햄버거', '치킨', '초밥',]
+    pick = random.choice(foods)
+    context = {
+        'pick': pick,
+        'foods': foods,
+    }
+    return render(request, 'dinner.html', context)
+```
+
+```html
+<!-- dinner.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+...
+</head>
+<body>
+  <p>{{ pick }}은 {{ pick|length }}글자</p>
+  <p>{{ foods|join:", "}}</p>
+    
+  <p>메뉴판</p>
+  <ul>
+    {% for food in foods %}
+      <li>{{ food }}</li>
+    {% endfor %}
+  </ul>
+    
+  <a href="/index/">뒤로</a>
+</body>
+</html>
+```
+
+#### Comments 예시
+
+```html
+<!-- dinner.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+...
+</head>
+<body>
+  ...
+  {# 이것은 주석입니다. #}
+    
+  {% comment %}
+    <p>여러 줄</p>
+    <p>주석</p>
+    <p>입니다.</p>
+  {% endcomment %}
+    
+  <a href="/index/">뒤로</a>
+</body>
+</html>
+```
