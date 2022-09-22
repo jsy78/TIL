@@ -46,7 +46,7 @@
 print('Hello, World!')
 ```
 
-```
+```python
 {
  "firstName": "John",
  "lastName": "Smith",
@@ -62,9 +62,11 @@ Ctrl + Enter로 블록 빠져나올 수 있음
 
 # Link : \[문자열]\(링크)
 
+`[KDT1 페이지(노션)](https://bit.ly/kdt-1)`
 [KDT1 페이지(노션)](https://bit.ly/kdt-1)
 
-[Syllaverse](https://bit.ly/kdt-1 )
+`[Syllaverse](https://syllaverse.com/)`
+[Syllaverse](https://syllaverse.com/)
 
 Ctrl + 클릭으로 Typora에서 링크 클릭 가능
 
@@ -72,9 +74,11 @@ Ctrl + 클릭으로 Typora에서 링크 클릭 가능
 
 # 이미지 : !\[문자열]\(링크)
 
-![01](./마크다운%20문법.assets/01.jpg)
+`![01](./markdown_syntax.assets/01.jpg)`
+![01](./markdown_syntax.assets/01.jpg)
 
-[![02](./마크다운%20문법.assets/02.jpg)](https://www.naver.com)
+`[![02](./markdown_syntax.assets/02.jpg)](https://www.naver.com)`
+[![02](./markdown_syntax.assets/02.jpg)](https://www.naver.com)
 
 # 인용문 : >
 
