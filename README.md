@@ -27,5 +27,16 @@
 |                                           |                                                   |                                                   |                                        |           [1<br/>HTML](./Web/Web04.md)            |       [2<br/>HTML, CSS](./Web/0902/project)       |    <span style="color: blue">3</span>     |
 |     <span style="color: red">4</span>     |           [5<br/>HTML](./Web/Web05.md)            |         [6<br/>Bootstrap](./Web/Web06.md)         |   [7<br/>Bootstrap](./Web/Web07.md)    |            [8<br/>Web](./Web/Web08.md)            |     <span style="color: red">9<br/>추</span>      | <span style="color: red">10<br/>석</span> |
 | <span style="color: red">11<br/>연</span> |     <span style="color: red">12<br/>휴</span>     |      [13<br/>Bootstrap](./Web/0913/project)       | [14<br/>Bootstrap](./Web/0914/project) | [15<br/>JavaScript](./JavaScript/JavaScript01.md) | [16<br/>JavaScript](./JavaScript/JavaScript02.md) |    <span style="color: blue">17</span>    |
-|    <span style="color: red">18</span>     | [19<br/>JavaScript](./JavaScript/JavaScript03.md) | [20<br/>JavaScript](./JavaScript/JavaScript04.md) | [21<br/>Django](./Django/Django01.md)  |       [22<br/>Django](./Django/Django02.md)       |                        23                         |    <span style="color: blue">24</span>    |
+|    <span style="color: red">18</span>     | [19<br/>JavaScript](./JavaScript/JavaScript03.md) | [20<br/>JavaScript](./JavaScript/JavaScript04.md) | [21<br/>Django](./Django/Django01.md)  |       [22<br/>Django](./Django/Django02.md)       |          [23<br/>Django](./Django/0923)           |    <span style="color: blue">24</span>    |
 |    <span style="color: red">25</span>     |                        26                         |                        27                         |                   28                   |                        29                         |                        30                         |                                           |
+
+## 2022-10
+
+| <span style="color: red">일</span> |                      월                      |  화  |  수  |  목  |  금  | <span style="color: blue">토</span> |
+| :--------------------------------: | :------------------------------------------: | :--: | :--: | :--: | :--: | :---------------------------------: |
+|                                    |                                              |      |      |      |      | <span style="color: blue">1</span>  |
+| <span style="color: red">2</span>  | <span style="color: red">3<br/>개천절</span> |  4   |  5   |  6   |  7   | <span style="color: blue">8</span>  |
+| <span style="color: red">9</span>  |                      10                      |  11  |  12  |  13  |  14  | <span style="color: blue">15</span> |
+| <span style="color: red">16</span> |                      17                      |  18  |  19  |  20  |  21  | <span style="color: blue">22</span> |
+| <span style="color: red">23</span> |                      24                      |  25  |  26  |  27  |  28  | <span style="color: blue">29</span> |
+| <span style="color: red">30</span> |                      31                      |      |      |      |      |                                     |
