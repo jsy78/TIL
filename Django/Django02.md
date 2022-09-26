@@ -51,7 +51,7 @@ def index(request):
 
 ### Templates
 
-```html
+```django
 <!-- articles/templates/index.html -->
 
 <!DOCTYPE html>
@@ -178,7 +178,7 @@ def greeting(request):
     return render(request, 'greeting.html', {'name': 'Alice'})
 ```
 
-```html
+```django
 <!-- articles/templates/greeting.html -->
 
 <!DOCTYPE html>
@@ -209,7 +209,7 @@ def greeting(request):
     return render(request, 'greeting.html', context)
 ```
 
-```html
+```django
 <!-- articles/templates/greeting.html -->
 
 <p>저는 {{ foods.0 }}을 가장 좋아합니다.</p>
@@ -249,7 +249,7 @@ def dinner(request):
     return render(request, 'dinner.html', context)
 ```
 
-```html
+```django
 <!-- dinner.html -->
 
 <!DOCTYPE html>
@@ -275,7 +275,7 @@ def dinner(request):
 
 #### Comments 예시
 
-```html
+```django
 <!-- dinner.html -->
 
 <!DOCTYPE html>

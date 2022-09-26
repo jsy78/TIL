@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  {% if number == 0 %}
+  <h1 style="text-align: center; font-weight: bold;">0은(는) 0입니다.</h1>
+  {% elif number|divisibleby:'2' %}
+  <h1 style="text-align: center; font-weight: bold;">{{ number }}은(는) 짝수입니다.</h1>
+  {% else %}
+  <h1 style="text-align: center; font-weight: bold;">{{ number }}은(는) 홀수입니다.</h1>
+  {% endif %}
+
+</body>
+
+</html>
