@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Ping</h1>
+  <form action="/pong" method="GET">
+    이름을 입력해주세요: <input type="text" name="ball">
+    <input type="submit">
+  </form>
+{% endblock %}

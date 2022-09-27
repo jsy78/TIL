@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+  <div>
+    <h1>방명록</h1>
+  </div>
+  <div>
+    <h2>글 목록</h2>
+    {% for content in guestbook %}
+    <p>{{ content.content }}</p>
+    {% endfor %}
+  </div>
+  <div>
+    <h2>글 작성</h2>
+    <form action="/articles/create/" method="GET">
+      <input type="text" name="content">
+      <input type="submit">
+    </form>
+  </div>
+</body>
+
+{% endblock %}
