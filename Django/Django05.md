@@ -693,7 +693,7 @@ def detail(request, pk):
     <p>글 번호: {{ article.pk }}</p>
     <p>글 제목: {{ article.title }}</p>
     <p>글 내용: {{ article.content }}</p>
-	<a href="{% url 'articles:detail' article.pk %}">detail</a>
+    <a href="{% url 'articles:detail' article.pk %}">detail</a>
     <hr>
   {% endfor %}
 {% endblock content %}
