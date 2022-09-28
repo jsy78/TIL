@@ -98,10 +98,70 @@
 
 ## URL namespace
 
+```python
+# articles/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('index/', views.index, name='index'),
+    path('greeting/', views.greeting, name='greeting'),
+    path('dinner/', views.dinner, name='dinner'),
+    path('throw/', views.throw, name='throw'),
+    path('catch/', views.catch, name='catch'),
+    path('hello/<str:name>/', views.hello, name='hello'),
+    # name 속성을 사용해 path에 별칭 설정 가능
+]
+```
+
+```python
+# pages/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('index/', views.index, name='index'),
+    # name 속성을 사용해 path에 별칭 설정 가능
+]
+```
+
+```python
+# pages/views.py
+
+def index(request):
+    return render(request, 'index.html')
+```
+
+```django
+<!-- pages/templates/index.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>pages 앱의 index</h1>
+{% endblock content %}
+```
+
+```django
+<!-- articles/templates/index.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>만나서 반가워요!</h1>
+  <a href="{% url 'greeting' %}">greeting</a>
+  <a href="{% url 'dinner' %}">dinner</a>
+  <a href="{% url 'throw' %}">throw</a>
+  <a href="{% url 'index' %}">pages 앱 index로 이동</a>
+{% endblock content %}
+```
+
 - articles app index 페이지에 pages app index로 이동하는 하이퍼 링크를 작성 후 클릭 시 현재 페이지로 다시 이동하는 문제 발생
   - pages의 view name과 articles 앱의 view name이 index로 같아서 중복되기 때문
-  - 각 앱의 urls.py 파일에 app_name을 추가하여 namespace를 설정해주면 해결 가능
-    - urlpattern의 이름이 중복되어도 구분 가능
+  - 각 앱의 urls.py 파일에 app_name attribute를 작성하여 URL namespace를 설정해주면 해결 가능
+    - 서로 다른 앱에서 동일한 URL 이름을 사용하는 경우에도 이름이 지정된 URL을 고유하게 사용 할 수 있음
 
 ```python
 # articles/urls.py
@@ -142,7 +202,55 @@ urlpatterns = [
 <!-- 템플릿에서 참조할 때는 다음과 같이 나타냄 -->
 <a href="{% url 'articles:index' %}">articles의 index로 이동</a>
 <a href="{% url 'pages:index' %}">pages의 index로 이동</a>
+<!-- ":" 연산자를 사용하여 참조 -->
+<!-- 예를 들어, app_name이 articles이고 URL name이 index인 주소 참조는 articles:index가 됨 -->
 ```
+
+```django
+<!-- articles/templates/index.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>만나서 반가워요!</h1>
+  <a href="{% url 'articles:greeting' %}">greeting</a>
+  <a href="{% url 'articles:dinner' %}">dinner</a>
+  <a href="{% url 'articles:throw' %}">throw</a>
+  <a href="{% url 'pages:index' %}">pages 앱 index로 이동</a>
+{% endblock %}
+```
+
+```django
+<!-- throw.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Throw</h1>
+  <form action="{% url 'articles:catch' %}" method="GET">
+    <label for="message">Throw</label>
+    <input type="text" id="message" name="message">
+    <input type="submit" value="던져">
+  </form>
+
+  <a href="{% url 'articles:index' %}">뒤로</a>
+{% endblock content %}
+```
+
+```django
+<!-- catch.html -->
+
+<a href="{% url 'articles:throw' %}">다시 던지러</a>
+```
+
+```django
+<!-- greeting, dinner.html -->
+
+<a href="{% url 'articles:index' %}">뒤로</a>
+```
+
+- app_name을 지정한 이후에는 url 태그에서 반드시 app_name:url_name 형태로만 사용해야 함
+  - 그렇지 않으면 NoReverceMatch 에러가 발생
 
 ## Template namespace
 

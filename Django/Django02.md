@@ -39,6 +39,10 @@ def index(request):
 
 #### render()
 
+```python
+from django.shortcuts import render
+```
+
 `render(request, template_name, context)`
 
 - 주어진 템플릿을 주어진 컨텍스트 데이터와 결합하고 렌더링 된 텍스트와 함께 HttpResponse(응답) 객체를 반환하는 함수
@@ -48,6 +52,24 @@ def index(request):
   - 템플릿의 전체 이름 또는 템플릿 이름의 경로
 - context
   - 템플릿에서 사용할 데이터 (딕셔너리 타입으로 작성)
+
+#### redirect()
+
+```python
+from django.shortcuts import redirect
+```
+
+`redirect(URL_pattern)`
+
+- 인자에 작성된 곳으로 요청을 보냄
+- 사용 가능한 인자
+  - view name (URL pattern name)
+  - absolute or relative URL
+- 동작 원리
+  1. 클라이언트가 url로 요청을 보냄
+  2. view 함수의 redirect 함수가 302 status code를 응답
+  3. 응답 받은 브라우저는 redirect 인자에 담긴 주소(index)로 사용자를 이동시키기 위해 index url로 Django에 재요청
+  4. index page를 정상적으로 응답 받음 (200 status code)
 
 ### Templates
 
