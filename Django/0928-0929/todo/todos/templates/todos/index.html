@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+<!-- {% load mathfilters %} -->
+
+{% block content %}
+<h1 class="p-4 text-center">INDEX</h1>
+<form class="p-4" action="{% url 'todos:create' %}" method="POST">
+  {% csrf_token %}
+  <div class="input-group mb-3">
+    <label for="content-text" class="input-group-text">할 일</label>
+    <input id="content-text" name="content" class="form-control" type="text" placeholder="내용을 입력해주세요." maxlength="80">
+  </div>
+  <div class="input-group mb-3">
+    <label for="priority-select" class="input-group-text">우선순위</label>
+    <select id="priority-select" name="priority" class="form-select">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+  <div class="input-group mb-3">
+    <label for="deadline-select" class="input-group-text">마감기한</label>
+    <input id="deadline-select" name="deadline" class="form-control" type="date">
+  </div>
+  <input class="form-control btn btn-secondary mb-3" type="submit" value="할 일 추가">
+</form>
+<table class="table p-4">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">우선 순위</th>
+      <th scope="col">할 일</th>
+      <th scope="col">생성 날짜</th>
+      <th scope="col">마감 기한</th>
+      <th scope="col">진행 상태</th>
+      <th scope="col">상태 변경</th>
+      <th scope="col">내용 수정</th>
+      <th scope="col">삭제</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for todo in todos %}
+    {% if todo.deadline|timeuntil == "0분" %}
+    <tr class="table-warning">{% else %}
+    <tr>{% endif %}
+      {% if todo.completed %}
+      <th scope="row" class="align-middle text-decoration-line-through">{{ todo.pk }}</th>
+      <td class="align-middle text-decoration-line-through">{{ todo.priority }}</td>
+      <td class="align-middle text-truncate text-decoration-line-through" style="max-width: 10rem;">
+        <a href="" class="text-decoration-none" data-bs-toggle="modal"
+          data-bs-target="#detailModal_{{ todo.pk }}">{{ todo.content }}</a>
+      </td>
+      <td class="align-middle text-decoration-line-through">{{ todo.created_at|date:'Y년 m월 d일' }}</td>
+      <td class="align-middle text-decoration-line-through">{{ todo.deadline|date:'Y년 m월 d일' }}</td>
+      <td class="align-middle text-decoration-line-through">{{ todo.completed }}</td>
+      {% else %}
+      <th scope="row" class="align-middle">{{ todo.pk }}</td>
+      <td class="align-middle">{{ todo.priority }}</td>
+      <td class="align-middle text-truncate" style="max-width: 10rem;">
+        <a href="" class="text-decoration-none" data-bs-toggle="modal"
+          data-bs-target="#detailModal_{{ todo.pk }}">{{ todo.content }}</a>
+      </td>
+      <td class="align-middle">{{ todo.created_at|date:'Y년 m월 d일' }}</td>
+      <td class="align-middle">{{ todo.deadline|date:'Y년 m월 d일' }}</td>
+      <td class="align-middle">{{ todo.completed }}</td>
+      {% endif %}
+      <td>
+        <form action="{% url 'todos:update' todo.pk %}" method="POST">
+          {% csrf_token %}
+          <input class="align-middle btn btn-primary btn-sm" type="submit" value="변경">
+        </form>
+      </td>
+      <td>
+        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+          data-bs-target="#modifyModal_{{ todo.pk }}">
+          수정
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+          data-bs-target="#deleteModal_{{ todo.pk }}">
+          삭제
+        </button>
+      </td>
+      <div class="modal fade" id="detailModal_{{ todo.pk }}" tabindex="-1"
+        aria-labelledby="detailModalLabel_{{ todo.pk }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="detailModalLabel_{{ todo.pk }}">상세 내용</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            {% if todo.completed %}
+            <div class="modal-body text-decoration-line-through overflow-auto" style="min-height: 10rem;">
+              <!-- <p>{{ todo.content }}</p> -->
+              <textarea class="form-control" style="min-height: 10rem;" disabled>{{ todo.content }}</textarea>
+            </div>
+            {% else %}
+            <div class="modal-body overflow-auto" style="min-height: 10rem;">
+              <!-- <p>{{ todo.content }}</p> -->
+              <textarea class="form-control" style="min-height: 10rem;" disabled>{{ todo.content }}</textarea>
+            </div>
+            {% endif %}
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="modifyModal_{{ todo.pk }}" tabindex="-1"
+        aria-labelledby="modifyModalLabel_{{ todo.pk }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modifyModalLabel_{{ todo.pk }}">수정하기</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'todos:modify' todo.pk %}" method="POST">
+              {% csrf_token %}
+              <div class="modal-body" style="min-height: 10rem;">
+                <!-- <div class="input-group">
+                  <label for="modified-content-text" class="input-group-text">할 일</label>
+                  <input id="modified-content-text" name="modified_content" class="form-control" type="text"
+                    placeholder="내용을 입력해주세요." value="{{ todo.content }}" maxlength="80">
+                </div> -->
+                <div class="form-floating mb-3">
+                  <textarea class="form-control" name="modified-content" id="modified-content-text"
+                    placeholder="내용을 입력해주세요." maxlength="80" style="min-height: 10rem;">{{ todo.content }}</textarea>
+                  <label for="modified-content-text">할 일</label>
+                </div>
+                <div class="input-group mb-3">
+                  <label for="modified-priority-select" class="input-group-text">우선순위</label>
+                  <select id="modified-priority-select" name="modified-priority" class="form-select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="modified-deadline-select" class="input-group-text">마감기한</label>
+                  <input id="modified-deadline-select" name="modified-deadline" class="form-control" type="date">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">수정</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">닫기</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="deleteModal_{{ todo.pk }}" tabindex="-1"
+        aria-labelledby="deleteModalLabel_{{ todo.pk }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel_{{ todo.pk }}">삭제하기</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'todos:delete' todo.pk %}" method="POST">
+              {% csrf_token %}
+              <div class="modal-body">
+                정말 삭제하시겠습니까?
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger">삭제</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">닫기</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
