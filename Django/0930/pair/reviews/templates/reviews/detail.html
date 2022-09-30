@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex align-items-start mx-2" style="height: 100vh;">
+  <div class="container bg-light" style="border-radius: 2rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+    <div class="p-3">
+      <h2 class="fw-bolder" style="letter-spacing: -1px;">{{ review.title }}</h2> 
+      <hr>
+      <div class="bg-white mb-4" style="border: 1px solid rgba(96, 91, 91, 0.645); border-radius: .5rem;">
+        <p class="p-3">{{ review.content }}</p>
+      </div>
+      <!-- 뷰포인트 lg 밑 -->
+      <div class="d-block d-lg-none">
+        <div class="d-flex flex-column align-items-center">
+          <a href="{% url 'reviews:edit' review.id %}" class="btn form-control btn-secondary mb-3"><i class="bi bi-pencil-square"></i> 리뷰 수정</a>
+          <a href="{% url 'reviews:review' %}" class="btn btn-dark form-control mb-3"><i class="bi bi-arrow-90deg-left"></i> 돌아 가기</a> 
+          <a href="{% url 'reviews:delete' review.id %}" class="btn btn-primary form-control text-white mb-3"><i class="bi bi-trash"></i> 리뷰 삭제</a>
+        </div>
+      </div>
+      <!-- 뷰포인트 lg 부터 -->
+      <div class="d-none d-lg-block">
+        <div class="d-flex justify-content-end">
+          <a href="{% url 'reviews:edit' review.id %}" class="btn btn-secondary me-3"><i class="bi bi-pencil-square"></i> 리뷰 수정</a>
+          <a href="{% url 'reviews:review' %}" class="btn btn-dark me-3"><i class="bi bi-arrow-90deg-left"></i> 돌아 가기</a>
+          <a href="{% url 'reviews:delete' review.id %}" class="btn btn-primary text-white me-3"><i class="bi bi-trash"></i> 리뷰 삭제</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

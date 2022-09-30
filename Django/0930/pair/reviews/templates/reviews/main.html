@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center mx-2" style="height: 100vh;">
+  <div class="text-center">
+    <h1 class="fw-light mb-3">Movie Review</h1>
+    <p><a href="{% url 'reviews:review' %}" class="btn btn-primary">GO !</a></p>
+  </div>
+</div>
+{% endblock %}

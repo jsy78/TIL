@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-start align-items-center mt-5">
+  <h1 class="fw-light">REVIEW</h1>
+  <div class="ms-3">
+    <a href="{% url 'reviews:main' %}" class="btn btn-outline-dark"><i class="bi bi-arrow-90deg-left"></i> HOME</a>
+  </div>
+</div>
+<hr>
+<table class="table align-middle mt-5">
+  <thead>
+    <tr>
+      <!-- <th scope="col"></th> -->
+      <th scope="col" style="width: 30rem; letter-spacing: -.7px">리뷰 제목</th>
+      <th scope="col" style="width: 55rem; letter-spacing: -.7px">리뷰 평점</th>
+      <th scope="col" class="text-center" style="width: 40rem; letter-spacing: -.7px">작성 시간</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in reviews %}
+    <tr>
+      <!-- <th scope="row" class="text-center" style="font-size: 15px;">{{ review.pk }}</th> -->
+      <td class="fw-bolder">
+        {% if review.title == '' %}
+        <a href="{% url 'reviews:detail' review.id %}" class="text-decoration-none text-dark fw-normal"> - </a>
+        {% else %}
+        <a href="{% url 'reviews:detail' review.id %}" class="text-decoration-none text-dark fw-normal" style="letter-spacing: -.8px;">{{ review.title }}</a>
+        {% endif %}
+      </td>
+      <td class="position-relative">
+        <input class="rating rating-loading position-absolute" style="top: 5;" value="{{ review.star}}" data-min="0" data-max="5" data-step="0.5" data-disabled="true" data-show-clear="false" data-size="xs" style="top: 20;">
+      </td>
+      <td class="text-center" style="letter-spacing: -1px;">{{ review.created_at|date:'Y년 m월 d일' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="d-flex justify-content-end">
+  <a href="{% url 'reviews:new' %}" class="btn btn-primary">리뷰 작성</a>
+</div>
+{% endblock %}
