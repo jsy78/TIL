@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+<!-- django-bootstrap 로드 -->
+
+{% block body %}
+<h1>글 수정하기</h1>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form article_form %}
+  <!-- bootstrap이 적용된 ModelForm -->
+  {% bootstrap_button button_type="submit" content="OK" %}
+  <!-- bootstrap이 적용된 버튼 -->
+</form>
+{% endblock %}

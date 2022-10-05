@@ -32,11 +32,11 @@
 
 ## 2022-10
 
-| <span style="color: red">일</span> |                      월                      |                  화                  |  수  |  목  |  금  | <span style="color: blue">토</span> |
-| :--------------------------------: | :------------------------------------------: | :----------------------------------: | :--: | :--: | :--: | :---------------------------------: |
-|                                    |                                              |                                      |      |      |      | <span style="color: blue">1</span>  |
-| <span style="color: red">2</span>  | <span style="color: red">3<br/>개천절</span> | [4<br/>Django](./Django/Django06.md) |  5   |  6   |  7   | <span style="color: blue">8</span>  |
-| <span style="color: red">9</span>  |                      10                      |                  11                  |  12  |  13  |  14  | <span style="color: blue">15</span> |
-| <span style="color: red">16</span> |                      17                      |                  18                  |  19  |  20  |  21  | <span style="color: blue">22</span> |
-| <span style="color: red">23</span> |                      24                      |                  25                  |  26  |  27  |  28  | <span style="color: blue">29</span> |
-| <span style="color: red">30</span> |                      31                      |                                      |      |      |      |                                     |
+| <span style="color: red">일</span> |                      월                      |                  화                  |                  수                  |  목  |  금  | <span style="color: blue">토</span> |
+| :--------------------------------: | :------------------------------------------: | :----------------------------------: | :----------------------------------: | :--: | :--: | :---------------------------------: |
+|                                    |                                              |                                      |                                      |      |      | <span style="color: blue">1</span>  |
+| <span style="color: red">2</span>  | <span style="color: red">3<br/>개천절</span> | [4<br/>Django](./Django/Django06.md) | [5<br/>Django](./Django/Django07.md) |  6   |  7   | <span style="color: blue">8</span>  |
+| <span style="color: red">9</span>  |                      10                      |                  11                  |                  12                  |  13  |  14  | <span style="color: blue">15</span> |
+| <span style="color: red">16</span> |                      17                      |                  18                  |                  19                  |  20  |  21  | <span style="color: blue">22</span> |
+| <span style="color: red">23</span> |                      24                      |                  25                  |                  26                  |  27  |  28  | <span style="color: blue">29</span> |
+| <span style="color: red">30</span> |                      31                      |                                      |                                      |      |      |                                     |

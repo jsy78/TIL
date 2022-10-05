@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- static 로드 -->
+{% load django_bootstrap5 %}
+<!-- django-bootstrap 로드 -->
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!-- static 폴더에 있는 css 로드 -->
+{% endblock %}
+
+{% block body %}
+<h1>게시판</h1>
+<img src="{% static 'images/apparel.jpeg' %}" alt="">
+<!-- static 폴더에 있는 image 로드 -->
+<a href="{% url 'articles:create' %}">글 쓰기</a>
+{% for article in articles %}
+<h3><a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></h3>
+<p>{{ article.created_at }} | {{ article.updated_at }}</p>
+<hr>
+{% endfor %}
+{% endblock %}
