@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="p-4">
+    <h1 class="text-center mb-3">수정</h1>
+    <form action="{% url 'movies:update' movie.pk %}" method="POST" class="form">
+      {% csrf_token %}
+      {% bootstrap_form movie_form %}
+      <button class="btn btn-outline-primary" type="submit">OK</button>
+      <a href="{% url 'movies:detail' movie.pk %}" class="btn btn-outline-secondary">BACK</a>
+    </form>
+  </div>
+{% endblock content %}

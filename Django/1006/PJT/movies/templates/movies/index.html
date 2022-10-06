@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+  <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+    <img class="navbar-brand" src="{% static "logo.png" %}" alt="logo" style="width: 4rem;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'movies:index' %}">목록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'movies:create' %}">추가</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">PK</th>
+        <th scope="col">영화 제목</th>
+        <th scope="col">영화 시간</th>
+        <th scope="col">작성 일자</th>
+        <th scope="col">수정 일자</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for movie in movies %}
+        <tr>
+          <th scope="row" class="align-middle">{{ movie.pk }}</td>
+          <td class="align-middle">
+            <a href="{% url 'movies:detail' movie.pk %}" class="text-decoration-none">{{ movie.title }}</a>
+          </td>
+          <td class="align-middle">{{ movie.running_time }}분</td>
+          <td class="align-middle">{{ movie.created_at|date:'Y년 m월 d일' }}</td>
+          <td class="align-middle">{{ movie.updated_at|date:'Y년 m월 d일' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

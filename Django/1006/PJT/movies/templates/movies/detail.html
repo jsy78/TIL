@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="p-4">
+    <h1 class="mb-3">{{ movie.title }}</h1>
+    <p>
+      작성일
+      {{ movie.created_at }}
+      <span>|</span>
+      수정일
+      {{ movie.updated_at }}
+    </p>
+    <p>{{ movie.summary }}</p>
+    <form action="{% url 'movies:delete' movie.pk %}" method="POST" class="form">
+      {% csrf_token %}
+      <a href="{% url 'movies:update' movie.pk %}" class="btn btn-outline-primary">수정</a>
+      <input class="btn btn-outline-danger" type="submit" value="삭제">
+      <a href="{% url 'movies:index' %}" class="btn btn-outline-secondary">뒤로</a>
+    </form>
+  </div>
+{% endblock content %}
