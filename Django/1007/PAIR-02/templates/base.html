@@ -1,0 +1,46 @@
+{% load django_bootstrap5 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"/>
+    <style>
+      body {
+        font-family: "Noto Sans KR";
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <a href="{% url 'main' %}" class="navbar-brand mx-3"><img class="img-fluid" src="{% static 'reviews/logo.png' %}" style="height: 3rem;"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-3 me-auto mb-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'reviews:index' %}">목록</a>
+          </li>
+          <li class=" nav-item">
+            <a class="nav-link" href="{% url 'reviews:create' %}">추가</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      {% block content %}{% endblock %}
+    </div>
+    {% bootstrap_javascript %}
+  </body>
+
+</html>

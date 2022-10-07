@@ -1,0 +1,36 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% bootstrap_css %}
+    <style>
+      @font-face {
+        font-family: 'SDSamliphopangche_Outline';
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff") format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: 'SDSamliphopangche_Outline';
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="d-flex align-items-center justify-content-center mx-2" style="height: 100vh;">
+      <div class="text-center">
+        <h1 class="fw-light mb-3">MOVIE REVIEW</h1>
+        <p>
+          <a href="{% url 'reviews:index' %}" class="btn btn-primary">GO !</a>
+        </p>
+      </div>
+    </div>
+  </body>
+
+</html>

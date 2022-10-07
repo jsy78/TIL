@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-6">
+        <div class="bg-light p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <h1 class="mb-3 fw-bolder">{{ review.title }}</h1>
+          <p class="mb-3" style="font-size: 0.9rem;">
+            <div class="d-flex align-items-center">
+              <h6 class="me-3 my-0">{{ review.movie_name }}</h6>
+              {% if review.grade == 0.5 %}
+                <div class="text-warning bi-star-half"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 1.0 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 1.5 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-half"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 2.0 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 2.5 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-half"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 3.0 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 3.5 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-half"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 4.0 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star"></div>
+              {% elif review.grade == 4.5 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-half"></div>
+              {% elif review.grade == 5.0 %}
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+                <div class="text-warning bi-star-fill"></div>
+              {% endif %}
+            </div>
+          </p>
+          <p class="fw-light mb-1 text-end" style="font-size: 0.7rem;">
+            작성일
+            <span>{{ review.created_at }}</span>
+            <span>|</span>
+            수정일
+            <span>{{ review.updated_at }}</span>
+          </p>
+        </div>
+        <div class="bg-white p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <p>{{ review.content }}</p>
+        </div>
+        <form action="{% url 'reviews:delete' review.pk %}" method="POST" class="form">
+          {% csrf_token %}
+          <div class="d-block d-lg-none">
+            <a href="{% url 'reviews:update' review.pk %}" class="btn btn-outline-primary form-control mb-3">수정</a>
+            <input class="btn btn-outline-danger form-control mb-3" type="submit" value="삭제">
+            <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
+          </div>
+          <div class="d-none d-lg-block">
+            <a href="{% url 'reviews:update' review.pk %}" class="btn btn-outline-primary">수정</a>
+            <input class="btn btn-outline-danger" type="submit" value="삭제">
+            <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary">뒤로</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

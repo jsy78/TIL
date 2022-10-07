@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="p-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">PK</th>
+          <th scope="col">리뷰 제목</th>
+          <th scope="col">영화 제목</th>
+          <th scope="col">리뷰 평점</th>
+          <th scope="col">작성 일자</th>
+          <th scope="col">수정 일자</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for review in reviews %}
+          <tr>
+            <th scope="row" class="align-middle">{{ review.pk }}</td>
+            <td class="align-middle">
+              <a href="{% url 'reviews:detail' review.pk %}" class="text-decoration-none">{{ review.title }}</a>
+            </td>
+            <td class="align-middle">{{ review.movie_name }}</td>
+            <td class="align-middle">
+              <div class="d-flex align-items-center">
+                {% if review.grade == 0.5 %}
+                  <div class="text-warning bi-star-half"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 1.0 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 1.5 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-half"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 2.0 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 2.5 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-half"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 3.0 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 3.5 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-half"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 4.0 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star"></div>
+                {% elif review.grade == 4.5 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-half"></div>
+                {% elif review.grade == 5.0 %}
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                  <div class="text-warning bi-star-fill"></div>
+                {% endif %}
+              </div>
+            </td>
+            <td class="align-middle">{{ review.created_at|date:'Y년 m월 d일' }}</td>
+            <td class="align-middle">{{ review.updated_at|date:'Y년 m월 d일' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
