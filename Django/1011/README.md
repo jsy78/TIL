@@ -91,5 +91,5 @@ Django **Auth**를 활용한 회원가입이 가능한 서비스를 개발합니
 
 - 회원 정보 출력
 
-  ![Untitled](./README.assets/1.png)
+  ![Untitled](./README.assets/1.PNG)
 
