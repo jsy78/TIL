@@ -279,7 +279,7 @@
 
 - 로그인 사용자에 대한 접근 제한하기
   - `is_authenticated` attribute를 활용한 조건문
-  - `@login_required decorator`를 활용한 view 제한
+  - `@login_required` decorator를 활용한 view 제한
 
 ### is_authenticated
 
