@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h1 class="text-center my-3">{{ user.username }}님의 프로필</h1>
+  <div class="p-4">
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">password</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.password }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">last_login</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.last_login }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">is_superuser</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.is_superuser }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">username</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.username }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">first_name</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.first_name }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">last_name</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.last_name }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">email</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.email }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">is_staff</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.is_staff }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">is_active</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.is_active }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <label for="password" class="col-2 col-form-label">date_joined</label>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <input type="text" class="form-control" id="password" value="{{ user.date_joined }}" readonly>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <div class="col-sm-12 col-md-10 col-lg-8 mb-3">
+        <a class="btn btn-primary form-control" href="{% url 'accounts:index' %}">BACK</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

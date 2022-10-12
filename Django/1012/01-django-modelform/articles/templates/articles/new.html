@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block body %} 
+<h1>글쓰기</h1>
+
+<!-- form : 사용자에게 양식을 제공하고 
+  값을 받아서(input : name, value) 
+  서버에 전송(form : action, method)-->
+<form action="" method="POST">
+  {% csrf_token %}
+
+  {% bootstrap_form article_form %}
+  {# article_form.as_p #}
+  <!-- <label for="title">제목 : </label>
+  <input type="text" name="title" id="title" required>
+  <label for="content">내용 : </label>
+  <textarea name="content" id="content" cols="30" rows="10" required></textarea> -->
+  {% bootstrap_button button_type="submit" content="OK" %}
+</form>
+{% endblock %}
