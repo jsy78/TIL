@@ -418,6 +418,25 @@ def login(request):
     </form>
   {% endblock content %}
   ```
+  
+  - form action을 작성한 상태에서 next의 URL로 페이지를 이동하려면  hidden 타입의 next 항목을 추가해야 함
+  
+  ```django
+  <!-- accounts/login.html -->
+  
+  {% block content %}
+    <h1>로그인</h1>
+    <form action="{% url 'accounts:login' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">  
+      <!-- 로그인 성공 후 이동되는 URL -->
+      {{ form.as_p }}
+      <input type="submit">
+    </form>
+  {% endblock content %}
+  ```
+  
+  
 
 ## 추가 사이트
 
@@ -427,3 +446,4 @@ def login(request):
 - [django/forms.py at main · django/django (github.com)](https://github.com/django/django/blob/main/django/contrib/auth/forms.py#L244)
 - [Using the Django authentication system | Django documentation | Django (djangoproject.com)](https://docs.djangoproject.com/en/3.2/topics/auth/default/#how-to-log-a-user-out)
 - [django/base_user.py at main · django/django (github.com)](https://github.com/django/django/blob/main/django/contrib/auth/base_user.py#L56)
+- [3-07 모델 변경 - 점프 투 장고 (wikidocs.net)](https://wikidocs.net/71306#_1)
