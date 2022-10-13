@@ -403,7 +403,8 @@ def login(request):
 
   - 만약 login 템플릿에서 form action이 작성되어 있다면 동작하지 않음
     - 해당 action 주소와 next 파라미터가 작성되어있는 현재 url이 아닌 form action의 url로 요청을 보내기 때문
-
+    - form action의 url은 request.GET.get('next')로 next url을 받아올 수 없음 (None 반환)
+  
   ```django
   <!-- accounts/login.html -->
   
@@ -419,7 +420,25 @@ def login(request):
   {% endblock content %}
   ```
   
-  - form action을 작성한 상태에서 next의 URL로 페이지를 이동하려면  hidden 타입의 next 항목을 추가해야 함
+  - form action을 지우면 next 파라미터의 url로 리다이렉트 가능
+  
+  ```django
+  <!-- accounts/login.html -->
+  
+  {% block content %}
+    <h1>로그인</h1>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit">
+    </form>
+  {% endblock content %}
+  ```
+  
+  - 만약 form action을 작성한 상태에서 next 파라미터의 url로 페이지를 이동하려면?
+    - hidden 타입으로 안 보이게 request.GET.next 값을 next라는 이름으로 form에 저장시키고
+    - views.py에 정의한 login 함수의 리다이렉트를 POST로 수정해야 함
+  
   
   ```django
   <!-- accounts/login.html -->
@@ -428,7 +447,7 @@ def login(request):
     <h1>로그인</h1>
     <form action="{% url 'accounts:login' %}" method="POST">
       {% csrf_token %}
-      <input type="hidden" name="next" value="{{ next }}">  
+      <input type="hidden" name="next" value="{{ request.GET.next }}">  
       <!-- 로그인 성공 후 이동되는 URL -->
       {{ form.as_p }}
       <input type="submit">
@@ -436,7 +455,27 @@ def login(request):
   {% endblock content %}
   ```
   
+  ```python
+  # accounts/views.py
   
+  from django.contrib.auth import login as auth_login
+  
+  def login(request):
+      if request.user.is_authenticated:
+          return redirect('articles:index')
+      
+      if request.method == 'POST':
+          form = AuthenticationForm(request, request.POST)
+          if form.is_valid():
+              auth_login(request, form.get_user())
+              return redirect(request.POST.get('next') or 'articles:index')
+      else:
+          form = AuthenticationForm()
+      context = {
+          'form': form
+      }
+      return render(request, 'accounts/login.html', context)
+  ```
 
 ## 추가 사이트
 
@@ -446,4 +485,4 @@ def login(request):
 - [django/forms.py at main · django/django (github.com)](https://github.com/django/django/blob/main/django/contrib/auth/forms.py#L244)
 - [Using the Django authentication system | Django documentation | Django (djangoproject.com)](https://docs.djangoproject.com/en/3.2/topics/auth/default/#how-to-log-a-user-out)
 - [django/base_user.py at main · django/django (github.com)](https://github.com/django/django/blob/main/django/contrib/auth/base_user.py#L56)
-- [3-07 모델 변경 - 점프 투 장고 (wikidocs.net)](https://wikidocs.net/71306#_1)
+- [노력하는 자를 이기는 것은 좌절 뿐이다 ::  로그인 이후 특정 페이지로 Redirect하기 (tistory.com)](https://hwan-hobby.tistory.com/221)
