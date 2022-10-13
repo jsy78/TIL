@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h1 class="text-center my-3">회원 정보 수정</h1>
+  <div class="p-4">
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% bootstrap_button button_class="btn-primary form-control" button_type="submit" content="OK" %}
+      <a class="btn btn-secondary form-control my-3" href="{% url 'mains:index' %}">BACK</a>
+      <a class="btn btn-danger form-control mb-3" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
+    </form>
+  </div>
+{% endblock content %}

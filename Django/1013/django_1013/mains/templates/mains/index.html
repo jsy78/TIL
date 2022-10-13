@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h1 class="text-center my-3">메인</h1>
+  {% if request.user.is_authenticated %}
+    <div class="fs-5 text-center my-3">
+      <span>
+        <a href="{% url 'accounts:detail' request.user.pk %}">{{ request.user }}({{ request.user.full_name }})</a>님, 환영합니다.
+      </span>
+      <a href="{% url 'accounts:logout' %}">로그아웃</a>
+      <a href="{% url 'accounts:update' %}">마이페이지</a>
+    </div>
+  {% else %}
+    <div class="fs-5 text-center my-3">
+      <a href="{% url 'accounts:login' %}">로그인</a>
+      <a href="{% url 'accounts:signup' %}">가입하기</a>
+    </div>
+  {% endif %}
+
+  <div class="p-4">
+    <div class="row justify-content-center mb-3">
+      <div class="col-12 col-md-8 col-lg-4">
+        {% if request.user.is_authenticated %}
+          <a class="btn btn-primary form-control disabled" href="{% url 'accounts:signup' %}">회원 가입</a>
+        {% else %}
+          <a class="btn btn-primary form-control active" href="{% url 'accounts:signup' %}">회원 가입</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <div class="col-12 col-md-8 col-lg-4">
+        <a class="btn btn-primary form-control" href="{% url 'accounts:index' %}">회원 목록</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
