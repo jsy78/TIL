@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block css %}
+  <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css"/>
+  <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.css" media="all" rel="stylesheet" type="text/css"/>
+{% endblock css %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="d-flex justify-content-center align-items-center">
+      <h1 class="me-4 my-4">리뷰 작성</h1>
+      <span>
+        <a href="{% url 'reviews:index' %}" class="btn btn-outline-secondary">BACK</a>
+      </span>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-6">
+        <form class="form" action="" method="POST">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <div class="mb-3">
+            <label class="form-label" for="grade">영화 평점</label>
+            <input id="grade" name="grade" class="rating rating-loading" data-show-clear="true" data-min="0" data-max="5" data-step="0.5" value="5">
+          </div>
+          <button class="btn btn-outline-primary form-control mb-3" type="submit">OK</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/star-rating.min.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/locales/LANG.js"></script>
+{% endblock js %}

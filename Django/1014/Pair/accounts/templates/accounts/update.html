@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>프로필 업데이트</h1>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="submit" class="btn btn-outline-primary me-2" value="OK">
+      <a class="btn btn-outline-warning me-2" href="{%  url 'accounts:password' %}">비밀번호 변경</a>
+      <a class="btn btn-outline-danger me-2" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
+      <a class="btn btn-outline-secondary" href="{% url 'main' %}">HOME</a>
+    </form>
+  </div>
+{% endblock content %}

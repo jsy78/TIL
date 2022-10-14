@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="d-flex justify-content-center align-items-center">
+      <h1 class="me-4 my-4">{{ user.username }}님의 마이페이지</h1>
+      <span>
+        <a href="{% url 'main' %}" class="btn btn-outline-secondary">HOME</a>
+      </span>
+    </div>
+    <div class="row my-5">
+      <div class="col-sm-6 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center" style="display: inline-block; text-align: center;">
+            <a href="{% url 'accounts:detail' user.pk %}">
+              <h5 class="card-title">회원 정보</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:articles' %}">
+              <h5 class="card-title my-auto">작성한 글</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

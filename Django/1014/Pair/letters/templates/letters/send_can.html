@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><a href="{% url 'letters:email_send' %}">편지 쓰기</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:index' %}">받은 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:important' %}">중요 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:send_can' %}">보낸 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:trash_can' %}">휴지통</a></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">받는 이</th>
+            <th scope="col">제목</th>
+            <th scope="col">보낸 시간</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for letter in letters %}
+          <tr>
+            <th>{{ letter.from_name }}</th>
+            <td>{{ letter.title }}</td>
+            <td>{{ letter.created_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}

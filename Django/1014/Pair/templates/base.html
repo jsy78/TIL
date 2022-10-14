@@ -1,0 +1,66 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block css %}{% endblock css %}
+    <!-- <link rel="shortcut icon" href="{% static 'css/pngwing.com.png' %}"> -->
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <!-- <img src="{% static 'css/pngwing.com.png' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top ms-3"> -->
+          </a>
+          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button> -->
+          <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="{% url 'main' %}">HOME</a>
+              <a class="nav-link" href="{% url 'accounts:index' %}">회원 목록</a>
+              <a class="nav-link" href="{% url 'reviews:index' %}">리뷰 목록</a>
+              {% if request.user.is_authenticated %}
+                <a class="nav-link" href="{% url 'letters:index' %}">메일</a>
+              {% else %}
+                <a class="nav-link disabled" href="{% url 'letters:index' %}">메일</a>
+              {% endif %}
+            </div>
+            <div>
+              {% if request.user.is_authenticated %}
+                <div class="d-flex justify-content-center">
+                  <p class="my-auto mx-2">{{ request.user }}님</p>
+                  <a href="{% url 'reviews:create' %}" class="my-auto mx-2">글쓰기</a>
+                  <a href="{% url 'accounts:mypage' %}" class="my-auto mx-2">마이페이지</a>
+                  <a href="{% url 'accounts:logout' %}" class="my-auto mx-2">로그아웃</a>
+                </div>
+              {% else %}
+                <div class="d-flex justify-content-center">
+                  <a href="{% url 'accounts:signup' %}" class="my-auto mx-2">회원가입</a>
+                  <a href="{% url 'accounts:login' %}" class="my-auto mx-2">로그인</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock content %}
+    </main>
+    <footer>
+      <!-- place footer here -->
+    </footer>
+    {% bootstrap_javascript %}
+    {% block js %}{% endblock js %}
+  </body>
+
+</html>

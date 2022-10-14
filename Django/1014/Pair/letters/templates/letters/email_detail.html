@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><a href="{% url 'letters:email_send' %}">편지 쓰기</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:index' %}">받은 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:important' %}">중요 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:send_can' %}">보낸 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:trash_can' %}">휴지통</a></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-9">
+      <h5 class="mb-3">보낸 사람 : {{ letter.from_name }}</h5>
+      <h5 class="mb-3">받은 시간 : {{ letter.created_at|date:'y년 m월 d일 H시 m분' }}</h5>
+      <h5 class="mb-3">제목 : {{ letter.title }}</h5>
+      <h5 class="mb-3">내용 : {{ letter.content }}</h5>
+    </div>
+  </div>
+</div>
+{% endblock content %}

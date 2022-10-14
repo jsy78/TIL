@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center my-3">메인</h1>
+  {% if request.user.is_authenticated %}
+    <div class="fs-5 text-center my-3">
+      <a href="{% url 'accounts:mypage' %}">{{ request.user }}({{ request.user.full_name }})</a>님, 환영합니다.
+    </div>
+  {% endif %}
+  <div class="p-4">
+    <div class="row justify-content-center mb-3">
+      <div class="col-12 col-md-8 col-lg-4">
+        <a class="btn btn-primary form-control" href="{% url 'accounts:index' %}">회원 목록</a>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <div class="col-12 col-md-8 col-lg-4">
+        <a class="btn btn-primary form-control" href="{% url 'reviews:index' %}">리뷰 목록</a>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <div class="col-12 col-md-8 col-lg-4">
+        {% if request.user.is_authenticated %}
+          <a class="btn btn-primary form-control" href="{% url 'letters:index' %}">메일</a>
+        {% else %}
+          <a class="btn btn-primary form-control disabled" href="{% url 'letters:index' %}">메일</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

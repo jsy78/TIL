@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><a href="{% url 'letters:email_send' %}">편지 쓰기</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:index' %}">받은 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:important' %}">중요 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:send_can' %}">보낸 편지함</a></th>
+          </tr>
+          <tr>
+            <th scope="row"><a href="{% url 'letters:trash_can' %}">휴지통</a></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">중요</th>
+            <th scope="col">보낸 이</th>
+            <th scope="col">제목</th>
+            <th scope="col">받은 시간</th>
+            <th scope="col">버리기</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for letter in letters %}
+          <tr>
+            {% if not letter.important %}
+            <th scope="row"><a href="{% url 'letters:important_check' letter.id %}"><i class="bi bi-star mx-1"></i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+              <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+            </svg></a></th>
+            {% else %}
+            <th scope="row"><a href="{% url 'letters:important_return' letter.id %}"><i class="bi bi-star-fill mx-1"></i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+            </svg></a></th>
+            {% endif %}
+            <th>{{ letter.from_name }}</th>
+            <td><a href="{% url 'letters:email_detail' letter.pk %}">{{ letter.title }}</a></td>
+            <td>{{ letter.created_at }}</td>
+            <td><a href="{% url 'letters:trash_throw_away' letter.id %}"><i class="bi bi-trash"></i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+            </svg></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}
