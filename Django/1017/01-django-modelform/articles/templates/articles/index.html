@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block body %} 
+<h1>수업 정리 모아보기</h1>
+{% if request.user.is_authenticated %}
+    <a class="btn btn-primary my-3 float-right" href="{% url 'articles:create' %}">글 쓰기</a>
+{% endif %}
+
+<div class="row">
+  {% for article in articles %}
+  <div class="col-4">
+    <div class="card">
+      <img src="{{ article.image.url }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <a href="{% url 'articles:detail' article.pk %}" class="btn btn-outline-primary my-3">복습하기</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

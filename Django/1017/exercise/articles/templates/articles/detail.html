@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-6">
+        <div class="bg-light p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <h1 class="mb-3 fw-bolder">{{ article.title }}</h1>
+          <p class="fw-light mb-1 text-end" style="font-size: 0.7rem;">
+            {{ article.created_at|date:'Y-m-d a h:i' }}
+            작성 |
+            {{ article.updated_at|date:'Y-m-d a h:i' }}
+            수정
+          </p>
+        </div>
+        <div class="bg-white p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <p>
+            {% if article.image %}
+              <img src="{{ article.image.url }}" alt="{{ article.image }}" class="img-fluid">
+            {% endif %}
+          </p>
+          <p>{{ article.content }}</p>
+        </div>
+        <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+          {% csrf_token %}
+          <div class="d-block d-lg-none">
+            <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-primary form-control mb-3">수정</a>
+            <input class="btn btn-outline-danger form-control mb-3" type="submit" value="삭제">
+            <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
+          </div>
+          <div class="d-none d-lg-block">
+            <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-primary">수정</a>
+            <input class="btn btn-outline-danger" type="submit" value="삭제">
+            <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary">뒤로</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

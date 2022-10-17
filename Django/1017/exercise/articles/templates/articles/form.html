@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="d-flex justify-content-center align-items-center">
+      <h1 class="me-4 my-4">FORM</h1>
+      <span>
+        <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary">BACK</a>
+      </span>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-6">
+        <form class="form" action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <button class="btn btn-outline-primary form-control mb-3" type="submit">OK</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
