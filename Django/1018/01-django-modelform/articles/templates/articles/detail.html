@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block body %} 
+<h1>{{ article.pk }}번 게시글</h1>
+<p>{{ article.created_at|date:"SHORT_DATETIME_FORMAT" }} | {{ article.updated_at|date:"y-m-d D" }}</p>
+<p>{{ article.content }} </p>
+{% if article.image %}
+    <img src="{{ article.image.url }}" alt="{{ article.image }}" width="400" height="300">
+{% endif %}
+<a href="{% url 'articles:update' article.pk %}">수정하기</a>
+<h4 class="my-3">댓글</h4>
+<form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form comment_form layout='inline'%}
+    {% bootstrap_button button_type="submit" content="OK" %}
+</form>
+<hr>
+{% for comment in comments %}
+    <p>{{ comment.content }}</p>
+    <hr>    
+{% empty %}
+    <p>댓글이 없어요 ㅠ_ㅠ</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-6">
+        <div class="bg-light p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <h1 class="mb-3 fw-bolder">{{ article.title }}</h1>
+          <p class="fw-light mb-1 text-end" style="font-size: 0.7rem;">
+            {{ article.created_at|date:'Y-m-d a h:i' }}
+            작성 |
+            {{ article.updated_at|date:'Y-m-d a h:i' }}
+            수정
+          </p>
+        </div>
+        <div class="bg-white p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <p>
+            {% if article.image %}
+              <img src="{{ article.image.url }}" alt="{{ article.image }}" class="img-fluid">
+            {% endif %}
+          </p>
+          <p>{{ article.content }}</p>
+          <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+            {% csrf_token %}
+            <div class="d-block d-lg-none">
+              <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary form-control mb-3">수정</a>
+              <input class="btn btn-outline-danger form-control mb-3" type="submit" value="삭제">
+              <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
+            </div>
+            <div class="d-none d-lg-block">
+              <div class="d-flex justify-content-end">
+                <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary me-1">수정</a>
+                <input class="btn btn-outline-danger me-1" type="submit" value="삭제">
+                <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary">뒤로</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="bg-gray-100 p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          {% if comments %}
+            <p>
+              <b>{{ comments|length }}개의 댓글이 있습니다.</b>
+            </p>
+            <hr>
+          {% endif %}
+          {% for comment in comments %}
+            <div class="comment_display_{{ comment.pk }} d-block">
+              <p class="mb-1">{{ comment.content }}</p>
+              <p class="fw-light mb-1 text-end" style="font-size: 0.7rem;">
+                {{ comment.created_at|date:'Y-m-d a h:i' }}
+                작성 |
+                {{ comment.updated_at|date:'Y-m-d a h:i' }}
+                수정
+              </p>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-sm btn-outline-secondary update_btn_{{ comment.pk }} me-1">수정</button>
+                <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method="POST" class="form">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-outline-danger" type="submit">삭제</button>
+                </form>
+              </div>
+            </div>
+            <div class="comment_update_{{ comment.pk }} d-none">
+              <form action="{% url 'articles:comment_update' article.pk comment.pk %}" method="POST" class="form">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="updated_comment" class="form-label">수정하기</label>
+                  <input type="text" class="form-control" name="updated_comment" id="updated_comment" maxlength="80" placeholder="댓글" value="{{ comment.content }}" required>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+                  <button class="btn btn-sm btn-secondary cancel_btn_{{ comment.pk }}" type="button">취소</button>
+                </div>
+              </form>   
+            </div>
+            <hr>
+          {% empty %}
+          <p>
+            <b>0개의 댓글이 있습니다.</b>
+          </p>
+          <hr>
+          {% endfor %}
+          <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <div class="d-flex justify-content-end">
+              <input class="btn btn-sm btn-primary" type="submit" value="작성">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script>
+  {% for comment in comments %}
+    const update_btn_{{ comment.pk }} = document.querySelector('.update_btn_{{ comment.pk }}')
+    const cancel_btn_{{ comment.pk }} = document.querySelector('.cancel_btn_{{ comment.pk }}')
+
+    update_btn_{{ comment.pk }}.addEventListener('click', function () {
+      document.querySelector('.comment_display_{{ comment.pk }}').classList.toggle('d-block')
+      document.querySelector('.comment_display_{{ comment.pk }}').classList.toggle('d-none')
+      document.querySelector('.comment_update_{{ comment.pk }}').classList.toggle('d-block')
+      document.querySelector('.comment_update_{{ comment.pk }}').classList.toggle('d-none')
+    })
+    cancel_btn_{{ comment.pk }}.addEventListener('click', function () {
+      document.querySelector('.comment_display_{{ comment.pk }}').classList.toggle('d-block')
+      document.querySelector('.comment_display_{{ comment.pk }}').classList.toggle('d-none')
+      document.querySelector('.comment_update_{{ comment.pk }}').classList.toggle('d-block')
+      document.querySelector('.comment_update_{{ comment.pk }}').classList.toggle('d-none')
+    })
+  {% endfor %}
+  </script>
+{% endblock js %}

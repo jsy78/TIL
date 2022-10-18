@@ -1,0 +1,48 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% bootstrap_css %}
+    <style>
+      @font-face {
+        font-family: 'GmarketSansMedium';
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      * {
+        font-family: 'GmarketSansMedium';
+      }
+
+      a {
+        text-decoration: none;
+        color: rgb(8, 96, 168);
+      }
+    </style>
+    {% block css %}{% endblock css %}
+  </head>
+
+  <body>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    <div class="container">
+      {% block content %}{% endblock content %}
+    </div>
+    {% bootstrap_javascript %}
+    {% block js %}{% endblock js %}
+  </body>
+
+</html>

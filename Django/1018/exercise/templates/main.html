@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center my-3">메인</h1>
+  <div class="p-4">
+    <div class="row justify-content-center mb-3">
+      <div class="col-12 col-md-8 col-lg-4">
+        <a class="btn btn-primary form-control" href="{% url 'articles:index' %}">GO!</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
