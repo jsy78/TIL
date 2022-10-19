@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="d-flex justify-content-center align-items-center">
+    <h1 class="me-4 my-4">{{ request.user }}님의 작성 글</h1>
+    <a href="{% url 'main' %}" class="btn btn-outline-secondary">HOME</a>
+  </div>
+  <div class="p-4">
+    <div class="row justify-content-center">
+      {% for article in articles %}
+        <div class="col-4">
+          <div class="card">
+            {% if article.thumbnail %}
+              <img src="{{ article.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ article.thumbnail }}">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ article.title }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ article.user }}</h6>
+              <a href="{% url 'articles:detail' article.pk %}" class="btn btn-outline-primary my-3">DETAIL</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
