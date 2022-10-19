@@ -117,21 +117,23 @@
 {% block js %}
   <script>
   {% for comment in comments %}
-    const update_btn_{{ comment.pk }} = document.querySelector('#update-btn-{{ comment.pk }}')
-    const cancel_btn_{{ comment.pk }} = document.querySelector('#cancel-btn-{{ comment.pk }}')
-
-    update_btn_{{ comment.pk }}.addEventListener('click', function () {
-      document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-block')
-      document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-none')
-      document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-block')
-      document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-none')
-    })
-    cancel_btn_{{ comment.pk }}.addEventListener('click', function () {
-      document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-block')
-      document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-none')
-      document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-block')
-      document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-none')
-    })
+    {% if request.user == comment.user %}
+      const update_btn_{{ comment.pk }} = document.querySelector('#update-btn-{{ comment.pk }}')
+      const cancel_btn_{{ comment.pk }} = document.querySelector('#cancel-btn-{{ comment.pk }}')
+  
+      update_btn_{{ comment.pk }}.addEventListener('click', function () {
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-none')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-none')
+      })
+      cancel_btn_{{ comment.pk }}.addEventListener('click', function () {
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-none')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-none')
+      })
+    {% endif %}
   {% endfor %}
   </script>
 {% endblock js %}
