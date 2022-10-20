@@ -1,0 +1,40 @@
+{% extends 'frame.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div id="comments_area" class="bg-gray-100 p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+    {% if comments %}
+      <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+      <hr>
+    {% else %}
+      <p><b>0개의 댓글이 있습니다.</b></p>
+      <hr>
+    {% endif %}
+    {% for comment in comments %}
+      <div class="d-flex justify-content-end">
+        {% if request.user == comment.user %}
+          <form action="{% url 'articles:comment_delete' comment.article.pk comment.pk %}" method="POST" class="form">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-link text-danger text-decoration-none fs-6 fw-bold" type="submit">X</button>
+          </form>
+        {% else %}
+          <button class="btn btn-sm btn-link text-danger text-decoration-line-through fs-6 fw-bold disabled" type="submit">X</button>
+        {% endif %}
+      </div>
+      <iframe src="{% url 'articles:comment_detail' article.pk comment.pk %}" style="width:100%;">
+      </iframe>
+      <hr>    
+    {% endfor %}
+    {% if request.user.is_authenticated %}
+      <form id="comment_form" class="form" action="{% url 'articles:comment_create' article.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form comment_form %}
+        <div class="d-flex justify-content-end">
+          <input class="btn btn-sm btn-primary" type="submit" value="작성">
+        </div>
+      </form>
+    {% else %}
+      <p class="text-center"><b>로그인이 필요합니다.</b></p>
+    {% endif %}
+  </div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends 'frame.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <form id="comment_form" class="form" action="{% url 'articles:comment_update' comment.article.pk  comment.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <div class="d-flex justify-content-end">
+      <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+      <a href="{% url 'articles:comment_detail' comment.article.pk comment.pk %}" class="btn btn-sm btn-secondary" type="button">취소</a>
+    </div>
+  </form>
+{% endblock content %}

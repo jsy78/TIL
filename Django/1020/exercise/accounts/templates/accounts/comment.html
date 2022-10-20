@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="d-flex justify-content-center align-items-center">
+    <h1 class="me-4 my-4">{{ request.user }}님의 작성 댓글</h1>
+    <a href="{% url 'main' %}" class="btn btn-outline-secondary">HOME</a>
+  </div>
+  <div class="p-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">게시글 ID</th>
+          <th scope="col">게시글 제목</th>
+          <th scope="col">댓글 내용</th>
+          <th scope="col">작성 일자</th>
+          <th scope="col">수정 일자</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comment in comments %}
+          <tr>
+            <th scope="row" class="align-middle">{{ comment.article.pk }}</td>
+            <td class="align-middle">
+              <a href="{% url 'articles:detail' comment.article.pk %}" class="text-decoration-none">{{ comment.article.title }}</a>
+            </td>
+            <td class="align-middle text-truncate" style="max-width: 10rem;">{{ comment.content }}</td>
+            <td class="align-middle">{{ comment.created_at|date:'Y-m-d a h:i' }}</td>
+            <td class="align-middle">{{ comment.updated_at|date:'Y-m-d a h:i' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}

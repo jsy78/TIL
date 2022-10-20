@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="bg-light p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <h1 class="mb-3 fw-bolder">{{ article.title }}</h1>
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="fw-light mb-1" style="font-size: 0.7rem;">{{ article.user }}</p>
+            <p class="fw-light mb-1" style="font-size: 0.7rem;">
+              {{ article.created_at|date:'Y-m-d a h:i' }} 작성 | {{ article.updated_at|date:'Y-m-d a h:i' }} 수정
+            </p>
+          </div>
+        </div>
+        <div class="bg-white p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <p>
+            {% if article.image %}
+              <img src="{{ article.image.url }}" alt="{{ article.image }}" class="img-fluid">
+            {% endif %}
+          </p>
+          <p>{{ article.content }}</p>
+          <div class="d-block d-lg-none">
+            {% if request.user == article.user %}
+              <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary form-control mb-3">수정</a>
+              <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+                {% csrf_token %}
+                <input class="btn btn-outline-danger form-control mb-3" type="submit" value="삭제">
+              </form>
+            {% else %}
+              <a href="" class="btn btn-outline-secondary form-control disabled mb-3">수정</a>
+              <a href="" class="btn btn-outline-danger form-control disabled mb-3">삭제</a>
+            {% endif %}
+            <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
+          </div>
+          <div class="d-none d-lg-block">
+            <div class="d-flex justify-content-end">
+              {% if request.user == article.user %}
+                <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-secondary me-1">수정</a>
+                <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+                  {% csrf_token %}
+                  <input class="btn btn-outline-danger me-1" type="submit" value="삭제">
+                </form>
+              {% else %}
+                <a href="" class="btn btn-outline-secondary disabled me-1">수정</a>
+                <a href="" class="btn btn-outline-danger disabled me-1">삭제</a>
+              {% endif %}
+              <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary">뒤로</a>
+            </div>
+          </div>
+        </div>
+        <iframe class="w-100 h-100" src="{% url 'articles:comment_index' article.pk %}">
+        </iframe>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends 'frame.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <p class="mb-1">{{ comment.content }}</p>
+  <div class="d-flex justify-content-between align-items-center">
+    <p class="fw-light" style="font-size: 0.7rem;">{{ comment.user }}</p>
+    <p class="fw-light" style="font-size: 0.7rem;">
+      {{ comment.created_at|date:'Y-m-d a h:i' }} 작성 | {{ comment.updated_at|date:'Y-m-d a h:i' }} 수정
+    </p>
+  </div>
+  <div class="d-flex justify-content-end">
+    {% if request.user == comment.user %}
+      <a href="{% url 'articles:comment_update' comment.article.pk comment.pk %}" class="btn btn-sm btn-outline-secondary">수정</a>
+    {% else %}
+      <button class="btn btn-sm btn-outline-secondary disabled">수정</button>
+    {% endif %}
+  </div>
+{% endblock content %}
