@@ -365,17 +365,17 @@ def likes(request, article_pk):
   {% for article in articles %}
     …
     <div>
-    <form action="{% url 'articles:likes' article.pk %}" method="POST">
-      {% csrf_token %}
-      {% if request.user in article.like_users.all %}
-        <input type="submit" value="좋아요 취소">
-      {% else %}
-        <input type="submit" value="좋아요">
-      {% endif %}
-    </form>
-  </div>
-  <a href="{% url 'articles:detail' article.pk %}">DETAIL</a>
-  <hr>
+      <form action="{% url 'articles:likes' article.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in article.like_users.all %}
+          <input type="submit" value="좋아요 취소">
+        {% else %}
+          <input type="submit" value="좋아요">
+        {% endif %}
+      </form>
+    </div>
+    <a href="{% url 'articles:detail' article.pk %}">DETAIL</a>
+    <hr>
   {% endfor %}
 {% endblock content %}
 ```
