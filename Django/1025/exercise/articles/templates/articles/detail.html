@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block css %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+{% endblock css %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="bg-light p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <h1 class="mb-3 fw-bolder">{{ article.title }}</h1>
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="fw-light mb-1" style="font-size: 0.7rem;">
+              <a href="{% url 'accounts:profile' article.user.username %}">{{ article.user }}</a>
+            </p>
+            <p class="fw-light mb-1" style="font-size: 0.7rem;">
+              {{ article.created_at|date:'Y-m-d a h:i' }} 작성 | {{ article.updated_at|date:'Y-m-d a h:i' }} 수정
+            </p>
+          </div>
+        </div>
+        <div class="bg-white p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <p>
+            {% if article.image %}
+              <img src="{{ article.image.url }}" alt="{{ article.image }}" class="img-fluid">
+            {% endif %}
+          </p>
+          <p>{{ article.content }}</p>
+          <div class="d-block d-lg-none">
+            {% if request.user.is_authenticated %}
+              {% if request.user in article.like_users.all %}
+                <a href="{% url 'articles:like' article.pk %}" class="btn btn-outline-info form-control mb-3"><i class="bi bi-heart-fill me-2"></i><span class="badge text-bg-info">{{ article.like_users.count }}</span></a>
+              {% else %}
+                <a href="{% url 'articles:like' article.pk %}" class="btn btn-outline-info form-control mb-3"><i class="bi bi-heart me-2"></i><span class="badge text-bg-info">{{ article.like_users.count }}</span></a>
+              {% endif %}
+            {% else %}
+              <a href="" class="btn btn-outline-danger mb-3 form-control disabled"><i class="bi bi-heart me-2"></i><span class="badge text-bg-danger">{{ article.like_users.count }}</span></a>
+            {% endif %}
+            {% if request.user == article.user %}
+              <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-success form-control mb-3">수정</a>
+              <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+                {% csrf_token %}
+                <input class="btn btn-outline-danger form-control mb-3" type="submit" value="삭제">
+              </form>
+            {% else %}
+              <a href="" class="btn btn-outline-success form-control disabled mb-3">수정</a>
+              <a href="" class="btn btn-outline-danger form-control disabled mb-3">삭제</a>
+            {% endif %}
+            <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
+          </div>
+          <div class="d-none d-lg-block">
+            <div class="d-flex justify-content-between">
+              {% if request.user.is_authenticated %}
+                {% if request.user in article.like_users.all %}
+                  <a href="{% url 'articles:like' article.pk %}" class="btn btn-outline-info active"><i class="bi bi-heart-fill me-2"></i><span class="badge text-bg-info">{{ article.like_users.count }}</span></a>
+                {% else %}
+                  <a href="{% url 'articles:like' article.pk %}" class="btn btn-outline-info"><i class="bi bi-heart me-2"></i><span class="badge text-bg-info">{{ article.like_users.count }}</span></a>
+                {% endif %}
+              {% else %}
+                <a href="" class="btn btn-outline-info disabled"><i class="bi bi-heart me-2"></i><span class="badge text-bg-info">{{ article.like_users.count }}</span></a>
+              {% endif %}
+              <div class="d-flex">
+                {% if request.user == article.user %}
+                  <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-success me-1">수정</a>
+                  <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+                    {% csrf_token %}
+                    <input class="btn btn-outline-danger me-1" type="submit" value="삭제">
+                  </form>
+                {% else %}
+                  <a href="" class="btn btn-outline-success disabled me-1">수정</a>
+                  <a href="" class="btn btn-outline-danger disabled me-1">삭제</a>
+                {% endif %}
+                <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary">뒤로</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="comments_area" class="bg-gray-100 p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          {% if comments %}
+            <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+            <hr>
+          {% endif %}
+          {% for comment in comments %}
+            <div id="display-{{ comment.pk }}" class="d-block">
+              <p class="mb-1">{{ comment.content }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="fw-light" style="font-size: 0.7rem;">
+                  <a href="{% url 'accounts:profile' comment.user.username %}">{{ comment.user }}</a>
+                <p class="fw-light" style="font-size: 0.7rem;">
+                  {{ comment.created_at|date:'Y-m-d a h:i' }} 작성 | {{ comment.updated_at|date:'Y-m-d a h:i' }} 수정
+                </p>
+              </div>
+              <div class="d-flex justify-content-between">
+                {% if request.user.is_authenticated %}
+                  {% if request.user in comment.like_users.all %}
+                    <a href="{% url 'articles:comment_like' article.pk comment.pk %}" class="btn btn-sm btn-outline-info active"><i class="bi bi-heart-fill me-2"></i><span class="badge text-bg-info">{{ comment.like_users.count }}</span></a>
+                  {% else %}
+                    <a href="{% url 'articles:comment_like' article.pk comment.pk %}" class="btn btn-sm btn-outline-info"><i class="bi bi-heart me-2"></i><span class="badge text-bg-info">{{ comment.like_users.count }}</span></a>
+                  {% endif %}
+                {% else %}
+                  <a href="" class="btn btn-sm btn-outline-info disabled"><i class="bi bi-heart me-2"></i><span class="badge text-bg-info">{{ comment.like_users.count }}</span></a>
+                {% endif %}
+                <div class="d-flex">
+                  {% if request.user == comment.user %}
+                    <button id="update-btn-{{ comment.pk }}" class="btn btn-sm btn-outline-success me-1">수정</button>
+                    <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method="POST" class="form">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-outline-danger" type="submit">삭제</button>
+                    </form>
+                  {% else %}
+                    <button class="btn btn-sm btn-outline-success disabled me-1">수정</button>
+                    <button class="btn btn-sm btn-outline-danger disabled" type="submit">삭제</button>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% if request.user == comment.user %}
+              <div id="update-{{ comment.pk }}" class="d-none">
+                <form action="{% url 'articles:comment_update' article.pk comment.pk %}" method="POST" class="form">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="updated_comment" class="form-label">수정하기</label>
+                    <input type="text" class="form-control" name="updated_comment" id="updated_comment" maxlength="80" placeholder="댓글" value="{{ comment.content }}" required>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+                    <button id="cancel-btn-{{ comment.pk }}" class="btn btn-sm btn-secondary" type="button">취소</button>
+                  </div>
+                </form>   
+              </div>
+            {% endif %}
+            <hr>
+          {% empty %}
+          <p><b>0개의 댓글이 있습니다.</b></p>
+          <hr>
+          {% endfor %}
+          {% if request.user.is_authenticated %}
+            <form id="comment_form" class="form" action="{% url 'articles:comment_create' article.pk %}" method="POST">
+              {% csrf_token %}
+              {% bootstrap_form comment_form %}
+              <div class="d-flex justify-content-end">
+                <input class="btn btn-sm btn-primary" type="submit" value="작성">
+              </div>
+            </form>
+          {% else %}
+            <p class="text-center"><b>로그인이 필요합니다.</b></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script>
+  {% for comment in comments %}
+    {% if request.user == comment.user %}
+      const update_btn_{{ comment.pk }} = document.querySelector('#update-btn-{{ comment.pk }}')
+      const cancel_btn_{{ comment.pk }} = document.querySelector('#cancel-btn-{{ comment.pk }}')
+  
+      update_btn_{{ comment.pk }}.addEventListener('click', function () {
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-none')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-none')
+      })
+      cancel_btn_{{ comment.pk }}.addEventListener('click', function () {
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#display-{{ comment.pk }}').classList.toggle('d-none')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-block')
+        document.querySelector('#update-{{ comment.pk }}').classList.toggle('d-none')
+      })
+    {% endif %}
+  {% endfor %}
+  </script>
+{% endblock js %}

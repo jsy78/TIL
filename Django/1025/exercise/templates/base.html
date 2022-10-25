@@ -1,0 +1,66 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% bootstrap_css %}
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+      * {
+        font-family: 'Nanum Gothic', sans-serif;
+      }
+
+      a {
+        text-decoration: none;
+        color: rgb(8, 96, 168);
+      }
+    </style>
+    {% block css %}{% endblock css %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-light">
+      <a class="navbar-brand mx-4" href="{% url 'main' %}">MAIN</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between mx-2" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="{% url 'accounts:index' %}">회원</a>
+          <a class="nav-link" href="{% url 'articles:index' %}">게시판</a>
+        </div>
+        <div class="navbar-nav">
+          {% if request.user.is_authenticated %}
+            <a class="nav-link" href="{% url 'accounts:profile' request.user.username %}">{{ request.user }}님</a>
+            <a class="nav-link" href="{% url 'articles:create' %}">글쓰기</a>
+            <a class="nav-link" href="{% url 'accounts:detail' request.user.pk %}">회원정보</a>
+            <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
+          {% else %}
+            <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입</a>
+            <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} text-center">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    <div class="container">
+      {% block content %}{% endblock content %}
+    </div>
+    {% bootstrap_javascript %}
+    {% block js %}{% endblock js %}
+  </body>
+
+</html>
