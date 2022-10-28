@@ -1,0 +1,730 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block css %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+{% endblock css %}
+
+{% block content %}
+  <div class="p-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="bg-light p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <h1 class="mb-3 fw-bolder">{{ article.title }}</h1>
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="fw-light mb-1" style="font-size: 0.7rem;">
+              <a href="{% url 'accounts:profile' article.user.username %}">{{ article.user }}</a>
+            </p>
+            <p class="fw-light mb-1" style="font-size: 0.7rem;">
+              {{ article.created_at|date:'Y-m-d a h:i' }} 작성 | {{ article.updated_at|date:'Y-m-d a h:i' }} 수정
+            </p>
+          </div>
+        </div>
+        <div class="bg-white p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          <p>
+            {% if article.image %}
+              <img src="{{ article.image.url }}" alt="{{ article.image }}" class="img-fluid">
+            {% endif %}
+          </p>
+          <p>{{ article.content }}</p>
+          <div id="sm-block" class="d-block d-lg-none">
+            {% if request.user.is_authenticated %}
+              {% if request.user in article.like_users.all %}
+                <button data-article-id="{{ article.pk }}" class="btn btn-outline-info form-control like-btn active mb-3"><i class="bi bi-heart-fill like-icon me-2"></i><span class="badge bg-black text-white like-count">{{ article.like_users.count }}</span></button>
+              {% else %}
+                <button data-article-id="{{ article.pk }}" class="btn btn-outline-info form-control like-btn mb-3"><i class="bi bi-heart like-icon me-2"></i><span class="badge bg-info text-black like-count">{{ article.like_users.count }}</span></button>
+              {% endif %}
+            {% else %}
+              <button class="btn btn-outline-danger mb-3 form-control disabled"><i class="bi bi-heart me-2"></i><span class="badge text-bg-danger">{{ article.like_users.count }}</span></button>
+            {% endif %}
+            {% if request.user == article.user %}
+              <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-success form-control mb-3">수정</a>
+              <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+                {% csrf_token %}
+                <input class="btn btn-outline-danger form-control mb-3" type="submit" value="삭제">
+              </form>
+            {% else %}
+              <a href="" class="btn btn-outline-success form-control disabled mb-3">수정</a>
+              <a href="" class="btn btn-outline-danger form-control disabled mb-3">삭제</a>
+            {% endif %}
+            <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary form-control mb-3">뒤로</a>
+          </div>
+          <div id="lg-block" class="d-none d-lg-block">
+            <div class="d-flex justify-content-between">
+              {% if request.user.is_authenticated %}
+                {% if request.user in article.like_users.all %}
+                  <button data-article-id="{{ article.pk }}" class="btn btn-outline-info like-btn active"><i class="bi bi-heart-fill like-icon me-2"></i><span class="badge bg-black text-white like-count">{{ article.like_users.count }}</span></button>
+                {% else %}
+                  <button data-article-id="{{ article.pk }}" class="btn btn-outline-info like-btn"><i class="bi bi-heart like-icon me-2"></i><span class="badge bg-info text-black like-count">{{ article.like_users.count }}</span></button>
+                {% endif %}
+              {% else %}
+                <a href="" class="btn btn-outline-info disabled"><i class="bi bi-heart me-2"></i><span class="badge text-bg-info">{{ article.like_users.count }}</span></a>
+              {% endif %}
+              <div class="d-flex">
+                {% if request.user == article.user %}
+                  <a href="{% url 'articles:update' article.pk %}" class="btn btn-outline-success me-1">수정</a>
+                  <form action="{% url 'articles:delete' article.pk %}" method="POST" class="form">
+                    {% csrf_token %}
+                    <input class="btn btn-outline-danger me-1" type="submit" value="삭제">
+                  </form>
+                {% else %}
+                  <a href="" class="btn btn-outline-success disabled me-1">수정</a>
+                  <a href="" class="btn btn-outline-danger disabled me-1">삭제</a>
+                {% endif %}
+                <a href="{% url 'articles:index' %}" class="btn btn-outline-secondary">뒤로</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="comments-area" class="bg-gray-100 p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          {% if comments %}
+            <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+            <hr>
+          {% endif %}
+          {% for comment in comments %}
+            <div id="comment-{{ comment.pk }}" class="d-block">
+              <p class="comment-content mb-1">{{ comment.content }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="fw-light" style="font-size: 0.7rem;">
+                  <a class="comment-user" href="{% url 'accounts:profile' comment.user.username %}">{{ comment.user }}</a>
+                <p class="fw-light" style="font-size: 0.7rem;">
+                  <span class="comment-created">{{ comment.created_at|date:'Y-m-d a h:i' }} 작성</span>
+                  <span> | </span>
+                  <span class="comment-updated">{{ comment.updated_at|date:'Y-m-d a h:i' }} 수정</span> 
+                </p>
+              </div>
+              <div class="d-flex justify-content-between">
+                {% if request.user.is_authenticated %}
+                  {% if request.user in comment.like_users.all %}
+                    <button data-article-id="{{ article.pk }}" data-comment-id="{{ comment.pk }}" class="btn btn-sm btn-outline-info comment-like-btn active"><i class="bi bi-heart-fill comment-like-icon me-2"></i><span class="badge bg-black text-white comment-like-count">{{ comment.like_users.count }}</span></button>
+                  {% else %}
+                    <button data-article-id="{{ article.pk }}" data-comment-id="{{ comment.pk }}" class="btn btn-sm btn-outline-info comment-like-btn"><i class="bi bi-heart comment-like-icon me-2"></i><span class="badge bg-info text-black comment-like-count">{{ comment.like_users.count }}</span></button>
+                  {% endif %}
+                {% else %}
+                  <button class="btn btn-sm btn-outline-info disabled"><i class="bi bi-heart me-2"></i><span class="badge text-bg-info">{{ comment.like_users.count }}</span></button>
+                {% endif %}
+                <div class="d-flex">
+                  {% if request.user == comment.user %}
+                    <button data-comment-id="{{ comment.pk }}" class="btn btn-sm btn-outline-success update-btn me-1">수정</button>
+                    <form class="comment-delete-form" data-article-id="{{ article.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-outline-danger" type="submit">삭제</button>
+                    </form>
+                  {% else %}
+                    <button class="btn btn-sm btn-outline-success disabled me-1">수정</button>
+                    <button class="btn btn-sm btn-outline-danger disabled" type="submit">삭제</button>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% if request.user == comment.user %}
+              <div id="update-{{ comment.pk }}" class="d-none">
+                <form class="comment-update-form" data-article-id="{{ article.pk }}" data-comment-id="{{ comment.pk }}">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="updated-comment-{{ comment.pk }}" class="form-label">수정하기</label>
+                    <input type="text" class="form-control" name="updated_comment" id="updated-comment-{{ comment.pk }}" maxlength="80" placeholder="댓글" value="{{ comment.content }}" required>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+                    <button data-comment-id="{{ comment.pk }}" class="btn btn-sm btn-secondary cancel-btn" type="button">취소</button>
+                  </div>
+                </form>   
+              </div>
+            {% endif %}
+            <hr>
+          {% empty %}
+            <p><b>0개의 댓글이 있습니다.</b></p>
+            <hr>
+          {% endfor %}
+        </div>
+        <div class="bg-gray-200 p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.493);">
+          {% if request.user.is_authenticated %}
+            <form id="comment-form" data-article-id="{{ article.pk }}">
+              {% csrf_token %}
+              {% bootstrap_form comment_form %}
+              <div class="d-flex justify-content-end">
+                <input class="btn btn-sm btn-primary" type="submit" value="작성">
+              </div>
+            </form>
+          {% else %}
+            <p class="text-center"><b>로그인이 필요합니다.</b></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    function articleLike() {
+      const smLikeBtn = document.querySelector('#sm-block > .like-btn')
+      const lgLikeBtn = document.querySelector('#lg-block .like-btn')
+
+      smLikeBtn.addEventListener('click', function (event) {
+        const articleId = event.currentTarget.dataset.articleId
+        axios({
+          method: "GET",
+          url: `/articles/${articleId}/like/`
+        })
+        .then(response => {
+          while (smLikeBtn.hasChildNodes()) {
+            smLikeBtn.removeChild(smLikeBtn.firstChild)
+          }
+          while (lgLikeBtn.hasChildNodes()) {
+            lgLikeBtn.removeChild(lgLikeBtn.firstChild)
+          }
+          if (response.data.is_article_liked) {
+            smLikeBtn.classList.toggle('active')
+            smLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart-fill like-icon me-2"></i><span class="badge bg-black text-white like-count">${response.data.article_like_count}</span>`
+            )
+
+            lgLikeBtn.classList.toggle('active')
+            lgLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart-fill like-icon me-2"></i><span class="badge bg-black text-white like-count">${response.data.article_like_count}</span>`
+            ) 
+          }
+          else {
+            smLikeBtn.classList.toggle('active')
+            smLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart like-icon me-2"></i><span class="badge bg-info text-black like-count">${response.data.article_like_count}</span>`
+            )
+            
+            lgLikeBtn.classList.toggle('active')
+            lgLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart like-icon me-2"></i><span class="badge bg-info text-black like-count">${response.data.article_like_count}</span>`
+            )
+          }
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+      })
+      
+      lgLikeBtn.addEventListener('click', function (event) {
+        const articleId = event.currentTarget.dataset.articleId
+        axios({
+          method: "GET",
+          url: `/articles/${articleId}/like/`
+        })
+        .then(response => {
+          while (smLikeBtn.hasChildNodes()) {
+            smLikeBtn.removeChild(smLikeBtn.firstChild)
+          }
+          while (lgLikeBtn.hasChildNodes()) {
+            lgLikeBtn.removeChild(lgLikeBtn.firstChild)
+          }
+          if (response.data.is_article_liked) {
+            smLikeBtn.classList.toggle('active')
+            smLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart-fill like-icon me-2"></i><span class="badge bg-black text-white like-count">${response.data.article_like_count}</span>`
+            )
+
+            lgLikeBtn.classList.toggle('active')
+            lgLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart-fill like-icon me-2"></i><span class="badge bg-black text-white like-count">${response.data.article_like_count}</span>`
+            )
+          }
+          else {
+            smLikeBtn.classList.toggle('active')
+            smLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart like-icon me-2"></i><span class="badge bg-info text-black like-count">${response.data.article_like_count}</span>`
+            )
+            
+            lgLikeBtn.classList.toggle('active')
+            lgLikeBtn.insertAdjacentHTML('beforeend', 
+              `<i class="bi bi-heart like-icon me-2"></i><span class="badge bg-info text-black like-count">${response.data.article_like_count}</span>`
+            )
+          }
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+      })
+    }
+    
+    function commentLike() {
+      const commentLikeBtns = document.querySelectorAll('.comment-like-btn')
+      commentLikeBtns.forEach((commentLikeBtn) => {
+        commentLikeBtn.addEventListener('click', function (event) {
+          const articleId = event.currentTarget.dataset.articleId
+          const commentId = event.currentTarget.dataset.commentId
+          axios({
+            method: "GET",
+            url: `/articles/${articleId}/comments/${commentId}/like/`,
+          })
+          .then((response) => {
+            while (commentLikeBtn.hasChildNodes()) {
+              commentLikeBtn.removeChild(commentLikeBtn.firstChild)
+            }
+            if (response.data.is_comment_liked) {
+              commentLikeBtn.classList.toggle('active')
+              commentLikeBtn.insertAdjacentHTML('beforeend', 
+                `<i class="bi bi-heart-fill comment-like-icon me-2"></i><span class="badge bg-black text-white comment-like-count">${response.data.comment_like_count}</span>`
+              )
+            }
+            else {
+              commentLikeBtn.classList.toggle('active')
+              commentLikeBtn.insertAdjacentHTML('beforeend', 
+                `<i class="bi bi-heart comment-like-icon me-2"></i><span class="badge bg-info text-black comment-like-count">${response.data.comment_like_count}</span>`
+              )
+            }
+          })
+          .catch(error => {
+            console.log(error.response)
+          })
+        })
+      })
+      return commentLikeBtns
+    }
+
+    function commentModify() {
+      const commentUpdateBtns = document.querySelectorAll('.update-btn')
+      commentUpdateBtns.forEach((commentUpdateBtn) => {
+      commentUpdateBtn.addEventListener('click', function (event) {
+        const commentId = event.currentTarget.dataset.commentId
+        const commentBlock = document.querySelector(`#comment-${commentId}`)
+        const updateBlock = document.querySelector(`#update-${commentId}`)
+
+        commentBlock.classList.toggle('d-block')
+        commentBlock.classList.toggle('d-none')
+        updateBlock.classList.toggle('d-block')
+        updateBlock.classList.toggle('d-none')
+        })
+      })
+      return commentUpdateBtns
+    }
+
+    function commentUpdate() {
+      const commentUpdateForms = document.querySelectorAll('.comment-update-form')
+      commentUpdateForms.forEach((commentUpdateForm) => {
+        commentUpdateForm.addEventListener('submit', function (event) {
+          event.preventDefault()
+          const articleId = event.currentTarget.dataset.articleId
+          const commentId = event.currentTarget.dataset.commentId
+          axios({
+            method: 'POST',
+            url: `/articles/${articleId}/comments/${commentId}/update/`,
+            headers: {'X-CSRFToken': csrftoken},
+            data: new FormData(commentUpdateForm)
+          })
+          .then(response => {
+            const commentBlock = document.querySelector(`#comment-${commentId}`)
+            const updateBlock = document.querySelector(`#update-${commentId}`)
+            const commentContent = document.querySelector(`#comment-${commentId} .comment-content`)
+            const commentUpdated = document.querySelector(`#comment-${commentId} .comment-updated`)
+            const updateContent = document.querySelector(`#updated-comment-${commentId}`)
+
+            commentContent.innerText = `${response.data.content}`
+            commentUpdated.innerText = `${response.data.updated} 수정`
+            updateContent.value = `${response.data.content}`
+
+            commentBlock.classList.toggle('d-block')
+            commentBlock.classList.toggle('d-none')
+            updateBlock.classList.toggle('d-block')
+            updateBlock.classList.toggle('d-none')
+
+            return commentUpdateForm
+          })
+          .catch(error => {
+            console.log(error.response)
+          })
+        })
+      })
+    }
+
+    function commentCancel() {
+      const commentCancelBtns = document.querySelectorAll('.cancel-btn')
+      commentCancelBtns.forEach((commentCancelBtn) => {
+        commentCancelBtn.addEventListener('click', function (event) {
+          const commentId = event.currentTarget.dataset.commentId
+          const commentBlock = document.querySelector(`#comment-${commentId}`)
+          const updateBlock = document.querySelector(`#update-${commentId}`)
+          const commentContent = document.querySelector(`#comment-${commentId} .comment-content`)
+          const updateContent = document.querySelector(`#updated-comment-${commentId}`)
+
+          updateContent.value = commentContent.innerText
+
+          commentBlock.classList.toggle('d-block')
+          commentBlock.classList.toggle('d-none')
+          updateBlock.classList.toggle('d-block')
+          updateBlock.classList.toggle('d-none')
+        })
+      })
+      return commentCancelBtns
+    }
+
+    function commentDelete() {
+      const commentDeleteForms = document.querySelectorAll('.comment-delete-form')
+      commentDeleteForms.forEach((commentDeleteForm) => {
+        commentDeleteForm.addEventListener('submit', function (event) {
+          event.preventDefault()
+          const articleId = event.currentTarget.dataset.articleId
+          const commentId = event.currentTarget.dataset.commentId
+          axios({
+            method: 'POST',
+            url: `/articles/${articleId}/comments/${commentId}/delete/`,
+            headers: {'X-CSRFToken': csrftoken}
+          })
+          .then(response => {
+            const commentsJSON = response.data.comments_json
+
+            const commentsArea = document.querySelector('#comments-area')
+            
+            while (commentsArea.hasChildNodes()) {
+              commentsArea.removeChild(commentsArea.firstChild)
+            }
+
+            const p = document.createElement('p')
+            const b = document.createElement('b')
+            const hr = document.createElement('hr')
+
+            b.innerText = `${response.data.comments_count}개의 댓글이 있습니다.`
+            p.appendChild(b)
+            commentsArea.appendChild(p)
+            commentsArea.appendChild(hr)
+
+            const comments_json = response.data.comments_json
+            for (let i = 0; i < comments_json.length; i++) {
+              if (response.data.request_user == comments_json[i].fields.user) {
+                if (comments_json[i].fields.like_users.includes(response.data.request_user)) {
+                  commentsArea.insertAdjacentHTML('beforeend', 
+                    `<div id="comment-${comments_json[i].pk}" class="d-block">
+                      <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                          <span> | </span>
+                          <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                        </p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn active"><i class="bi bi-heart-fill comment-like-icon me-2"></i><span class="badge bg-black text-white comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                        <div class="d-flex">
+                          <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-success update-btn me-1">수정</button>
+                          <form class="comment-delete-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                            <button class="btn btn-sm btn-outline-danger" type="submit">삭제</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="update-${comments_json[i].pk}" class="d-none">
+                      <form class="comment-update-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="mb-3">
+                          <label for="updated-comment-${comments_json[i].pk}" class="form-label">수정하기</label>
+                          <input type="text" class="form-control" name="updated_comment" id="updated-comment-${comments_json[i].pk}" maxlength="80" placeholder="댓글" value="${comments_json[i].fields.content}" required>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                          <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+                          <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-secondary cancel-btn" type="button">취소</button>
+                        </div>
+                      </form>   
+                    </div>
+                    <hr>`
+                  )
+                }
+                else {
+                  commentsArea.insertAdjacentHTML('beforeend', 
+                    `<div id="comment-${comments_json[i].pk}" class="d-block">
+                      <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                          <span> | </span>
+                          <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                        </p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn"><i class="bi bi-heart comment-like-icon me-2"></i><span class="badge bg-info text-black comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                        <div class="d-flex">
+                          <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-success update-btn me-1">수정</button>
+                          <form class="comment-delete-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                            <button class="btn btn-sm btn-outline-danger" type="submit">삭제</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="update-${comments_json[i].pk}" class="d-none">
+                      <form class="comment-update-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="mb-3">
+                          <label for="updated-comment-${comments_json[i].pk}" class="form-label">수정하기</label>
+                          <input type="text" class="form-control" name="updated_comment" id="updated-comment-${comments_json[i].pk}" maxlength="80" placeholder="댓글" value="${comments_json[i].fields.content}" required>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                          <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+                          <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-secondary cancel-btn" type="button">취소</button>
+                        </div>
+                      </form>   
+                    </div>
+                    <hr>`
+                  )
+                }
+              }
+              else {
+                if (comments_json[i].fields.like_users.includes(response.data.request_user)) {
+                  commentsArea.insertAdjacentHTML('beforeend', 
+                    `<div id="comment-${comments_json[i].pk}" class="d-block">
+                      <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                          <span> | </span>
+                          <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                        </p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn active"><i class="bi bi-heart-fill comment-like-icon me-2"></i><span class="badge bg-black text-white comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                        <div class="d-flex">
+                          <button class="btn btn-sm btn-outline-success disabled me-1">수정</button>
+                          <button class="btn btn-sm btn-outline-danger disabled" type="submit">삭제</button>
+                        </div>
+                      </div>
+                    </div>
+                    <hr>`
+                  )
+                }
+                else {
+                  commentsArea.insertAdjacentHTML('beforeend', 
+                    `<div id="comment-${comments_json[i].pk}" class="d-block">
+                      <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                        <p class="fw-light" style="font-size: 0.7rem;">
+                          <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                          <span> | </span>
+                          <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                        </p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn"><i class="bi bi-heart comment-like-icon me-2"></i><span class="badge bg-info text-black comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                        <div class="d-flex">
+                          <button class="btn btn-sm btn-outline-success disabled me-1">수정</button>
+                          <button class="btn btn-sm btn-outline-danger disabled" type="submit">삭제</button>
+                        </div>
+                      </div>
+                    </div>
+                    <hr>`
+                  )              
+                } 
+              }  
+            }
+            return commentDeleteForms
+          })
+          .then(response => {
+            commentLike()
+            commentModify()
+            commentUpdate()
+            commentCancel()
+            commentDelete()
+          })
+          .catch(error => {
+            console.log(error.response)
+          })
+        })
+      })
+    }
+
+    function commentCreate() {
+      const commentForm = document.querySelector('#comment-form')
+      commentForm.addEventListener('submit', function (event) {
+        event.preventDefault()
+        const articleId = event.currentTarget.dataset.articleId
+        axios({
+          method: 'POST',
+          url: `/articles/${articleId}/comments/`,
+          headers: {'X-CSRFToken': csrftoken},
+          data: new FormData(commentForm) // 폼에 있는 정보를 data로 넘겨줄 수 있도록 변환
+        })
+        .then(response => {
+          const commentsJSON = response.data.comments_json
+
+          const commentsArea = document.querySelector('#comments-area')
+          while (commentsArea.hasChildNodes()) {
+            commentsArea.removeChild(commentsArea.firstChild)
+          }
+
+          const p = document.createElement('p')
+          const b = document.createElement('b')
+          const hr = document.createElement('hr')
+
+          b.innerText = `${response.data.comments_count}개의 댓글이 있습니다.`
+          p.appendChild(b)
+          commentsArea.appendChild(p)
+          commentsArea.appendChild(hr)
+
+          const comments_json = response.data.comments_json
+          for (let i = 0; i < comments_json.length; i++) {
+            if (response.data.request_user == comments_json[i].fields.user) {
+              if (comments_json[i].fields.like_users.includes(response.data.request_user)) {
+                commentsArea.insertAdjacentHTML('beforeend', 
+                  `<div id="comment-${comments_json[i].pk}" class="d-block">
+                    <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                        <span> | </span>
+                        <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                      </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn active"><i class="bi bi-heart-fill comment-like-icon me-2"></i><span class="badge bg-black text-white comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                      <div class="d-flex">
+                        <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-success update-btn me-1">수정</button>
+                        <form class="comment-delete-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm btn-outline-danger" type="submit">삭제</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="update-${comments_json[i].pk}" class="d-none">
+                    <form class="comment-update-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="mb-3">
+                        <label for="updated-comment-${comments_json[i].pk}" class="form-label">수정하기</label>
+                        <input type="text" class="form-control" name="updated_comment" id="updated-comment-${comments_json[i].pk}" maxlength="80" placeholder="댓글" value="${comments_json[i].fields.content}" required>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+                        <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-secondary cancel-btn" type="button">취소</button>
+                      </div>
+                    </form>   
+                  </div>
+                  <hr>`
+                )
+              }
+              else {
+                commentsArea.insertAdjacentHTML('beforeend', 
+                  `<div id="comment-${comments_json[i].pk}" class="d-block">
+                    <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                        <span> | </span>
+                        <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                      </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn"><i class="bi bi-heart comment-like-icon me-2"></i><span class="badge bg-info text-black comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                      <div class="d-flex">
+                        <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-success update-btn me-1">수정</button>
+                        <form class="comment-delete-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm btn-outline-danger" type="submit">삭제</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="update-${comments_json[i].pk}" class="d-none">
+                    <form class="comment-update-form" data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="mb-3">
+                        <label for="updated-comment-${comments_json[i].pk}" class="form-label">수정하기</label>
+                        <input type="text" class="form-control" name="updated_comment" id="updated-comment-${comments_json[i].pk}" maxlength="80" placeholder="댓글" value="${comments_json[i].fields.content}" required>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <input class="btn btn-sm btn-primary me-1" type="submit" value="완료">
+                        <button data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-secondary cancel-btn" type="button">취소</button>
+                      </div>
+                    </form>   
+                  </div>
+                  <hr>`
+                )
+              }
+            }
+            else {
+              if (comments_json[i].fields.like_users.includes(response.data.request_user)) {
+                commentsArea.insertAdjacentHTML('beforeend', 
+                  `<div id="comment-${comments_json[i].pk}" class="d-block">
+                    <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                        <span> | </span>
+                        <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                      </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn active"><i class="bi bi-heart-fill comment-like-icon me-2"></i><span class="badge bg-black text-white comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                      <div class="d-flex">
+                        <button class="btn btn-sm btn-outline-success disabled me-1">수정</button>
+                        <button class="btn btn-sm btn-outline-danger disabled" type="submit">삭제</button>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>`
+                )
+              }
+              else {
+                commentsArea.insertAdjacentHTML('beforeend', 
+                  `<div id="comment-${comments_json[i].pk}" class="d-block">
+                    <p class="comment-content mb-1">${comments_json[i].fields.content}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <a class="comment-user" href="/accounts/profile/${comments_json[i].fields.username}/">${comments_json[i].fields.username}</a>
+                      <p class="fw-light" style="font-size: 0.7rem;">
+                        <span class="comment-created">${comments_json[i].fields.created_at} 작성</span>
+                        <span> | </span>
+                        <span class="comment-updated">${comments_json[i].fields.updated_at} 수정</span> 
+                      </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <button data-article-id="${comments_json[i].fields.article}" data-comment-id="${comments_json[i].pk}" class="btn btn-sm btn-outline-info comment-like-btn"><i class="bi bi-heart comment-like-icon me-2"></i><span class="badge bg-info text-black comment-like-count">${comments_json[i].fields.like_users.length}</span></button>
+                      <div class="d-flex">
+                        <button class="btn btn-sm btn-outline-success disabled me-1">수정</button>
+                        <button class="btn btn-sm btn-outline-danger disabled" type="submit">삭제</button>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>`
+                )              
+              } 
+            }  
+          }
+          commentForm.reset()
+          return commentForm
+        })
+        .then(response => {
+          commentLike()
+          commentModify()
+          commentUpdate()
+          commentCancel()
+          commentDelete()
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+      })
+    }
+
+    articleLike()
+    commentLike()
+    commentModify()
+    commentUpdate()
+    commentCancel()
+    commentDelete()
+    commentCreate()
+  </script>
+{% endblock js %}

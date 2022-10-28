@@ -117,4 +117,4 @@ def search(request):
     context = {
         "articles" : articles,
     }
-    return render(request, 'articles/search.html', context)
+    return render(request, 'articles/search.html', context) 

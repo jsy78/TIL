@@ -97,3 +97,7 @@ Date: 2022년 10월 26일
 
 - `GET` http://127.0.0.1:8000/articles/create/
 - 게시글 작성 폼
+
+### 참고 사이트
+
+- [javascript - Recursively fetching data with axios and chaining the result - Stack Overflow](https://stackoverflow.com/questions/49839831/recursively-fetching-data-with-axios-and-chaining-the-result)

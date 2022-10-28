@@ -1,4 +1,15 @@
 asgiref==3.5.2
+dj-database-url==1.0.0
 Django==3.2.13
+django-appconf==1.0.5
+django-bootstrap5==22.1
+django-imagekit==4.1.0
+gunicorn==20.1.0
+pilkit==2.0
+Pillow==9.2.0
+psycopg2-binary==2.9.5
+python-dotenv==0.21.0
 pytz==2022.5
+six==1.16.0
 sqlparse==0.4.3
+whitenoise==6.2.0

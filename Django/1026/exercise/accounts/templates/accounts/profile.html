@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="d-flex justify-content-center align-items-center">
+    <h1 class="me-4 my-4">{{ user.username }}님의 프로필</h1>
+    <a href="{% url 'main' %}" class="btn btn-outline-secondary">HOME</a>
+  </div>
+  <p class="text-center">
+    팔로잉 : <span id="followings-count">{{ user.followings.all|length }}</span>명 | 
+    팔로워 : <span id="followers-count">{{ user.followers.all|length }}</span>명
+  </p>
+  <div class="p-4">
+    <div class="row justify-content-center mb-2">
+      <div class="col-sm-12 col-md-4 col-lg-3 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:detail' user.pk %}">
+              <h5 class="card-title">회원 정보</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:article' user.username %}">
+              <h5 class="card-title my-auto">작성한 글</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:comment' user.username %}">
+              <h5 class="card-title my-auto">작성한 댓글</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center mb-2">
+      <div class="col-sm-12 col-md-4 col-lg-3 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:like_article' user.username %}">
+              <h5 class="card-title">좋아요 누른 게시글</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:like_comment' user.username %}">
+              <h5 class="card-title">좋아요 누른 댓글</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:following' user.pk %}">
+              <h5 class="card-title">팔로잉 목록</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3 mb-3">
+        <div class="card text-center" style="height: 10rem;">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <a href="{% url 'accounts:follower' user.pk %}">
+              <h5 class="card-title">팔로워 목록</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if request.user == user %}
+      <div class="row justify-content-center mb-3">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+          <a class="btn btn-primary form-control" href="{% url 'accounts:update' %}">회원 정보 수정</a>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-3">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+          <a class="btn btn-warning form-control" href="{% url 'accounts:password' %}">비밀번호 변경</a>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-3">
+        <div class="col-sm-12 col-md-10 col-lg-8">
+          <a class="btn btn-danger form-control" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
+        </div>
+      </div>
+    {% else %}
+      <div class="row justify-content-center mb-3">
+        <div class="col-sm-12 col-md-8 col-lg-4">
+          {% if request.user.is_authenticated %}
+            <form id="follow-form" data-user-id="{{ user.pk }}">
+              {% csrf_token %}
+              {% if request.user in user.followers.all %}
+                <button id="follow-btn" class="btn btn-success form-control" type="submit">언팔로우</button>
+              {% else %}
+                <button id="follow-btn" class="btn btn-outline-success form-control" type="submit">팔로우</button>
+              {% endif %}
+            </form>
+          {% else %}
+            <button class="btn btn-outline-success form-control disabled">팔로우</button>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script> const followUrl = "{% url 'accounts:follow' user.pk %}"; </script>
+  <script>
+    const followForm = document.querySelector("#follow-form")
+    const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value
+
+    followForm.addEventListener("submit", function (event) {
+      event.preventDefault()
+      axios({
+        method: "POST",
+     // url: `/accounts/follow/${event.target.dataset.userId}/`,
+        url: followUrl,
+        headers: {'X-CSRFToken': csrftoken},
+      })
+      .then(response => {
+        const isFollowed = response.data.is_followed
+        const followBtn = document.querySelector('#follow-form > #follow-btn')
+        const followersCountTag = document.querySelector('#followers-count')
+        const followingsCountTag = document.querySelector('#followings-count')
+
+        if (isFollowed) {
+          followBtn.classList.add("btn-success")
+          followBtn.classList.remove("btn-outline-success")
+          followBtn.innerText = "언팔로우"
+        }
+        else {
+          followBtn.classList.add("btn-outline-success")
+          followBtn.classList.remove("btn-success")
+          followBtn.innerText = "팔로우"
+        }
+        followersCountTag.innerText =  response.data.followers_count
+        followingsCountTag.innerText = response.data.followings_count
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
+    })
+  </script>
+{% endblock js %}
+
