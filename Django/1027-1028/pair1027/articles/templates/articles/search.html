@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-center mt-3 my-3" style="height: 35px;">
+    <form class="d-flex" role="search" action=" {% url 'articles:search' %}">
+        <select class="form-select form" name="select" style="width: 8rem;">
+            <option value="1">작성자</option>
+            <option value="2">게시글</option>
+        </select>
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+          name="search">
+      <button class="btn btn-outline-dark" type="submit">Search</button>
+    </form>
+</div>
+
+<div>
+  {% if articles.count == 0 %}
+  <h2 class="m-3">검색 결과가 없습니다.</h2>
+  {% else %}
+  <h2 class="m-3">검색 결과</h2>
+  <div class="container">
+    {% for article in articles %}
+    <div class="card" style="width: 18rem;">
+        {% if article.thumbnail %}
+        <img src="{{ article.thumbnail.url }}" class="card-img-top" alt="thumbnail">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">제목: {{ article.title }}</h5>
+          <p class="card-text">평점:
+            {% if article.grade == 5 %}
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            {% endif %}
+            {% if article.grade == 4 %}
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            {% endif %}
+            {% if article.grade == 3 %}
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            {% endif %}
+            {% if article.grade == 2 %}
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            {% endif %}
+            {% if article.grade == 1 %}
+            <i class="bi bi-star-fill" style="color: rgba(255, 217, 0, 0.921);"></i>
+            {% endif %}
+        </p>
+          <p class="card-text">좋아요 수:{{article.like_users.count }}</p>
+          <p class="card-text">댓글 수:{{article.comment_set.count }}</p>
+          <a href="{% url 'articles:detail' article.pk %}" class="btn btn-dark">자세히</a>
+        </div>
+      </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>
+<hr>
+
+{% endblock content %}

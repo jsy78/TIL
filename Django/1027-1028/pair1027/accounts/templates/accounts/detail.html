@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="me-4 my-4">{{ user.username }}님의 프로필</h2>
+  <div class="p-4 text-center">
+    <p class="text-center">
+      이름: {{ user.full_name }}
+    </p>
+    <p class="text-center">
+      이메일 : {{ user.email }}
+    </p>
+    <div class="text-center">
+      팔로워 : <span id="followers-count">{{ user.followers.all|length }}명</span> |
+      팔로잉 : <span id="followings-count">{{ user.followings.all|length }}명</span>
+    </div>
+  </div>
+  <hr>
+  <div class="p-4 text-center">
+    {% if request.user == user %}
+      <div class="row justify-content-center mb-3">
+        <div class="col-4">
+          <a class="btn btn-primary" href="{% url 'accounts:update' %}">회원 정보 수정</a>
+          <a class="btn btn-warning" href="{% url 'accounts:password' %}">비밀번호 변경</a>
+          <a class="btn btn-danger" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if request.user != user %}
+    <div data-my-id="my-data">
+      <form class="my-5" id="follow-form" data-user-id="{{ user.pk }}">
+      {% csrf_token %}
+      {% if request.user in user.followers.all %}
+        <input class="btn btn-outline-danger" type="submit" value="언팔로우">
+      {% else %}
+        <input class="btn btn-outline-primary" type="submit" value="팔로우">
+      {% endif %}
+      </form>
+    </div>
+    {% endif %}
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const form = document.querySelector('#follow-form')
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+  form.addEventListener('submit', function (event){
+    event.preventDefault()
+    const userId = event.target.dataset.userId
+    axios({
+      method: 'post',
+      url: `/accounts/${userId}/follow/`,
+      headers: {'X-CSRFToken': csrftoken,}
+    })
+      .then((response) => {
+        const isFollowed = response.data.is_followed
+        const followBtn = document.querySelector('#follow-form > input[type=submit]')
+        if (isFollowed === true) {
+          followBtn.classList.add('btn-outline-danger')
+          followBtn.classList.remove('btn-outline-primary')
+          followBtn.value = '언팔로우'
+        } else {
+          followBtn.classList.add('btn-outline-primary')
+          followBtn.classList.remove('btn-outline-danger')
+          followBtn.value = '팔로우'
+        }
+        const followersCountTag = document.querySelector('#followers-count')
+        const followingsCountTag = document.querySelector('#followings-count')
+        followersCountTag.innerText = `${response.data.followers_count}명`
+        followingsCountTag.innerText = `${response.data.followings_count}명`
+      })
+    })
+</script>
+
+{% endblock content %}

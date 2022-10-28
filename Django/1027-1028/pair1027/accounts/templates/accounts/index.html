@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="p-4">
+    <h2 class="me-4 my-4">회원</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">회원번호</th>
+          <th scope="col">ID</th>
+          <th scope="col">이름</th>
+          <th scope="col">이메일</th>
+          <th scope="col">Following</th>
+          <th scope="col">Follower</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <th scope="row" class="align-middle">{{ user.pk }}</td>
+            <td class="align-middle">
+              <a href="{% url 'accounts:detail' user.pk %}" class="text-decoration-none">{{ user.username }}</a>
+            </td>
+            <td class="align-middle">{{ user.full_name }}</td>
+            <td class="align-middle">{{ user.email }}</td>
+            <td class="align-middle">{{ user.followings.count }}</td>
+            <td class="align-middle">{{ user.followers.count }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
