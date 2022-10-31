@@ -39,7 +39,7 @@
 | <span style="color: red">9</span>  | <span style="color: red">10<br/>한글날</span> | [11<br/>Django](./Django/Django08.md) | [12<br/>Django](./Django/Django09.md) | [13<br/>Django](./Django/Django10.md) |   [14<br/>Django](./Django/1014)    | <span style="color: blue">15</span> |
 | <span style="color: red">16</span> |     [17<br/>Django](./Django/Django11.md)     | [18<br/>Django](./Django/Django12.md) | [19<br/>Django](./Django/Django13.md) |    [20<br/>Django](./Django/1020)     |   [21<br/>Django](./Django/1021)    | <span style="color: blue">22</span> |
 | <span style="color: red">23</span> |     [24<br/>Django](./Django/Django14.md)     | [25<br/>Django](./Django/Django15.md) | [26<br/>Django](./Django/Django16.md) |  [27<br/>Django](./Django/1027-1028)  | [28<br/>Django](./Django/1027-1028) | <span style="color: blue">29</span> |
-| <span style="color: red">30</span> |                      31                       |                                       |                                       |                                       |                                     |                                     |
+| <span style="color: red">30</span> |    [31<br/>Project I](./Project%20I/1031)     |                                       |                                       |                                       |                                     |                                     |
 
 ## 2022-11
 
