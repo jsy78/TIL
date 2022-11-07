@@ -280,6 +280,11 @@ def followings(request):
         for article in followings_user.article_set.all():
             articles.append(article)
 
+    # articles = list()
+    # for following_user in request.user.followings.all():
+    #     for article in following_user.article_set.all():
+    #         articles.append(article)
+
     articles.sort(key=lambda x: x.created_at, reverse=True)
 
     page = request.GET.get("page", "1")  # 페이지

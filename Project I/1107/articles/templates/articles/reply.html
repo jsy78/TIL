@@ -11,7 +11,13 @@
           {% else %}
             <a class="card-text m-2 comment-user" href="{% url 'accounts:profile' comment.user %}">{{ comment.user }}</a>
           {% endif %}
-          <p class="card-text text-muted">{{ comment.created_at|date:'Y-m-d D' }}</p>
+          <p class="card-text text-muted">
+            {% if comment.created_string == False %}
+              {{ comment.created_at|date:'Y-m-d D' }}
+            {% else %}
+              {{ comment.created_string }}
+            {% endif %}
+          </p>
         </div>
         <div class="d-flex justify-content-between m-2">
           <p>{{ comment.content }}</p>
