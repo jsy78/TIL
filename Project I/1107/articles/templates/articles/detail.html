@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <!-- 지도 -->
+      <div class="col-sm-3">
+        <div class="card my-5">
+          <div class="card-body d-flex flex-column align-items-center">
+            <div id="map" style="width:90%;"></div>
+            <input type="hidden" id="detailLocation" value="{{ article.location }}" style="z-index:-30; width:1px;">
+          </div>
+          <a href="/search/?q={{ article.roadname }}" class="ms-3 text-decoration-none text-dark">
+            <p class="mb-1 me-3 fw-bold text-truncate">{{ article.location }}</p>
+            <p class="mb-3">맛집 더 찾아보기 <i class="bi bi-arrow-right-circle-fill ms-2 text-secondary" ></i></p>
+          </a>
+        </div>
+      </div>
+      <!-- 게시글 -->
+      <div class="col-sm-9">
+        <div class="container d-flex flex-column justify-content-center mt-5 mb-3 p-5 rounded-4 shadow">
+          <div class="d-flex justify-content-between align-middle align-items-end">
+            <h2 class="fs-1 text-center">
+              <span class="fw-bold">
+                {{ article.title }}
+              </span>
+              <span class="fs-3 text-muted d-inline-block text-truncate" style="max-width: 350px;">
+                | {{ article.location }}
+              </span>
+            </h2>
+            <p class="mb-0 fs-5 text-muted">{{ article.foodType }}</p>
+          </div>
+          <hr class="mt-1 mb-2">
+          <div class="d-flex justify-content-between align-items-center text-muted px-1">
+            <!-- 평점 -->
+            {% if article.grade == 0.5 %}
+              <div>
+              <i class="p-0  bi bi-star-half fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 1 %}
+              <div>
+              <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 1.5 %}
+              <div>
+              <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star-half fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 2 %}
+              <div>
+              <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 2.5 %}
+              <div>
+              <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star-half fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 3 %}
+              <div>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 3.5 %}
+              <div>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-half fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 4 %}
+              <div>
+                <i class="p-0 bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 4.5 %}
+              <div>
+                <i class="p-0 bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-half fs-4 text-warning"></i>
+              </div>
+            {% elif article.grade == 5 %}
+              <div>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+                <i class="p-0  bi bi-star-fill fs-4 text-warning"></i>
+              </div>
+            {% endif %}
+            <div class="text-end">
+              <p class="m-0">
+                {% if request.user == article.user %}
+                  작성자 : 
+                  <a href="{% url 'accounts:mypage' %}" class="text-decoration-none text-dark">
+                    <span class="nav1-text">{{ article.user.username }}</span>
+                  </a>
+                {% else %}
+                  작성자 : 
+                  <a href="{% url 'accounts:profile' article.user.username %}" class="text-decoration-none text-dark">
+                    <span class="nav1-text">{{ article.user.username }}</span>
+                  </a>
+                {% endif %}
+              </p>
+              {% if article.is_updated == False %}
+                <p class="m-0">
+                  {% if article.created_string == False %}
+                    {{ article.created_at|date:'Y-m-d D' }}
+                  {% else %}
+                    {{ article.created_string }}
+                  {% endif %}
+              {% else %}
+                <p class="m-0">
+                  {% if article.created_string == False %}
+                    {{ article.updated_at|date:'Y-m-d D' }}
+                  {% else %}
+                    {{ article.created_string }}
+                  {% endif %}
+                  {% comment %} {{ article.updated_at|date:'Y-m-d D' }} {% endcomment %}
+                  (수정됨)</p>
+              {% endif %}
+            </div>
+          </div>
+          <hr class="mt-2">
+          {% if article.image %}
+            <div class="d-flex justify-content-center">
+              <img src="{{ article.image.url }}" class="container">
+            </div>
+          {% endif %}
+          <p class="fs-5 mt-3 mb-5 px-3">{{ article.content }}</p>
+          <hr>
+          <!-- 아이콘 -->
+          <div class="d-flex">
+            <!-- 조회수 -->
+            <div class="d-flex flex-column align-items-center me-3">
+              <i class="bi bi-search fs-4"></i>
+              <p class=hits>{{ article.hits }}</p>
+            </div>
+            <!-- 좋아요 -->
+            <div class="d-flex flex-column align-items-center me-3">
+              <button id="like-btn" class="btn btn-lg p-0 m-0 border-0" data-article-id="{{ article.pk }}">
+                {% if request.user in article.like_users.all %}
+                  <i id="heart-icon" class="bi bi-heart-fill fs-4" style="color: #f38524;"></i>
+                {% else %}
+                  <i id="heart-icon" class="bi bi-heart fs-4" style="color: #f38524;"></i>
+                {% endif %}
+              </button>
+              <p id="like-count">{{ article.like_users.count }}</p>
+            </div>
+
+            <!-- 공유 -->
+            <div class="d-flex flex-column align-items-center me-3">
+              <button class="btn btn-lg p-0 m-0 border-0" data-bs-toggle="modal" data-bs-target="#shareModal">
+                <i class="bi bi-share fs-4"></i>
+              </button>
+              <p>공유</p>
+            </div>
+            <!-- 스크랩 -->
+            <div class="d-flex flex-column align-items-center me-3">
+              <button id="bookmark-btn" class="btn btn-lg p-0 m-0 border-0" data-article-id="{{ article.pk }}">
+                {% if request.user in article.bookmark_users.all %}
+                  <i id="bookmark-icon" class="bi bi-bookmark-fill fs-4" style="color: #ea449a;"></i>
+                {% else %}
+                  <i id="bookmark-icon" class="bi bi-bookmark fs-4" style="color: #ea449a;"></i>
+                {% endif %}
+              </button>
+              <p id="bookmark-count">{{ article.bookmark_users.count }}</p>
+            </div>
+          </div>
+        </div>
+        <!-- 수정, 뒤로, 삭제 버튼 -->
+        <div class="d-flex justify-content-end">
+        {% if request.user == article.user %}
+        <div>
+          <a class="btn btn-orange m-2 rounded-pill" href="{% url 'articles:update' article.pk %}">수정</a>
+          <input class="btn btn-outline-secondary m-2 rounded-pill" type="button" value="뒤로" onclick="back()">
+          <a class="btn btn-pink m-2 rounded-pill" href="{% url 'articles:delete' article.pk %}">삭제</a>
+        </div>
+        {% else %}
+          <input class="btn btn-outline-secondary m-2 rounded-pill" type="button" value="뒤로" onclick="back()">
+        {% endif %}
+        </div>
+        <!-- 댓글 -->
+        <div class="mt-3 mb-5 p-5 rounded-4 shadow">
+          <div class="mb-4">
+            {% if request.user.is_authenticated %}
+              <form id="comment-create-form" data-article-id="{{ article.pk }}">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between">
+                  <div class="flex-fill me-2">
+                    {% bootstrap_form comment_form %}
+                  </div>
+                  <div>
+                    <input class="btn btn-search" type="submit" value="작성">
+                  </div>
+                </div>
+              </form>
+            {% else %}
+              <div class="rounded bg-white border border-2">
+                <p class="text-muted align-middle m-2">댓글을 달려면 로그인해야 합니다.</p>
+              </div>
+            {% endif %}
+          </div>
+          <div id="comments-area">
+            <h5>{{ comments_count }}개의 댓글</h5>
+            <hr class="mb-0">
+            <ul id="comments-list" class="list-group list-group-flush rounded-2">
+              {% for comment in comments %}
+                <li id="comment-{{ comment.pk }}" class="list-group-item bg-light p-0">
+                  <div id="comment-{{ comment.pk }}-user" class="d-flex justify-content-between align-items-center">
+                    {% if request.user == comment.user %}
+                      <a class="card-text m-2 comment-user" href="{% url 'accounts:mypage' %}">{{ comment.user }}</a>
+                    {% else %}
+                      <a class="card-text m-2 comment-user" href="{% url 'accounts:profile' comment.user %}">{{ comment.user }}</a>
+                    {% endif %}
+                    <p class="card-text text-muted">
+                      {% if comment.created_string == False %}
+                        {{ comment.created_at|date:'Y-m-d D' }}
+                      {% else %}
+                        {{ comment.created_string }}
+                      {% endif %}
+                  </div>
+                  <div class="d-flex justify-content-between m-2">
+                    <p>{{ comment.content }}</p>
+                    <div id="btn-{{ comment.pk }}" class="d-flex align-items-baseline">
+                      {% if request.user == comment.user %}
+                      <form class="comment-delete-form" data-article-id="{{ article.pk }}" data-comment-id="{{ comment.pk }}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm p-0 border-0 text-danger text-decoration-none me-2" type="submit"><i class="bi bi-x-square"></i></button>
+                      </form>
+                      {% endif %}
+                      {% if request.user.is_authenticated %}
+                        <button class="btn btn-sm p-0 border-0 text-secondary text-decoration-none me-2 reply-btn" data-comment-id="{{ comment.pk }}"><i class="bi bi-arrow-down-right"></i></button>
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% if request.user.is_authenticated %}
+                    <div id="reply-create-{{ comment.pk }}" class="d-none">
+                      <form class="reply-create-form" data-article-id="{{ article.pk }}" data-comment-id="{{ comment.pk }}">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                          <div class="flex-fill me-2">
+                            {% bootstrap_form reply_form %}
+                          </div>
+                          <div>
+                            <input class="btn btn-search" type="submit" value="작성">
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  {% endif %}
+                  {% with parent=comment reply_list=comment.reply_set.all %}
+                    {% include 'articles/reply.html' %}
+                  {% endwith %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div> <!-- 댓글 -->
+      </div> <!-- 게시글 col-sm-9 -->
+    </div> <!-- row -->
+
+    <!-- 공유 Modal -->
+    <div class="modal fade" id="shareModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">공유하기</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>다음 링크를 복사해주세요.</p>
+            <p>{{ request.build_absolute_uri }}</p>
+            <!-- 절대 링크 -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- container -->
+
+
+  <!-- 뒤로가기 버튼 -->
+  <script>
+    const back = () => {
+        window.history.back();
+    }
+  </script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={% include 'articles/appkey.txt' %}&libraries=services"></script>
+  <!-- 지도 -->
+  <script type="text/javascript" src="/static/js/mapsearch.js"></script>
+  <!-- 좋아요 비동기 -->
+  <script type="text/javascript" src="/static/js/heart.js"></script>
+  <!-- 스크랩 비동기 -->
+  <script type="text/javascript" src="/static/js/scrap.js"></script>
+  <!-- 댓글 비동기 -->
+  <script type="text/javascript" src="/static/js/comment.js"></script>
+{% endblock content %}
+

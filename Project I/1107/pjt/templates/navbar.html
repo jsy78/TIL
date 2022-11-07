@@ -1,0 +1,119 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!-- Navbar 1 -->
+<nav class="navbar-stretch navbar-expand-lg p-0 bg-white sticky-top">
+  <div class="d-flex flex-column px-5 py-2">
+    <ul class="navbar-nav me-0 mb-2 mb-lg-0 d-flex justify-content-between align-items-center">
+      <!-- 로고 -->
+      <div>
+        <a class="navbar-brand" href="{% url 'main' %}">
+          <img src="{% static 'images/맛팔해조 로고.png' %}" alt="Logo" style="width: 11rem; height: 4rem;">
+        </a>
+      </div>
+      <!-- 검색창 -->
+      <div style="width: 30rem;">
+        <li class="nav-item">
+          <form class="form-inline my-2 my-lg-0 d-flex" style="position:sticky; top:70px; right:25px;" action="{% url 'search:searchResult' %}" method="get">
+            <input class="form-control bg-light" type="search" placeholder="지역, 음식 또는 식당" aria-label="Search" name="q">
+            <button class="btn btn-search rounded-pill px-3 ms-2" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+          <!-- 서치바 -->
+        </li>
+      </div>
+      <!-- 토글러 -->
+      <div class="d-flex">
+        {% if request.user.is_authenticated %}
+          <li class="nav-item me-4 nav1-text">
+            <a class="nav-link" href="{% url 'accounts:mypage' %}">{{ request.user }}</a>
+          </li>
+          <li class="nav-item nav1-text">
+            <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
+          </li>
+        {% else %}
+          <li class="nav-item me-4 nav1-text">
+            <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
+          </li>
+          <li class="nav-item nav1-text">
+            <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입</a>
+          </li>
+        {% endif %}
+      </div>
+    </ul>
+  </div>
+
+  <!-- Navbar 2 -->
+  <!-- 아래로 스크롤 => 사라짐 / 위로 스크롤 => 나타남 -->
+  <ul class="lower-navbar navbar-nav text-white d-flex justify-content-between align-items-center px-5 py-1">
+    <div class="d-flex">
+      <!--
+      <li class="nav-item mx-5">
+        <a class="nav-link nav2-text" aria-current="page" href="{% url 'accounts:index' %}">All</a>
+      </li> 
+    -->
+      <li class="nav-item mx-5">
+        <a class="nav-link nav2-text" aria-current="page" href="{% url 'articles:index' %}">All</a>
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link nav2-text" aria-current="page" href="{% url 'accounts:followings' %}">Following</a>
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link nav2-text" aria-current="page" href="{% url 'articles:saved' %}">Saved</a>
+      </li>
+    </div>
+    <div>
+      <a class="nav-link nav2-text mx-5" aria-current="page" href="{% url 'articles:create' %}">후기쓰기</a>
+    </div>
+  </ul>
+</div>
+</div>
+</nav>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+// https://webdir.tistory.com/481
+// Hide .lower-navbar on on scroll down
+var didScroll;
+var lastScrollTop = 0;
+var delta = 5;
+var navbarHeight = $('.lower-navbar').outerHeight();
+
+$(window).scroll(function (event) {
+didScroll = true;
+});
+
+setInterval(function () {
+if (didScroll) {
+  hasScrolled();
+  didScroll = false;
+}
+}, 250);
+
+function hasScrolled() {
+var st = $(this).scrollTop();
+
+// Make sure they scroll more than delta
+if (Math.abs(lastScrollTop - st) <= delta) 
+  return;
+
+// If they scrolled down and are past the navbar, add class .nav-up.
+// This is necessary so you never see what is "behind" the navbar.
+if (st > lastScrollTop && st > navbarHeight) {
+  // Scroll Down
+  $('.lower-navbar')
+    .removeClass('nav-down')
+    .addClass('nav-up');
+} else {
+  // Scroll Up
+  if (st + $(window).height() < $(document).height()) {
+    $('.lower-navbar')
+      .removeClass('nav-up')
+      .addClass('nav-down');
+  }
+}
+
+lastScrollTop = st;
+}
+</script>

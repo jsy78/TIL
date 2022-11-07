@@ -1,0 +1,307 @@
+/* @media 사용 => responsive */
+#map {
+  width: 250px;
+  height: 280px;
+  border-radius: 2%;
+  border: 1px solid #6c757d;
+}
+
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.table-img:hover {
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+}
+
+.topBtn {
+  background: linear-gradient(45deg, #ea449a, #f38524);
+  color: white;
+  /* color: #ea449a;
+  background-color: white; */
+  /* border: 2px solid #ea449a; */
+  border: none;
+  border-radius: 50%;
+  padding: 15px 14px;
+  box-shadow: rgba(225, 19, 131, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.lower-navbar {
+  background-color: #f38524;
+  color: white;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  z-index: 100;
+  width: 100%;
+  transform: translate(-50%);
+  transition: top 0.2s ease-in-out;
+}
+
+/* JS로 추가 */
+.nav-up {
+  top: -80px;
+}
+
+.btn-orange {
+  background-color: white;
+  color: #f38524;
+  border: 1px solid #f38524;
+}
+
+.btn-orange:hover {
+  background-color: #f38524;
+  color: white;
+  border: 1px solid #f38524;
+}
+
+.btn-pink {
+  background-color: white;
+  color: #ea449a;
+  border: 1px solid #ea449a;
+}
+
+.btn-pink:hover {
+  background-color: #ea449a;
+  color: white;
+  border: 1px solid #ea449a;
+}
+
+.btn-search {
+  background-color: #ea449a;
+  color: white;
+  border: 1px solid #ea449a;
+}
+
+.btn-search:hover {
+  background-color: #e11383;
+  color: white;
+  border: 1px solid #e11383;
+}
+
+.btn-form {
+  background-color: #ea449a;
+  color: white;
+  border: 1px solid #ea449a;
+}
+
+.btn-form:hover {
+  background-color: #e11383;
+  color: white;
+  border: 1px solid #e11383;
+}
+
+.btn-outline-pink {
+  background-color: white;
+  color: #ea449a;
+  border: 1px solid #ea449a;
+}
+
+.btn-outline-pink:hover {
+  font-weight: bold;
+  color: #ea449a;
+  border: 2px solid #e11383;
+}
+
+.bi-heart:hover {
+  color: #f38524;
+}
+
+.bi-share:hover {
+  color: #0d6efd;
+}
+
+.bi-bookmark:hover {
+  color: #ea449a;
+}
+
+.nav1-text:hover {
+  color: #ea449a;
+}
+
+/* .nav2-text:hover {
+  font-weight: bold;
+  margin-left: -2px;
+  margin-right: -1.9px;
+} */
+
+.nav2-text {
+  color: white;
+  position: relative;
+  padding: 0;
+  margin: 10px 0;
+  /* text-decoration: none; */
+}
+
+.nav2-text::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  border-radius: 3px;
+  background-color: white;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav2-text:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.nav2-mypage:hover {
+  font-weight: bold;
+}
+
+.comment-user {
+  text-decoration: none;
+  color: #6c757d;
+}
+
+.comment-user:hover {
+  color: #ea449a;
+}
+
+.black-pink {
+  color: black;
+}
+
+.black-pink:hover {
+  color: #ea449a;
+}
+
+/* Medium devices (tablets, 768px and up) 
+The navbar toggle appears at this breakpoint */
+/* @media (min-width: 768px) {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+    border-radius: 0;
+  }
+} */
+
+/* ㅡㅡㅡㅡㅡㅡㅡㅡ 아래 성민 ㅡㅡㅡㅡㅡㅡㅡㅡ */
+.black {
+  color: black;
+}
+
+.pink {
+  color: #ea449a;
+}
+
+.pink-btn {
+  color: white;
+  background-color: #ea449a;
+}
+
+.pink-btn:hover {
+  color: #ea449a;
+  background-color: white;
+  border: 1px solid #ea449a;
+}
+
+/* carousel 버튼 색 */
+.carousel-btn {
+  color: gray;
+  border: 0;
+}
+
+.carousel-btn:hover {
+  color: #ea449a;
+}
+
+/* 별 평점, 깜박임 효과 */
+.blink {
+  animation: blink-effect 0.5s step-end infinite;
+}
+
+@keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
+}
+
+.dot-yellow {
+  border: 3px dotted yellow;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.hidden-white {
+  visibility: hidden;
+  color: white;
+}
+
+.white {
+  color: white;
+}
+
+.gray {
+  color: gray;
+}
+
+.form-center {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.berry-title {
+  width: 10rem;
+  background-color: white;
+}
+
+/* form 버튼 효과 */
+.rainbow {
+  background-color: #ea449a;
+  border-radius: 4px;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.rainbow-5:hover {
+  background-image: linear-gradient(
+    to right,
+    #e7484f,
+    #e7484f 16.65%,
+    #f68b1d 16.65%,
+    #f68b1d 33.3%,
+    #fced00 33.3%,
+    #fced00 49.95%,
+    #009e4f 49.95%,
+    #009e4f 66.6%,
+    #00aac3 66.6%,
+    #00aac3 83.25%,
+    #732982 83.25%,
+    #732982 100%,
+    #e7484f 100%
+  );
+  animation: slidebg 2s linear infinite;
+}
+
+@keyframes slidebg {
+  to {
+    background-position: 20vw;
+  }
+}
+
+/* 정렬선택 색 */
+.down {
+  color: #ea449a;
+  border-color: #ea449a;
+}
+
+.down:hover {
+  color: white;
+  background-color: #fabfdd;
+}

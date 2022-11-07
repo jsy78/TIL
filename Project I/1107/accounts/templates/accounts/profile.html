@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+{% comment %} {% static 'css/style2.css' %} {% endcomment %}
+{% endblock css %}
+
+{% block content %}
+<div class="container m-auto">
+  <h1 class="text-center mt-5 pt-5 fs-3 fw-bold">{{ user.username }}님의 프로필</h1>
+
+  <div class="px-4 py-3 pb-5">
+    <div class="row mx-auto mb-3 rounded bg-white border">
+      <div class="col-2 my-3 d-flex justify-content-center align-items-center">
+        {% if user.profile %}
+          <img src="{{ user.profile.url }}" class="rounded img-fluid" alt="{{ user.profile }}" style="width:150px;"></td>
+        {% else %}
+          <img src="https://source.boringavatars.com/bauhaus/150/{{ user.email }}" class="rounded img-fluid" alt="{{ user.email }}" style="width:150px;"></td>
+        {% endif %}
+      </div>
+      <div class="col-8 my-3 d-flex flex-column justify-content-center">
+        <h2 class="my-2">{{ user.nickname }}</h2>
+        <h5 class="my-2">{{ user.email }}</h5>
+        <h5 class="my-2">
+          팔로잉 : <span id="followings-count">{{ user.followings.count }}</span>명 | 
+          팔로워 : <span id="followers-count">{{ user.followers.count }}</span>명
+        </h5>
+      </div>
+      <div class="col-2 my-3 d-flex justify-content-center align-items-center">
+        {% if request.user.is_authenticated %}
+          {% if request.user != user %}
+            <form id="follow-form" data-user-name="{{ user.username }}">
+              {% csrf_token %}
+              {% if request.user in user.followers.all %}
+                <button id="follow-btn" class="btn btn-outline-pink" type="submit">팔로우 취소</button>
+              {% else %}
+                <button id="follow-btn" class="btn btn-form" type="submit">팔로우</button>
+              {% endif %}
+            </form>
+          {% else %}
+            <button class="btn btn-form disabled">팔로우</button>
+          {% endif %}
+        {% else %}
+          <button class="btn btn-form disabled">팔로우</button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mx-auto mb-3 py-3 rounded bg-white border">
+      <div class="col-2 my-3">
+        <div class="list-group">
+          <button type="button" class="list-group-item list-group-item-action">작성한 글</button>
+        </div>
+      </div>
+      <div class="col-10 px-5">
+        <div class="user-articles d-block">
+          <div class="row flex-wrap justify-content-center">
+            <!-- 작성한 글-->
+            {% for article in paginated_user_articles_lists %}
+              <div class="col-sm-3 mb-5" style="min-width: 15rem; height: 21rem;">
+                  <a href="{% url 'articles:detail' article.pk %}" class="p-0 text-decoration-none text-dark">
+                  <div class="card h-100 m-3">
+                      <img src="{{ article.image.url }}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                          <h5 class="card-title text-center text-dark text-decoration-none mt-1 mb-4">{{ article.title }}</h5>
+                          <p class="mb-2 text-muted text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</p>
+                          <p><i class="pink bi bi-hash"></i> {{ article.foodType }}</p>
+                          <div class="">
+                              <span class="me-2">
+                                <i class="pink bi bi-heart-fill"></i>
+                                {{ article.like_users.count }}
+                              </span>
+                              <span class="">
+                                <i class="pink bi bi-search"></i>
+                                {{ article.hits }}
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+                  </a>
+              </div>
+              {% empty %}
+                <p class="text-center fs-5 my-5 py-5">아직 작성한 글이 없어요</p>
+              {% endfor %}
+          </div>
+          <ul class="pagination justify-content-center align-end">
+            <!-- 이전 페이지 -->
+            {% if paginated_user_articles_lists.has_previous %}
+              <!-- 이전 페이지 있으면 연결-->
+              <li class="page-item">
+                <a class="page-link" tabindex="-1"  href="?user-articles-page={{ paginated_user_articles_lists.previous_page_number }}">&laquo;</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+              </li>
+            {% endif %}
+            <!-- 페이지 리스트 -->
+            {% for page_number in paginated_user_articles_lists.paginator.page_range %} <!--페이지 범위를 하나씩 리턴-->
+              <!--현재 페이지일 때는 active-->
+              {% if page_number == paginated_user_articles_lists.number %} 
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="?user-articles-page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?user-articles-page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+            <!-- 다음 페이지 -->
+            {% if paginated_user_articles_lists.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?user-articles-page={{ paginated_user_articles_lists.next_page_number }}">&raquo;</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" href="#">&raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const followForm = document.querySelector("#follow-form")
+    const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value
+    
+    followForm.addEventListener("submit", function (event) {
+      event.preventDefault()
+      axios({
+        method: "POST",
+        url: `/accounts/follow/${event.target.dataset.userName}/`,
+        headers: {'X-CSRFToken': csrftoken},
+      })
+      .then(response => {
+        const isFollowed = response.data.is_followed
+        const followBtn = document.querySelector('#follow-form > #follow-btn')
+        const followersCountTag = document.querySelector('#followers-count')
+        const followingsCountTag = document.querySelector('#followings-count')
+
+        if (isFollowed) {
+          followBtn.classList.add("btn-outline-pink")
+          followBtn.classList.remove("btn-form")
+          followBtn.innerText = "팔로우 취소"
+        }
+        else {
+          followBtn.classList.add("btn-form")
+          followBtn.classList.remove("btn-outline-pink")
+          followBtn.innerText = "팔로우"
+        }
+        followersCountTag.innerText =  response.data.followers_count
+        followingsCountTag.innerText = response.data.followings_count
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
+    })
+  </script>
+{% endblock content %}

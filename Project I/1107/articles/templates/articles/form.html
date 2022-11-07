@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+  <style>
+    body {
+      width: 100vw;
+      background-image: url('https://burst.shopifycdn.com/photos/ripe-red-strawberries-against-pink.jpg?width=925&format=pjpg&exif=1&iptc=1');
+      background-repeat : no-repeat;
+      background-size : cover;
+    }
+  </style>
+{% endblock css %}
+
+{% block content %}
+  <div class="container">
+    <div class="pink d-flex justify-content-center">
+      {% if request.resolver_match.url_name == "create" %}
+      <h1 class="berry-title text-center p-3 m-3 fs-3 fw-bold rounded">후기 작성</h1>
+      {% elif request.resolver_match.url_name == "update" %}
+      <h1 class="berry-title text-center p-3 m-3 fs-3 fw-bold rounded">후기 수정</h1>
+      {% else %}
+      <h1 class="berry-title text-center p-3 m-3 fs-3 fw-bold rounded">후기 삭제</h1>
+      {% endif %}
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="card col-9 review-detail"> 
+        <div class="card-body">
+          <form action="" method="POST" class="text-dark px-5 py-5" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="mb-3">
+              <label class="form-label" for="location">위치</label>
+              <input type="text" id="location" name="location" maxlength="120" class="form-control" placeholder="위치" value="{{ location }}" required readonly>
+              <input type="hidden" id="roadname" name="roadname" maxlength="30" class="form-control" placeholder="도로명" value="{{ roadname }}" required readonly>
+              <div id="map" class="mt-3 d-none" style="width: 300px; height: 300px;"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="grade">평점</label>
+              <input id="grade" name="grade" class="rating rating-loading" data-show-clear="false" data-min="0" data-max="5" data-step="0.5" value="{{ grade }}">
+            </div>
+            <div class="text-center mt-5">
+              <input type="submit" class="rainbow rainbow-5 px-5" value="작성 완료">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block script %}
+  <!-- 주소 API -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <!-- 지도 API -->
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={% include 'articles/appkey.txt' %}&libraries=services"></script>
+  <script type="text/javascript" src="/static/js/address.js"></script>
+{% endblock script %}

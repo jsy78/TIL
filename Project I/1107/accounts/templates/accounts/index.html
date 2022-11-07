@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+    <h1 class="text-center my-5 pt-5 fs-3 fw-bold">전체 회원</h1>
+  </div>
+  <!-- content -->
+  <div class="flex-wrap my-3 pb-5">
+    <main class="container d-flex justify-content-center rounded bg-white border my-5">
+      <section class="container" style="width: 85%; height: auto;">
+          <table class="table my-5 mt-3">
+            <thead>
+              <tr>
+                <th scope="col">User No.</th>
+                <th scope="col">프로필</th>
+                <th scope="col">아이디</th>
+                <th scope="col">닉네임</th>
+                <th scope="col">이름</th>
+                <th scope="col">이메일</th>
+              </tr>
+            </thead>
+            <tbody>
+        {% for user in users %}
+          <tr>
+            <th scope="row" class="align-middle">{{ user.pk }}</td>
+            <td class="align-middle">
+              {% if user.profile %}
+                <img src="{{ user.profile.url }}" class="img-thumbnail rounded" alt="{{ user.profile }}" style="width:50px;"></td>
+              {% else %}
+                <img src="https://source.boringavatars.com/bauhaus/50/{{ user.email }}" class="img-thumbnail rounded" alt="{{ user.email }}" style="width:50px;"></td>
+              {% endif %}
+            <td class="align-middle">
+              {{ user.username }}
+            </td>
+            <td class="align-middle">
+              <a href="{% url 'accounts:profile' user.username %}" class="fw-bold black-pink text-decoration-none">
+              {{ user.nickname }}</a></td>
+            <td class="align-middle">{{ user.full_name }}</td>
+            <td class="align-middle">{{ user.email }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+          </table>
+    </main>
+
+    <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center my-3">
+          <!-- 이전페이지 -->
+          {% if page_list.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_list.previous_page_number }}">이전</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+          {% endif %}
+          <!-- 페이지리스트 -->
+          {% for page_number in page_list.paginator.page_range %}
+            {% if page_number >= page_list.number|add:-5 and page_number <= page_list.number|add:5 %}
+              {% if page_number == page_list.number %}
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          <!-- 다음페이지 -->
+          {% if page_list.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_list.next_page_number }}">다음</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+          {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
+      </section>
+  </div>
+
+{% endblock content %}

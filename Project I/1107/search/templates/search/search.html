@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<div class="container my-5">
+    <p class="fs-5 pt-5">검색어 : <b>"{{ query }}"</b></p>
+    <p class="fs-5 mb-4">검색 결과 : </p>
+  
+    <div class="mx-4">
+      <!-- 게시글 -->
+      <div class="d-flex flex-wrap justify-content-center mb-5">        
+        {% for article in article %}
+        <div class="col-sm-2 mb-5" style="min-width: 15rem; height: 22rem;">
+            <a href="{% url 'articles:detail' article.pk %}" class="p-0 text-decoration-none text-dark">
+            <div class="card h-100 m-3">
+                <img src="{{ article.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <!--본문-->
+                    <h5 class="card-title text-center text-dark text-decoration-none mt-1 mb-4">{{ article.title }}</h5>
+                    <p class="mb-2 text-muted text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</p>
+                    <p><i class="pink bi bi-hash"></i> {{ article.foodType }}</p>
+                    <div class="">
+                        <span class="me-2">
+                          <i class="pink bi bi-heart-fill"></i>
+                          {{ article.like_users.count }}
+                        </span>
+                        <span class="">
+                          <i class="pink bi bi-search"></i>
+                          {{ article.hits }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="row mx-auto">
+          <p class="text-center fs-5">검색 결과가 없어요 😥</p>
+          <p class="text-center text-muted">지역, 음식 또는 식당 이름을 검색해 주세요.</p>
+        </div>
+        {% endfor %}
+      </div> <!-- flex -->
+    </div>
+</div> <!-- container -->
+
+<script>
+    const back = () => {
+        window.history.back();
+    }
+</script>
+{% endblock content %}

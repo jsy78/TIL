@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="container my-4">
+    <h1 class="text-center my-5 pt-5 fs-3 fw-bold">전체 후기</h1>
+  </div>
+  <!-- content -->
+  <div class="flex-wrap my-3 pb-5">
+    <main class="container d-flex justify-content-center rounded bg-white border my-5">
+      <section class="container" style="width: 85%; height: auto;">
+          <table class="table my-5 mt-3">
+            <thead>
+              <tr>
+                <th scope="col">후기 No.</th>
+                <th scope="col">사진</th>
+                <th scope="col">후기 제목</th>
+                <th scope="col">후기 작성자</th>
+                <th scope="col">작성일자</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for article in page_list %}
+                <tr>
+                  <td scope="row" class="align-middle">{{ article.pk }}</td>
+                  <td>
+                    <a href="{% url 'articles:detail' article.pk %}">
+                    <img src="{{ article.image.url }}" class="table-img card-img-top rounded" alt="..." style="float: left; width:5rem; height:5rem;">
+                    </a></td>
+                  <th class="align-middle">
+                    <a href="{% url 'articles:detail' article.pk %}" class="black-pink text-decoration-none">{{ article.title }}</a>
+                  </th>
+                  <td class="align-middle">
+                    {% if request.user == article.user %}
+                  <a href="{% url 'accounts:mypage' %}" class="text-decoration-none text-dark">
+                    <span class="nav1-text">{{ article.user.username }}</span>
+                  </a>
+                {% else %}
+                  <a href="{% url 'accounts:profile' article.user.username %}" class="text-decoration-none text-dark">
+                    <span class="nav1-text">{{ article.user.username }}</span>
+                  </a>
+                {% endif %}
+              </td>
+                  <td class="align-middle">
+                    {% if article.is_updated == False %}
+                <p class="m-0">
+                  {% if article.created_string == False %}
+                    {{ article.created_at|date:'Y-m-d D' }}
+                  {% else %}
+                    {{ article.created_string }}
+                  {% endif %}
+              {% else %}
+                <p class="m-0">
+                  {% if article.created_string == False %}
+                    {{ article.updated_at|date:'Y-m-d D' }}
+                  {% else %}
+                    {{ article.created_string }}
+                  {% endif %}
+                  (수정됨)</p>
+              {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          {% comment %} <div class="row">
+            {% for article in page_list %}
+              <!--각각의 글들-->
+              <div class="d-block">
+                <div class="text-center w-75 mx-auto my-2 d-flex justify-content-around align-items-center">
+                  {% if article.image %}
+                    <!--이미지-->
+                    <img src="{{ article.image.url }}" class="card-img-top rounded" alt="..." style="float: left; width:100px; height:100px;">
+                  {% else %}
+                    <!--이미지 없을시-->
+                    <img src="https://dummyimage.com/50x50/000000/c4c4c4" class="card-img-top">
+                  {% endif %}
+                  <div>
+                    <!--본문-->
+                    <h5 class="my-2">{{ article.title }}</h5>
+                    <p class="text-muted mb-2">
+                      {% if request.user == article.user %}
+                        <a href="{% url 'accounts:mypage' %}" class="text-dark text-decoration-none">{{ article.user.username }}</a>
+                      {% else %}
+                        <a href="{% url 'accounts:profile' article.user.username %}" class="text-dark text-decoration-none">{{ article.user.username }}</a>
+                      {% endif %}
+                      <!--user페이지 링크-->
+                    </p>
+                    {% if article.created_at == article.updated_at %}
+                <p class="m-0">
+                  {% if article.created_string == False %}
+                    {{ article.created_at|date:'Y-m-d D' }}
+                  {% else %}
+                    {{ article.created_string }}
+                  {% endif %}
+              {% else %}
+                <p class="m-0">
+                  {% if article.created_string == False %}
+                    {{ article.updated_at|date:'Y-m-d D' }}
+                  {% else %}
+                    {{ article.created_string }}
+                  {% endif %}
+                  (수정됨)</p>
+              {% endif %}
+                    <!--날짜-->
+                  </div>
+                <a href="{% url 'articles:detail' article.pk %}" class="btn btn-outline-primary my-3">CHECK</a>
+                <!--디테일링크-->
+              </div>
+            {% endfor %}
+          </div> {% endcomment %}
+
+        
+
+      {% comment %} <section class="float-right">
+        <!--aside-->
+        <article class="d-block">
+          <div class="container border border-dark border-2">
+            <div class="h-50">
+              <div class="justify-content-center text-center align-middle mt-2">
+                {% if request.user.is_authenticated %}
+                  <!--로그인되어있으면-->
+                  <p class="text-center">{{ request.user }}</p>
+                  <!--유저네임-->
+                {% else %}
+                  <!--login안되있으면-->
+                  <!-- 
+                    <a href="{% url 'accounts:login' %}" class="btn btn-outline-warning">로그인하세요.</a>
+                  -->
+                  <!--로그인링크-->
+                  login required
+                {% endif %}
+              </div>
+              <hr>
+              <div class="justify-content-center text-center">
+                {% if request.user.is_authenticated %}
+                  <!--로그인 되어있으면-->
+                  <span>
+                    <a href="{% url 'accounts:mypage' %}" class="btn btn-warning">계정 관리</a>
+                    <a href="{% url 'articles:create' %}" class="btn btn-primary my-2">글쓰기</a>
+                  </span>
+                {% else %}
+                  <span>
+                    <!--로그인 안되있으면 비활성화-->
+                    <button class="btn btn-warning" disabled>계정 관리</button>
+                    <button class="btn btn-primary my-2" disabled>글쓰기</button>
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </article>
+      </section> {% endcomment %}
+
+    </main>
+
+    <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center my-3">
+          <!-- 이전페이지 -->
+          {% if page_list.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_list.previous_page_number }}">이전</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+          {% endif %}
+          <!-- 페이지리스트 -->
+          {% for page_number in page_list.paginator.page_range %}
+            {% if page_number >= page_list.number|add:-5 and page_number <= page_list.number|add:5 %}
+              {% if page_number == page_list.number %}
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          <!-- 다음페이지 -->
+          {% if page_list.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_list.next_page_number }}">다음</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+          {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
+      </section>
+  </div>
+{% endblock content %}

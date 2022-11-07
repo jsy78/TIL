@@ -1,0 +1,93 @@
+.bg-pink {
+    background-color: #EA449A;
+}
+
+.bg-orange {
+    background-color: #F38524;
+}
+
+.text-pink {
+    color: #EA449A;
+}
+
+.text-orange {
+    color: #F38524;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.article {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    padding: 0.3em 0;
+    list-style: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.content__id,
+.content__author,
+.content__date {
+    flex-basis: 15%;
+}
+
+.content__title {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.buttons {
+    position: relative;
+    padding: 1rem 0;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.button {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    color: #333;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+.button.active,
+.button:hover {
+    color: #1f975d;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.prev {
+    position: absolute;
+    left: -2.5rem;
+}
+
+.next {
+    position: absolute;
+    right: -2.5rem;
+}
+
+ion-icon {
+    padding-top: 0.05rem;
+}
+
+#trash {
+    background-color: transparent;
+    color: white;
+    border-color: transparent;
+}

@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+
+<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 아래 성민 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+<!-- 배너 부분 carousel -->
+<div class="row">
+<!-- 배너 carousel 좌측 버튼 -->
+<button class="bg-light carousel-btn col-1 fs-1" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+  <i class="bi bi-arrow-left"></i>
+  <span class="visually-hidden">Previous</span>
+</button>
+
+<div id="carouselExampleControls" class="col-10 carousel slide" data-bs-ride="carousel">
+  <div class="py-3 fs-5 fw-bold">인기 맛집 - <span class="pink">TOP 9</span></div>
+  <div class="row carousel-inner">
+
+    <!-- 배너 carousel 1페이지 -->
+    <div class="carousel-item active">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+        {% for article in articles|slice:":3" %}
+          <div class="col mb-4">
+            <a href="{% url 'articles:detail' article.pk %}" class="text-decoration-none text-dark">
+            <div class="card" style="width: 23rem;">
+              <div class="w-100" style="height: 23rem; position: relative;">
+                <img src="{{ article.image.url }}" alt="" class="h-100 card-img-top">
+                <div class="dot-yellow blink px-1" style="position: absolute; top: 91%; left: 84%;">
+                  <span class="hidden"><i class="text-warning bi bi-star-fill"></i></span>
+                  <span class="hidden">{{ article.grade }}</span>
+                </div>
+                <div class="px-1" style="position: absolute; top: 92%; left: 85%; background-color: rgba(0, 0, 0, 0.44);">
+                  <span><i class="text-warning bi bi-star-fill" ></i></span>
+                  <span class="white">{{ article.grade }}</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="my-3 gray card-text text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</p>
+                <p class="card-text"><i class="pink bi bi-hash"></i> {{ article.foodType }}</p>
+                <div class="my-2">
+                <span class="me-2">
+                  <i class="pink bi bi-heart-fill"></i>
+                  {{ article.like_users.count }}
+                </span>
+                <span class="">
+                  <i class="pink bi bi-mouse"></i>
+                  {{ article.hits }}
+                </span>
+              </div>
+              </div>
+            </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 배너 carousel 2페이지 -->
+    <div class="carousel-item">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+        {% for article in articles|slice:"3:6" %}
+          <div class="col mb-4">
+            <a href="{% url 'articles:detail' article.pk %}" class="text-decoration-none text-dark">
+            <div class="card" style="width: 23rem;">
+              <div class="w-100" style="height: 23rem; position: relative;">
+                <img src="{{ article.image.url }}" alt="" class="h-100 card-img-top">
+                <div class="dot-yellow blink px-1" style="position: absolute; top: 91%; left: 84%;">
+                  <span class="hidden"><i class="text-warning bi bi-star-fill"></i></span>
+                  <span class="hidden">{{ article.grade }}</span>
+                </div>
+                <div class="px-1" style="position: absolute; top: 92%; left: 85%; background-color: rgba(0, 0, 0, 0.44);">
+                  <span><i class="text-warning bi bi-star-fill" ></i></span>
+                  <span class="white">{{ article.grade }}</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="my-3 gray card-text text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</p>
+                <p class="card-text"><i class="pink bi bi-hash"></i> {{ article.foodType }}</p>
+                <div class="my-2">
+                <span class="me-2">
+                  <i class="pink bi bi-heart-fill"></i>
+                  {{ article.like_users.count }}
+                </span>
+                <span class="">
+                  <i class="pink bi bi-mouse"></i>
+                  {{ article.hits }}
+                </span>
+              </div>
+              </div>
+            </div>
+          </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 배너 carousel 3페이지 -->
+    <div class="carousel-item">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+        {% for article in articles|slice:"6:9" %}
+          <div class="col mb-4">
+            <a href="{% url 'articles:detail' article.pk %}" class="text-decoration-none text-dark">
+            <div class="card" style="width: 23rem;">
+              <div class="w-100" style="height: 23rem; position: relative;">
+                <img src="{{ article.image.url }}" alt="" class="h-100 card-img-top">
+                <div class="dot-yellow blink px-1" style="position: absolute; top: 91%; left: 84%;">
+                  <span class="hidden"><i class="text-warning bi bi-star-fill"></i></span>
+                  <span class="hidden">{{ article.grade }}</span>
+                </div>
+                <div class="px-1" style="position: absolute; top: 92%; left: 85%; background-color: rgba(0, 0, 0, 0.44);">
+                  <span><i class="text-warning bi bi-star-fill" ></i></span>
+                  <span class="white">{{ article.grade }}</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="my-3 gray card-text text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</p>
+                <p class="card-text"><i class="pink bi bi-hash"></i> {{ article.foodType }}</p>
+                <div class="my-2">
+                <span class="me-2">
+                  <i class="pink bi bi-heart-fill"></i>
+                  {{ article.like_users.count }}
+                </span>
+                <span class="">
+                  <i class="pink bi bi-mouse"></i>
+                  {{ article.hits }}
+                </span>
+              </div>
+              </div>
+            </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 배너 carousel 우측 버튼 -->
+<button class="bg-light carousel-btn col-1 fs-1" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+  <i class="bi bi-arrow-right"></i>
+  <span class="visually-hidden">Next</span>
+</button>
+</div>
+
+<!-- 메인 (~순 정렬) -->
+<div class="row my-5 pb-5">
+<!-- 리스트 carousel 좌측 버튼 -->
+<button class="bg-light carousel-btn col-1 fs-1" type="button" data-bs-target="#mainControls" data-bs-slide="prev">
+  <i class="bi bi-arrow-left"></i>
+  <span class="visually-hidden">Previous</span>
+</button>
+
+<div id="mainControls" class="col-10 carousel slide">
+  <div class="mb-2 d-flex justify-content-between">
+    <div class="pink fs-5 fw-bold">맛집 <span class="black">리스트</span></div>
+
+    <!-- select 정렬 선택 -->
+    <select class="down" onchange="if(this.value) location.href=(this.value);">
+      <option value="" disabled selected>정렬 선택</option>
+      <option value="{% url 'good' %}">인기순 (좋아요순)</option>
+      <option value="{% url 'new' %}" >최신순</option>
+      <option value="{% url 'hit' %}">조회순</option>
+    </select>
+  </div>
+  <div class="carousel-inner">
+
+    <!-- 리스트 carousel 1페이지 -->
+    <div class="carousel-item active">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+        {% for article in articles|slice:":8" %}
+          <div class="col mb-5 d-flex flex-column align-items-between" id="one">
+            <div style="width: 15rem; height: 15rem; position: relative;">
+              <img class="w-100 h-100 rounded" src="{{ article.image.url }}" alt="">
+              <div class="dot-yellow blink px-1" style="position: absolute; top: 87%; left: 76%;">
+                <span class="hidden"><i class="text-warning bi bi-star-fill"></i></span>
+                <span class="hidden">{{ article.grade }}</span>
+              </div>
+              <div class="px-1" style="position: absolute; top: 88%; left: 77%; background-color: rgba(0, 0, 0, 0.44);">
+                <span><i class="text-warning bi bi-star-fill" ></i></span>
+                <span class="white">{{ article.grade }}</span>
+              </div>
+            </div>
+            <div style="width: 15rem;">
+              <div>
+                <div class="my-3">
+                  <a href="{% url 'articles:detail' article.pk %}" class="pink-btn btn">{{ article.title }}</a>
+                </div>
+                <div class="mb-2 gray text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</div>
+                <div><i class="pink bi bi-hash"></i> {{ article.foodType }}</div>
+              </div>
+              <div class="my-2">
+                <span class="me-2">
+                  <i class="pink bi bi-heart-fill"></i>
+                  {{ article.like_users.count }}
+                </span>
+                <span class="">
+                  <i class="pink bi bi-mouse"></i>
+                  {{ article.hits }}
+                </span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 리스트 carousel 2페이지 -->
+    <div class="carousel-item">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+        {% for article in articles|slice:"8:16" %}
+          <div class="col mb-5 d-flex flex-column align-items-between" id="one">
+            <div style="width: 15rem; height: 15rem; position: relative;">
+              <img class="w-100 h-100" src="{{ article.image.url }}" alt="">
+              <div class="dot-yellow blink px-1" style="position: absolute; top: 87%; left: 76%;">
+                <span class="hidden"><i class="text-warning bi bi-star-fill"></i></span>
+                <span class="hidden">{{ article.grade }}</span>
+              </div>
+              <div class="px-1" style="position: absolute; top: 88%; left: 77%; background-color: rgba(0, 0, 0, 0.44);">
+                <span><i class="text-warning bi bi-star-fill" ></i></span>
+                <span class="white">{{ article.grade }}</span>
+              </div>
+            </div>
+            <div style="width: 15rem;">
+              <div>
+                <div class="my-3">
+                  <a href="{% url 'articles:detail' article.pk %}" class="pink-btn btn">{{ article.title }}</a>
+                </div>
+                <div class="mb-2 gray text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</div>
+                <div><i class="pink bi bi-hash"></i> {{ article.foodType }}</div>
+              </div>
+              <div class="my-2">
+                <span class="me-2">
+                  <i class="pink bi bi-heart-fill"></i>
+                  {{ article.like_users.count }}
+                </span>
+                <span class="">
+                  <i class="pink bi bi-mouse"></i>
+                  {{ article.hits }}
+                </span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 리스트 carousel 3페이지 -->
+    <div class="carousel-item">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+        {% for article in articles|slice:"16:" %}
+          <div class="col mb-5 d-flex flex-column align-items-between" id="one">
+            <div style="width: 15rem; height: 15rem; position: relative;">
+              <img class="w-100 h-100" src="{{ article.image.url }}" alt="">
+              <div class="dot-yellow blink px-1" style="position: absolute; top: 87%; left: 76%;">
+                <span class="hidden"><i class="text-warning bi bi-star-fill"></i></span>
+                <span class="hidden">{{ article.grade }}</span>
+              </div>
+              <div class="px-1" style="position: absolute; top: 88%; left: 77%; background-color: rgba(0, 0, 0, 0.44);">
+                <span><i class="text-warning bi bi-star-fill" ></i></span>
+                <span class="white">{{ article.grade }}</span>
+              </div>
+            </div>
+            <div style="width: 15rem;">
+              <div>
+                <div class="my-3">
+                  <a href="{% url 'articles:detail' article.pk %}" class="pink-btn btn">{{ article.title }}</a>
+                </div>
+                <div class="mb-2 gray text-truncate"><i class="pink bi bi-geo-alt"></i> {{ article.location }}</div>
+                <div><i class="pink bi bi-hash"></i> {{ article.foodType }}</div>
+              </div>
+              <div class="my-2">
+                <span class="me-2">
+                  <i class="pink bi bi-heart-fill"></i>
+                  {{ article.like_users.count }}
+                </span>
+                <span class="">
+                  <i class="pink bi bi-mouse"></i>
+                  {{ article.hits }}
+                </span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 리스트 carousel 우측 버튼 -->
+<button class="bg-light carousel-btn col-1 fs-1" type="button" data-bs-target="#mainControls" data-bs-slide="next">
+  <i class="bi bi-arrow-right"></i>
+  <span class="visually-hidden">Next</span>
+</button>
+</div>
+
+{% endblock content %}
