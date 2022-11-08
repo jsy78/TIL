@@ -140,6 +140,7 @@
                   {% else %}
                     {{ article.created_string }}
                   {% endif %}
+                </p>
               {% else %}
                 <p class="m-0">
                   {% if article.created_string == False %}
@@ -148,7 +149,8 @@
                     {{ article.created_string }}
                   {% endif %}
                   {% comment %} {{ article.updated_at|date:'Y-m-d D' }} {% endcomment %}
-                  (수정됨)</p>
+                  (수정됨)
+                </p>
               {% endif %}
             </div>
           </div>

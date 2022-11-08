@@ -137,6 +137,7 @@ def update(request, pk):
                 and 0 < len(roadname) <= 30
             ):
                 article = form.save(commit=False)
+                article.is_updated = True
                 article.location = location
                 article.roadname = roadname
                 article.grade = grade

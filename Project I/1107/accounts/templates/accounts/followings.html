@@ -48,6 +48,7 @@
                   {% else %}
                     {{ article.created_string }}
                   {% endif %}
+                </p>
               {% else %}
                 <p class="m-0">
                   {% if article.created_string == False %}
@@ -55,7 +56,8 @@
                   {% else %}
                     {{ article.created_string }}
                   {% endif %}
-                  (수정됨)</p>
+                  (수정됨)
+                </p>
               {% endif %}
                   </td>
                 </tr>

@@ -52,6 +52,7 @@ class Article(models.Model):
         settings.AUTH_USER_MODEL, related_name="bookmark_articles"
     )
     hits = models.PositiveBigIntegerField(default=0, verbose_name="조회수")
+    is_updated = models.BooleanField(default=False)
 
     @property
     def created_string(self):
@@ -68,14 +69,6 @@ class Article(models.Model):
             return str(time.days) + "일 전"
         else:
             return False
-
-    @property
-    def is_updated(self):
-        time = self.updated_at - self.created_at
-        if time < timedelta(seconds=10):
-            return False
-        else:
-            return True
 
 
 class Comment(models.Model):

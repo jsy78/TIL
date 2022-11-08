@@ -42,23 +42,25 @@
                   </a>
                 {% endif %}
               </td>
-                  <td class="align-middle">
-                    {% if article.is_updated == False %}
-                <p class="m-0">
-                  {% if article.created_string == False %}
-                    {{ article.created_at|date:'Y-m-d D' }}
+                <td class="align-middle">
+                  {% if article.is_updated == False %}
+                    <p class="m-0">
+                      {% if article.created_string == False %}
+                        {{ article.created_at|date:'Y-m-d D' }}
+                      {% else %}
+                        {{ article.created_string }}
+                      {% endif %}
+                    </p>
                   {% else %}
-                    {{ article.created_string }}
+                    <p class="m-0">
+                      {% if article.created_string == False %}
+                        {{ article.updated_at|date:'Y-m-d D' }}
+                      {% else %}
+                        {{ article.created_string }}
+                      {% endif %}
+                      (수정됨)
+                    </p>
                   {% endif %}
-              {% else %}
-                <p class="m-0">
-                  {% if article.created_string == False %}
-                    {{ article.updated_at|date:'Y-m-d D' }}
-                  {% else %}
-                    {{ article.created_string }}
-                  {% endif %}
-                  (수정됨)</p>
-              {% endif %}
                   </td>
                 </tr>
               {% endfor %}
