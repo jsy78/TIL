@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'accounts/css/update.css' %}">
+{% endblock css %}
+
+{% block content %}
+  <div class="personal-info">
+    {% if request.user.profile %}
+      <img src="{{ request.user.profile.url }}" alt="직접 설정해둔 프로필 사진">
+    {% else %}
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" alt="기본 프로필 사진">
+    {% endif %}
+    <p>{{ request.user }}</p>
+  </div>
+  <div class="update">
+    <form action="" method="POST" enctype="multipart/form-data" class="update-form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <a href="{% url 'accounts:delete' %}" class="delete">회원 탈퇴</a>
+      <div class="buttons">
+        <button type="submit" class="update-button">수정</button>
+        <button type="button" class="back-button" onclick="location.href='{% url 'accounts:profile' user.username %}'">취소</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <!-- 주소 API -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script>
+    const addressInput = document.querySelector('#id_address')
+    const sidoInput = document.querySelector('#id_sido')
+    const sigunguInput = document.querySelector('#id_sigungu')
+    const roadnameInput = document.querySelector('#id_roadname')
+
+    addressInput.addEventListener('click', function () {
+      new daum
+        .Postcode({
+          oncomplete: function (data) {
+            // 주소 정보를 해당 필드에 넣는다.
+            addressInput.value = data.address
+            sidoInput.value = data.sido
+            sigunguInput.value = data.sigungu
+            roadnameInput.value = data.roadname
+            // 주소로 상세 정보를 검색
+          }
+        })
+        .open()
+    })
+  </script>
+{% endblock js %}

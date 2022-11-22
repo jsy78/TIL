@@ -1,0 +1,86 @@
+{% for comment in reply_list %}
+  <div class="d-flex">
+    <a href="#comment-{{ parent.pk }}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+    <div class="flex-fill">
+      <div id="comment-{{ comment.pk }}">
+        <div id="comment-{{ comment.pk }}-block" class="d-flex mb-1 d-block">
+          <!-- 프로필 사진 -->
+          {% if comment.user.profile %}
+            <img src="{{ comment.user.profile.url }}" class="sub-profile-img" alt="자신의 프로필 사진"/>
+          {% else %}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진"/>
+          {% endif %}
+          <!-- 댓글 본문 -->
+          <div class="comment-contents">
+            <div class="name-and-contents">
+              <a href="{% url 'accounts:profile' comment.user.username %}" class="detail_name">{{ comment.user }}</a>
+              <div id="comment-{{ comment.pk }}-content" class="my-2">{{ comment.content }}</div>
+            </div>
+          </div>
+          <!-- comment-contents 끝남 -->
+        </div>
+        <div id="comment-{{ comment.pk }}-update" class="d-none">
+          {% if request.user == comment.user %}
+            <form class="comment-update-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+              {% csrf_token %}
+              <div class="comment-update">
+                <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="{{ comment.content }}"/>
+                <input class="comment-update-button btn btn-primary" type="submit" value="수정"/>
+              </div>
+            </form>
+          {% endif %}
+        </div>
+        <div id="comment-{{ comment.pk }}-btn" class="d-flex justify-content-between">
+          {% if request.user.is_authenticated %}
+            <div class="d-flex">
+              <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="{{ comment.pk }}">
+                <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                <span class="ms-2 reply-count yellow">{{ comment.reply_set.count }}</span>
+              </button>
+              <form class="comment-like-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                {% csrf_token %}
+                <button class="btn btn-sm border-0 text-danger" type="submit">
+                  {% if request.user in comment.like_users.all %}
+                    <i class="bi bi-heart-fill fs-5"></i>
+                  {% else %}
+                    <i class="bi bi-heart fs-5"></i>
+                  {% endif %}
+                  <span class="ms-2 comment-like-count">{{ comment.like_users.count }}</span>
+                </button>
+              </form>
+            </div>
+          {% endif %}
+          {% if request.user == comment.user %}
+            <div class="d-flex">
+              <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                <i class="bi bi-pencil yellow fs-5"></i>
+              </button>
+              <form class="comment-delete-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                {% csrf_token %}
+                <button class="btn btn-sm border-0 text-danger" type="submit">
+                  <i class="bi bi-trash fs-5"></i>
+                </button>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+        <div id="reply-form-{{ comment.pk }}" class="d-none">
+          {% if request.user.is_authenticated %}
+            <hr class="my-hr3">
+            <form class="reply-create-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+              {% csrf_token %}
+              <div class="comment-create">
+                <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+              </div>
+            </form>
+            <hr class="my-hr3">
+          {% endif %}
+        </div>
+        {% with parent=comment reply_list=comment.reply_set.all %}
+          {% include 'cafes/reply.html' %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

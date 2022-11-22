@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+/* 전체 여백 */
+.container {
+    background-color: rgba(92, 92, 92, 0.5);
+    border-radius: 2rem;
+    min-height: 71vh !important;
+    padding: 3.5rem;
+    padding-bottom: 1rem;
+    margin: 5rem auto !important;
+    width: 45%;
+}
+
+
+/* (카페 이름)에 대해 알려주세요! */
+.welcome-text {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-top: 13%;
+}
+
+.cafe-name {
+    color: #ECE7B4;
+    font-weight: 600;
+    margin-left: 15%;
+}
+
+
+/* 폼 사이즈 조절 */
+.c-create {
+    margin: auto;
+    width: 70%;
+}
+
+
+/* 폼 조절 */
+.c-create .form-label {
+    color: #ffffff;
+    margin-top: 1.6rem;
+}
+
+.c-create .form-control {
+    padding: 0.7rem;
+}
+
+.c-create .form-control::placeholder {
+    font-size: 0.9rem;
+}
+
+.form-select {
+    color: #757575;
+    font-size: 0.9rem;
+    padding: 0.7rem;
+}
+
+#id_image1 {
+    color: #757575;
+    font-size: 0.9rem;
+}
+
+#id_image2 {
+    color: #757575;
+    font-size: 0.9rem;
+}
+
+#id_image3 {
+    color: #757575;
+    font-size: 0.9rem;
+}
+
+
+/* 현재 이미지 경로 */
+.col-auto {
+    color: #d9d9d9;
+    font-size: 0.8rem;
+}
+
+.col-auto a {
+    color: #ECE7B4;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+/* 버튼 위치 조절 */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 3rem;
+}
+
+
+/* 수정 버튼 */
+.c-create-button {
+    align-items: center;
+    background-color: #ECE7B4;
+    border: none;
+    border-radius: 20rem;
+    color: #666666;
+    font-weight: 600;
+    height: 3.5rem;
+    margin: 4.5rem auto 10rem;
+    width: 11rem;
+}
+
+
+/* 뒤로가기 버튼 */
+.back-button {
+    align-items: center;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 20rem;
+    color: #666666;
+    font-weight: 600;
+    height: 3.5rem;
+    margin: 4.5rem auto 10rem;
+    width: 11rem;
+}

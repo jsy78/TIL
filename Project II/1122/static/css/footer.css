@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+/* 배경 */
+.footer {
+    margin-top: 5rem;
+}
+
+.real-container {
+    background-color: #2d3b2c;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+
+/* 푸터 텍스트 */
+.footer-text {
+    color: #eeeeee;
+    font-size: 0.82rem;
+    font-weight: 200;
+    letter-spacing: 0.1rem;
+    line-height: 1.6rem;
+    margin: 0;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+
+/* 깃허브 링크 */
+.follow-us {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.follow-us-text {
+    color: #eeeeee;
+    font-size: 0.82rem;
+    font-weight: 200;
+    letter-spacing: 0.1rem;
+    margin: 0 0.3rem 0.2rem;
+}
+
+.follow-us-img a {
+    text-decoration: none;
+}
+
+.follow-us-img img {
+    border-radius: 5rem;
+    width: 2.9rem;
+    margin-left: 0.4rem;
+}

@@ -1,0 +1,234 @@
+@charset "UTF-8";
+
+.navbar {
+    background-color: rgba(38, 57, 35, 0.9) !important;
+}
+
+/* 네비게이션 왼쪽 로고 */
+.logo img {
+    height: 1.9rem;
+    margin: 0;
+    margin-left: 1.3rem;
+}
+
+.logo img:hover {
+    animation: rotate_image 0.2s linear;
+    filter: brightness(115%);
+    transform-origin: 50% 50%;
+    transform: scale(1.1);
+}
+
+@keyframes rotate_image {
+    100% {
+        transform: rotate(720deg);
+    }
+}
+
+
+/* 네비게이션 가운데 검색창 */
+.search {
+    display: flex;
+}
+
+.search input {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    height: 2.3rem;
+    padding: 0.5rem;
+    position: relative;
+    width: 27rem;
+}
+
+.search input:focus {
+    outline: none;
+}
+
+
+/* 검색창 자동완성 시 css 수정 */
+.search input:-webkit-autofill,
+.search input:-webkit-autofill:hover,
+.search input:-webkit-autofill:focus,
+.search input:-webkit-autofill:active {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.0) inset !important;
+    box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.search input:autofill,
+.search input:autofill:hover,
+.search input:autofill:focus,
+.search input:autofill:active {
+    -webkit-text-fill-color: #000;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+/* 검색창 placeholder */
+.search ::-webkit-input-placeholder {
+    color: #ffffff;
+    font-size: 0.9rem;
+    opacity: 60%;
+}
+
+/* 검색창 css */
+
+.search-bar {
+    position: relative;
+}
+
+
+/* 검색창 버튼 css */
+.search-button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    left: 24.7rem;
+    top: 0.24rem;
+}
+
+.search-button img {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(235deg) brightness(108%) contrast(102%);
+    width: 1.2rem;
+}
+
+
+/* 햄버거 */
+.navbar-toggler {
+    border: none;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(235deg) brightness(108%) contrast(102%);
+    margin-right: 1.3rem;
+}
+
+
+/* 사이드 메뉴 */
+.offcanvas {
+    background-color: #F3EFCC;
+    color: #666666;
+}
+
+
+/* 사이드 메뉴 여백 */
+.cafe {
+    margin: 3.5rem 2.4rem;
+}
+
+
+/* 프로필 */
+.offcanvas-header {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.offcanvas-header img {
+    border-radius: 50rem;
+    height: 5rem;
+    object-fit: cover;
+    width: 5rem;
+}
+
+.offcanvas-title {
+    font-size: 1.3rem;
+    margin-left: 0.8rem;
+}
+
+.name {
+    color: #406343;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.name:hover {
+    color: #406343;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* 로그인이 필요합니다 */
+.login-letter {
+    color: #666666;
+    font-size: 1.3rem;
+}
+
+.line-one {
+    align-items: center;
+    display: flex;
+    margin-bottom: 0;
+}
+
+.line-one a {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+
+/* 메뉴 */
+.cate-menu {
+    list-style: none;
+    line-height: 3rem;
+    margin-top: 2rem;
+    padding-left: 0px;
+}
+
+.cate-menu a:hover {
+    color: #32502E;
+    font-weight: 700;
+}
+
+
+/* 개인정보 관련 */
+.personal {
+    line-height: 3rem;
+    margin-top: 4rem;
+}
+
+.logout {
+    color: #AA4A4A;
+    text-decoration: none;
+}
+
+.logout:hover {
+    color: #AA4A4A;
+    text-decoration: none;
+}
+
+.signups {
+    color: #32502E;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.signups:hover {
+    color: #32502E;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.cafe-create {
+    color: #406343;
+    text-decoration: none;
+}
+
+.cafe-create:hover {
+    color: #406343;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+/* 사이드메뉴 순서 변경 */
+.content_block {
+    z-index: 99;
+    /*position: relative; relative 때문에 navbar가 안 붙음*/
+}
+
+.messages.success {
+    color: green;
+}

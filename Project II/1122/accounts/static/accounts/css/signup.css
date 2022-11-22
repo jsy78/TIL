@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+/* 배경 */
+.container {
+    background-color: rgba(92, 92, 92, 0.5);
+    border-radius: 2rem;
+    padding: 3.5rem;
+    padding-bottom: 1rem;
+    margin: 5rem auto !important;
+    width: 45%;
+}
+
+
+/* 폼 사이즈 조절 */
+.signup-form {
+    margin: auto;
+    padding-top: 10%;
+    width: 70%;
+}
+
+
+/* 폼 조절 */
+.signup-form .form-label {
+    color: #ffffff;
+    margin-top: 1.6rem;
+}
+
+.signup-form .form-control {
+    padding: 0.7rem;
+}
+
+.signup-form .form-control::placeholder {
+    font-size: 0.9rem;
+}
+
+.signup-form .form-text {
+    color: #b8b8b8;
+    font-size: 0.8rem;
+}
+
+#id_profile {
+    color: #757575;
+    font-size: 0.9rem;
+}
+
+
+/* 이미 회원이신가요? */
+.signup-form .go-login {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.signup-form .go-login a {
+    color: #cccccc;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+
+/* 회원가입 버튼 */
+.signup-form .signup-button {
+    align-items: center;
+    background-color: #ECE7B4;
+    border: none;
+    border-radius: 20rem;
+    color: #666666;
+    display: flex;
+    font-weight: 600;
+    height: 4rem;
+    justify-content: center;
+    margin: 4.5rem auto 10rem;
+    width: 13rem;
+}

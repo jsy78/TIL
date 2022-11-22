@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+  {{ form.media }}
+  <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css"/>
+  <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.css" media="all" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="{% static 'cafes/css/review_form.css' %}">
+{% endblock css %}
+
+{% block content %}
+  <div class="welcome-text">
+    {% if request.resolver_match.url_name == "review_create" %}
+      <p><span class="cafe-name">{{ article.name }}</span>, 어떠셨나요?</p>
+    {% elif request.resolver_match.url_name == "review_update" %}
+      <p><span class="cafe-name">{{ article.name }}</span>, 어떠셨나요?</p>
+    {% endif %}
+  </div>
+  <div class="r-create">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="buttons">
+        {% if request.resolver_match.url_name == "review_create" %}
+          <button type="submit" class="r-create-button">작성</button>
+        {% elif request.resolver_match.url_name == "review_update" %}
+          <button type="submit" class="r-create-button">수정</button>
+        {% endif %}
+        <!-- 취소 : 이전 페이지로 돌아가야 하는데 이전 페이지가 어딘지 -->
+        <button type="button" class="back-button" onclick="location.href='{% url 'cafes:cafe_detail' article.pk %}'">취소</button>
+      </div>
+    </form>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/star-rating.min.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/locales/LANG.js"></script>
+  <script>
+    document.querySelectorAll('.mb-3').item(0).querySelector('#id_rate').remove()
+    document.querySelectorAll('.mb-3').item(0).insertAdjacentHTML('beforeend', `
+      <input id="id_rate" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="0.5" required="true" value="3">
+    `)
+  </script>
+{% endblock js %}

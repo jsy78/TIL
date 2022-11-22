@@ -1,0 +1,1548 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="{% static 'cafes/css/cafe_detail.css' %}"/>
+{% endblock css %}
+{% block content %}
+  <!-- 최상단 정보 -->
+  <div class="titles">
+    <!-- 카페 이름, 평점 -->
+    <div class="cafe-left">
+      <div class="cafe-upper">
+        <p class="cafe-name">{{ article.name }}</p>
+        <p class="rate-number">{{ rate_avg|floatformat }}</p>
+      </div>
+
+
+      <!-- 조회수, 좋아요, 북마크, 공유 -->
+      <div class="cafe-lower">
+        <!-- 조회수 -->
+        <div class="views">
+          <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘"/>
+          <p class="views-count">{{ article.hits }}</p>
+        </div>
+
+
+        <!-- 좋아요 -->
+        <div class="like">
+          {% if request.user.is_authenticated %}
+            <form id="cafe-like-form" data-article-id="{{ article.pk }}">
+              {% csrf_token %}
+              <button type="submit" class="like-button">
+                <img src="https://cdn-icons-png.flaticon.com/512/5881/5881205.png" alt="좋아요 아이콘"/>
+                <p id="cafe-like-count">{{ article.like_users.count }}</p>
+              </button>
+            </form>
+          {% else %}
+            <button type="button" class="like-button">
+              <img src="https://cdn-icons-png.flaticon.com/512/5881/5881205.png" alt="좋아요 아이콘"/>
+              <span id="cafe-like-count">{{ article.like_users.count }}</span>
+            </button>
+          {% endif %}
+        </div>
+
+        <!-- 북마크 -->
+        <div class="bookmark">
+          {% if request.user.is_authenticated %}
+            <form id="cafe-bookmark-form" data-article-id="{{ article.pk }}">
+              {% csrf_token %}
+              <button type="submit" class="bookmark-button">
+                <img src="https://cdn-icons-png.flaticon.com/512/3303/3303088.png" alt="북마크 아이콘"/>
+                <p id="cafe-bookmark-count">{{ article.bookmark_users.count }}</p>
+              </button>
+            </form>
+          {% else %}
+            <button type="button" class="bookmark-button">
+              <img src="https://cdn-icons-png.flaticon.com/512/3303/3303088.png" alt="북마크 아이콘"/>
+              <p id="bookmark-count">{{ article.bookmark_users.count }}</p>
+            </button>
+          {% endif %}
+        </div>
+
+        <!-- 공유 -->
+        <div class="share">
+          <button class="share-button" data-bs-toggle="modal" data-bs-target="#shareModal">
+            <img src="https://cdn-icons-png.flaticon.com/512/1330/1330134.png" alt="공유 아이콘"/>
+          </button>
+        </div>
+
+        <!-- 공유 Modal -->
+        <div class="modal fade" id="shareModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!--<div class="modal-header"> <h1 class="modal-title fs-5" id="exampleModalLabel">공유하기</h1> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>-->
+              <div class="modal-body">
+                <p>다음 링크를 통해 다른 사람들과 공유해보세요!</p>
+                <p>{{ request.build_absolute_uri }}</p>
+                <!-- 절대 링크 -->
+              </div>
+              <!-- modal-body 끝남 -->
+            </div>
+            <!-- modal-content 끝남 -->
+          </div>
+          <!-- modal-dialog 끝남 -->
+        </div>
+        <!-- modal fade 끝남 -->
+      </div>
+      <!-- cafe-lower 끝남 -->
+    </div>
+    <!-- cafe-left 끝남 -->
+
+    <!-- 수정 버튼 -->
+    <div class="cafe-right d-flex align-items-center">
+      {% if request.user == article.user %}
+        <div class="p-1" style="width: 50px;">
+          <a class="edit-button" href="{% url 'cafes:cafe_update' article.pk %}">
+            <img src="https://cdn-icons-png.flaticon.com/512/1014/1014883.png" alt="수정 아이콘"/>
+            <p>수정</p>
+          </a>
+        </div>
+        <div style="width: 50px;">
+          <form action="{% url 'cafes:cafe_delete' article.pk %}" method="POST">
+            {% csrf_token %}
+            <button class="edit-button" type="submit">
+              <img src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png" alt="삭제 아이콘"/>
+              <p>삭제</p>
+            </button>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- titles 끝남 -->
+
+  <!-- 이미지/캐러셀 -->
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{ article.image1.url }}" class="d-block w-100 rounded" alt="..."/>
+      </div>
+      <div class="carousel-item">
+        <img src="{{ article.image2.url }}" class="d-block w-100 rounded" alt="..."/>
+      </div>
+      <div class="carousel-item">
+        <img src="{{ article.image3.url }}" class="d-block w-100 rounded" alt="..."/>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+  </div>
+
+  <!-- 카페 정보 -->
+  <div class="cafe-info">
+    <!-- 왼쪽 -->
+    <div class="info-left">
+      <table>
+        <tr>
+          <th>주소</th>
+          <td>
+            <span id="cafe-address">{{ article.address }}</span>
+            <div id="map" class="rounded" style="width: 100%; height: 350px"></div>
+          </td>
+        </tr>
+        <tr>
+          <th>전화번호</th>
+          <td>{{ article.number }}</td>
+        </tr>
+        <tr>
+          <th>영업 시간</th>
+          <td>{{ article.opening_hour }}</td>
+        </tr>
+        <tr>
+          <th>휴일</th>
+          <td>{{ article.dayoff }}</td>
+        </tr>
+        <tr>
+          <th>주차</th>
+          <td>{{ article.parking }}</td>
+        </tr>
+        <tr>
+          <th>메뉴</th>
+          <td>{{ article.menu|safe }}</td>
+        </tr>
+      </table>
+    </div>
+    <!--info-left 끝남 -->
+
+    <!-- 오른쪽 -->
+    <div class="info-right">
+      <div class="introduce-theme">
+        <p class="theme-title">이 매장이 소개된 테마</p>
+        <a href="{% url 'cafes:category' article.cafeType %}">
+          <img src="{{ article.image1.url }}" alt="테마 이미지" class="temas-image" style="width: 200px; height: 200px;">
+          <p class="cafe-type">{{ article.cafeType }}</p>
+        </a>
+      </div>
+      <!-- introduce-theme 끝남 -->
+    </div>
+    <!-- info-right 끝남 -->
+  </div>
+  <!-- cafe-info 끝남 -->
+
+  <!-- 리뷰 -->
+  <hr class="review-start">
+  <div class="review-cate">
+    <p>
+      <span class="review-name">{{ article.name }}</span>의 후기</p>
+
+    <!-- 버튼 -->
+    <div class="buttons">
+      <div class="dropdown text-end">
+        <select class="down form-select review_create" onchange="if(this.value) location.href=(this.value);">
+          <!--<option value="" disabled="disabled" selected="selected">정렬 선택</option>-->
+          <option value="{% url 'cafes:cafe_detail_new' article.pk %}">
+            최신순
+          </option>
+          <option value="{% url 'cafes:cafe_detail_good' article.pk %}">
+            좋아요순
+          </option>
+        </select>
+      </div>
+      {% if request.user.is_authenticated %}
+        <a class="rc-button review_create" href="{% url 'cafes:review_create' article.pk  %}">후기 작성</a>
+      {% else %}
+        <a class="btn btn-primary ms-1 my-auto disabled">후기 작성</a>
+      {% endif %}
+    </div>
+    <!-- buttons 끝남 -->
+  </div>
+  <!--review-cate 끝남 -->
+
+  <!-- 리뷰 본문 -->
+
+  {% for review in reviews %}
+    <div id="review-{{ review.pk }}" class="card w-100 review-area review_reply">
+      <div class="card-body">
+        <!-- 프로필 사진 -->
+        {% if review.user.profile %}
+          <img src="{{ review.user.profile.url }}" class="profile-img" alt="자신의 프로필 사진"/>
+        {% else %}
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진"/>
+        {% endif %}
+
+        <!-- 리뷰 구체적인 내용 -->
+        <div class="review-contents">
+          <div class="flex-fill">
+            <div class="name-and-rate">
+              <!-- 이름 -->
+              <a href="{% url 'accounts:profile' review.user.username %}" class="detail_name">{{ review.user }}</a>
+
+              <!-- 별점 -->
+              <div class="rate-star">
+                {% if review.rate == 0.0 %}
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 0.5 %}
+                  <i class="p-0 bi bi-star-half fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 1.0 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 1.5 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-half fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 2.0 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 2.5 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-half fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 3.0 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 3.5 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-half fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 4.0 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star fs-5"></i>
+                {% elif review.rate == 4.5 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-half fs-5"></i>
+                {% elif review.rate == 5.0 %}
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                  <i class="p-0 bi bi-star-fill fs-5"></i>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if request.user == review.user %}
+              <div class="edit-and-delete">
+                <!-- 수정 -->
+                <a class="edit-btn btn btn-sm" href="{% url 'cafes:review_update' article.pk review.pk %}">
+                  <p>수정</p>
+                </a>
+
+                <!-- 삭제 -->
+                <form action="{% url 'cafes:review_delete' article.pk review.pk %}" method="POST">
+                  {% csrf_token %}
+                  <button class="delete-btn btn btn-sm" type="submit">
+                    <p>삭제</p>
+                  </button>
+                </form>
+              </div>
+            {% endif %}
+          </div>
+          <!-- flex-fill 끝남 -->
+
+          <!-- 리뷰 쓴 것 -->
+          <div class="review-text">{{ review.content|safe }}</div>
+
+          <!-- 리뷰 댓글 -->
+          <div class="review-icons">
+            <div class="review-and-like">
+              <!-- 댓글 아이콘 -->
+              <button class="comment-btn" data-review-id="{{ review.pk }}">
+                <img src="https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘"/>
+                <p class="comment-{{ review.pk }}-count">{{ review.comment_set.count }}</p>
+              </button>
+
+              <!-- 좋아요 아이콘 -->
+              {% if request.user.is_authenticated %}
+                <form class="review-like-form" data-article-id="{{ article.pk }}" data-review-id="{{ review.pk }}">
+                  {% csrf_token %}
+                  <button class="like-btn text-danger" type="submit">
+                    {% if request.user in review.like_users.all %}
+                      <i class="bi bi-heart-fill review-like-icon"></i>
+                    {% else %}
+                      <i class="bi bi-heart review-like-icon"></i>
+                    {% endif %}
+                    <p class="review-like-count">{{ review.like_users.count }}</p>
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+            <!-- review-and-like 끝남 -->
+          </div>
+          <!-- review-icons 끝남 -->
+
+          <div id="comment-area-{{ review.pk }}" class="d-none">
+            {% if request.user.is_authenticated %}
+              <!-- 댓글 작성 폼 -->
+              <form class="comment-create-form" data-review-id="{{ review.pk }}">
+                {% csrf_token %}
+                <div class="comment-create">
+                  <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true">
+                  <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                </div>
+              </form>
+              <hr>
+            {% endif %}
+            <!-- 댓글 시작 -->
+            {% for comment in review.root_comments %}
+              <div id="comment-{{ comment.pk }}">
+                <div id="comment-{{ comment.pk }}-block" class="d-flex mb-1 d-block">
+                  <!-- 프로필 사진 -->
+                  {% if comment.user.profile %}
+                    <img src="{{ comment.user.profile.url }}" class="sub-profile-img" alt="자신의 프로필 사진"/>
+                  {% else %}
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진"/>
+                  {% endif %}
+                  <!-- 댓글 본문 -->
+                  <div class="comment-contents">
+                    <div class="name-and-contents">
+                      <a href="{% url 'accounts:profile' comment.user.username %}" class="detail_name">{{ comment.user }}</a>
+                      <div id="comment-{{ comment.pk }}-content" class="my-2">{{ comment.content }}</div>
+                    </div>
+                  </div>
+                  <!-- comment-contents 끝남 -->
+                </div>
+                <div id="comment-{{ comment.pk }}-update" class="d-none">
+                  {% if request.user == comment.user %}
+                    <form class="comment-update-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      <div class="comment-update">
+                        <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="{{ comment.content }}">
+                        <input class="comment-update-button btn btn-primary" type="submit" value="수정">
+                      </div>
+                    </form>
+                  {% endif %}
+                </div>
+                <div id="comment-{{ comment.pk }}-btn" class="d-flex justify-content-between">
+                  {% if request.user.is_authenticated %}
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="{{ comment.pk }}">
+                        <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                        <span class="ms-2 reply-count yellow">{{ comment.reply_set.count }}</span>
+                      </button>
+                      <form class="comment-like-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          {% if request.user in comment.like_users.all %}
+                            <i class="bi bi-heart-fill fs-5"></i>
+                          {% else %}
+                            <i class="bi bi-heart fs-5"></i>
+                          {% endif %}
+                          <span class="ms-2 comment-like-count">{{ comment.like_users.count }}</span>
+                        </button>
+                      </form>
+                    </div>
+                  {% endif %}
+                  {% if request.user == comment.user %}
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                        <i class="bi bi-pencil yellow fs-5"></i>
+                      </button>
+                      <form class="comment-delete-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          <i class="bi bi-trash fs-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  {% endif %}
+
+                </div>
+                <div id="reply-form-{{ comment.pk }}" class="d-none">
+                  {% if request.user.is_authenticated %}
+                    <hr class="my-hr3">
+                    <form class="reply-create-form" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      <div class="comment-create">
+                        <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                        <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                      </div>
+                    </form>
+                    <hr class="my-hr3">
+                  {% endif %}
+                </div>
+                {% with parent=comment reply_list=comment.reply_set.all %}
+                  {% include 'cafes/reply.html' %}
+                {% endwith %}
+              </div>
+              <hr>
+            {% endfor %}
+          </div>
+          <!-- comment-area-{{ review.pk }} 끝남 -->
+        </div>
+        <!-- review-contents 끝남 -->
+      </div>
+      <!-- card-body 끝남 -->
+    </div>
+    <!-- review_reply 끝남 -->
+    <hr class="review-divider">
+  {% empty %}
+    <p class="no-review">
+      등록된 후기가 없습니다.<br/>첫 후기의 주인공이 되어보세요!
+    </p>
+  {% endfor %}
+
+{% endblock content %}
+{% block js %}
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={% include 'cafes/appkey.txt' %}&libraries=services"></script>
+  <script>
+    var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+      mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3, // 지도의 확대 레벨
+      };
+    // 지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+    // 주소로 좌표를 검색합니다
+    geocoder.addressSearch(document.querySelector("#cafe-address").innerText, function (result, status) {
+
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({map: map, position: coords});
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({content: '<div style="color:#333333;font-size:0.85rem;font-weight:600;padding:0.4rem 0;text-align:center;width:150px;">가게 위치</div>'});
+        infowindow.open(map, marker);
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+      }
+    });
+  </script>
+  <script>
+    const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  </script>
+  <script>
+    const cafeLikeForm = document.querySelector("#cafe-like-form");
+    cafeLikeForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const articleId = event.currentTarget.dataset.articleId;
+      axios({
+        method: "POST",
+        url: `/cafes/${articleId}/cafe_like/`,
+        headers: {
+          "X-CSRFToken": csrftoken
+        }
+      })
+      .then((response) => {
+        document.querySelector("#cafe-like-count").innerText = response.data.like_count;
+      });
+    });
+  </script>
+  <script>
+    const cafeBookmarkForm = document.querySelector("#cafe-bookmark-form");
+    cafeBookmarkForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const articleId = event.currentTarget.dataset.articleId;
+      axios({
+        method: "POST",
+        url: `/cafes/${articleId}/cafe_bookmark/`,
+        headers: {
+          "X-CSRFToken": csrftoken
+        }
+      })
+      .then((response) => {
+        document.querySelector("#cafe-bookmark-count").innerText = response.data.bookmark_count;
+      });
+    });
+  </script>
+  <script>
+    const reviewLikeForms = document.querySelectorAll(".review-like-form");
+    reviewLikeForms.forEach((reviewLikeForm) => {
+      reviewLikeForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const articleId = event.currentTarget.dataset.articleId;
+        const reviewId = event.currentTarget.dataset.reviewId;
+        axios({
+          method: "POST",
+          url: `/cafes/${articleId}/review_like/${reviewId}/`,
+          headers: {
+            "X-CSRFToken": csrftoken
+          }
+        })
+        .then((response) => {
+          if (response.data.is_review_liked) {
+            reviewLikeForm.querySelector(".review-like-icon").classList.remove("bi-heart");
+            reviewLikeForm.querySelector(".review-like-icon").classList.add("bi-heart-fill");
+          } else {
+            reviewLikeForm.querySelector(".review-like-icon").classList.remove("bi-heart-fill");
+            reviewLikeForm.querySelector(".review-like-icon").classList.add("bi-heart");
+          }
+          reviewLikeForm.querySelector(".review-like-count").innerText = response.data.review_like_count;
+        });
+      });
+    });
+  </script>
+  <script>
+    const commentBtns = document.querySelectorAll(".comment-btn");
+    commentBtns.forEach((commentBtn) => {
+      commentBtn.addEventListener("click", function (event) {
+        const reviewId = event.currentTarget.dataset.reviewId;
+        document.querySelector(`#comment-area-${reviewId}`).classList.toggle("d-none");
+        document.querySelector(`#comment-area-${reviewId}`).classList.toggle("d-block");
+      });
+    });
+  </script>
+  <script>
+    function commentUpdateBtn(dom) {
+      const commentUpdateBtns = dom.querySelectorAll(".comment-update-btn");
+      commentUpdateBtns.forEach((commentUpdateBtn) => {
+        commentUpdateBtn.addEventListener("click", function (event) {
+          const reviewId = event.currentTarget.dataset.reviewId;
+          const commentId = event.currentTarget.dataset.commentId;
+          dom.querySelector(`#comment-${commentId}-block`).classList.toggle("d-none");
+          dom.querySelector(`#comment-${commentId}-block`).classList.toggle("d-block");
+          dom.querySelector(`#comment-${commentId}-update`).classList.toggle("d-block");
+          dom.querySelector(`#comment-${commentId}-update`).classList.toggle("d-none");
+          dom.querySelector(`#comment-${commentId}-update .form-control`).value = dom.querySelector(`#comment-${commentId}-content`).innerText;
+        });
+      });
+    }
+
+    function replyBtn(dom) {
+      const replyBtns = dom.querySelectorAll(".reply-btn");
+      replyBtns.forEach((replyBtn) => {
+        replyBtn.addEventListener("click", function (event) {
+          const commentId = event.currentTarget.dataset.commentId;
+          dom.querySelector(`#reply-form-${commentId}`).classList.toggle("d-none");
+          dom.querySelector(`#reply-form-${commentId}`).classList.toggle("d-block");
+        });
+      });
+    }
+
+    function commentLike(dom) {
+      const commentLikeForms = dom.querySelectorAll(".comment-like-form");
+      commentLikeForms.forEach((commentLikeForm) => {
+        commentLikeForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const reviewId = event.currentTarget.dataset.reviewId;
+          const commentId = event.currentTarget.dataset.commentId;
+          axios({
+            method: "POST",
+            url: `/cafes/${reviewId}/comment_like/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            }
+          })
+          .then((response) => {
+            if (response.data.is_comment_liked) {
+              commentLikeForm.querySelector(".bi").classList.add("bi-heart-fill");
+              commentLikeForm.querySelector(".bi").classList.remove("bi-heart");
+            } else {
+              commentLikeForm.querySelector(".bi").classList.add("bi-heart");
+              commentLikeForm.querySelector(".bi").classList.remove("bi-heart-fill");
+            }
+            commentLikeForm.querySelector(".comment-like-count").innerText = response.data.comment_like_count;
+          });
+        });
+      });
+    }
+
+    function commentUpdate(dom) {
+      const commentUpdateForms = dom.querySelectorAll(".comment-update-form");
+      commentUpdateForms.forEach((commentUpdateForm) => {
+        commentUpdateForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const reviewId = event.currentTarget.dataset.reviewId;
+          const commentId = event.currentTarget.dataset.commentId;
+          axios({
+            method: "POST",
+            url: `/cafes/${reviewId}/comment_update/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            },
+            data: new FormData(commentUpdateForm), // 폼에 있는 정보를 data로 넘겨줄 수 있도록 변환
+          }).then((response) => {
+            dom.querySelector(`#comment-${commentId}-block`).classList.remove("d-none");
+            dom.querySelector(`#comment-${commentId}-block`).classList.add("d-block");
+            dom.querySelector(`#comment-${commentId}-update`).classList.remove("d-block");
+            dom.querySelector(`#comment-${commentId}-update`).classList.add("d-none");
+            dom.querySelector(`#comment-${commentId}-update .form-control`).value = response.data.content;
+            dom.querySelector(`#comment-${commentId}-content`).innerText = response.data.content;
+          });
+        });
+      });
+    }
+
+    function commentDelete(dom) {
+      const commentDeleteForms = dom.querySelectorAll(".comment-delete-form");
+      commentDeleteForms.forEach((commentDeleteForm) => {
+        commentDeleteForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const reviewId = event.currentTarget.dataset.reviewId;
+          const commentId = event.currentTarget.dataset.commentId;
+          axios({
+            method: "POST",
+            url: `/cafes/${reviewId}/comment_delete/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            }
+          })
+          .then((response) => {
+            console.log(response.data);
+            dom.querySelector(`.comment-${reviewId}-count`).innerText = response.data.comments_count;
+            const comments = response.data.comments;
+            const commentsArea = document.querySelector(`#comment-area-${reviewId}`);
+
+            while (commentsArea.hasChildNodes()) {
+              commentsArea.removeChild(commentsArea.firstChild);
+            }
+
+            if (response.data.request_is_authenticated) {
+              commentsArea.insertAdjacentHTML("beforeend", `
+                <form class="comment-create-form" data-review-id="${reviewId}">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                  <div class="comment-create">
+                    <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true"/>
+                    <input class="comment-create-button btn btn-primary" type="submit" value="등록"/>
+                  </div>
+                </form>
+                <hr>
+              `);
+            }
+
+            for (let i = 0; i < comments.length; i++) {
+              if (comments[i].parent == null) {
+                commentsArea.insertAdjacentHTML("beforeend", `
+                  <div id="comment-${comments[i].pk}">
+                    <div id="comment-${comments[i].pk}-block" class="d-flex mb-1 d-block">
+                    </div>
+                    <div id="comment-${comments[i].pk}-update" class="d-none">
+                    </div>
+                    <div id="comment-${comments[i].pk}-btn" class="d-flex justify-content-between">
+                    </div>
+                    <div id="reply-form-${comments[i].pk}" class="d-none">
+                    </div>
+                  </div>
+                  <hr class="my-hr3">
+                `);
+
+                if (comments[i].profile == null) {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                } 
+                else {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="${comments[i].profile}" class="sub-profile-img" alt="자신의 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-update-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-update">
+                        <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="${comments[i].content}">
+                        <input class="comment-update-button btn btn-primary" type="submit" value="수정">
+                      </div>
+                    </form>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  } 
+                  else {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart fs-5"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  }
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <i class="bi bi-pencil yellow fs-5"></i>
+                      </button>
+                      <form class="comment-delete-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          <i class="bi bi-trash fs-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  dom.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <hr class="my-hr3">
+                    <form class="reply-create-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-create">
+                        <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                        <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                      </div>
+                    </form>
+                    <hr class="my-hr3">
+                  `);
+                }
+              } 
+              else {
+                dom.querySelector(`#comment-${comments[i].parent}`).insertAdjacentHTML("beforeend", `
+                  <div class="d-flex">
+                    <a href="#comment-${comments[i].parent}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+                    <div class="flex-fill">
+                      <div id="comment-${comments[i].pk}">
+                        <div id="comment-${comments[i].pk}-block" class="d-flex mb-1 d-block">
+                        </div>
+                        <div id="comment-${comments[i].pk}-update" class="d-none">
+                        </div>
+                        <div id="comment-${comments[i].pk}-btn" class="d-flex justify-content-between">
+                        </div>
+                        <div id="reply-form-${comments[i].pk}" class="d-none">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `);
+
+                if (comments[i].profile == null) {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                } 
+                else {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="${comments[i].profile}" class="sub-profile-img" alt="자신의 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-update-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-update">
+                        <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="${comments[i].content}">
+                        <input class="comment-update-button btn btn-primary" type="submit" value="수정">
+                      </div>
+                    </form>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  } 
+                  else {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart fs-5"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  }
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <i class="bi bi-pencil yellow fs-5"></i>
+                      </button>
+                      <form class="comment-delete-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          <i class="bi bi-trash fs-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  dom.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <hr class="my-hr3">
+                    <form class="reply-create-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-create">
+                        <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                        <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                      </div>
+                    </form>
+                    <hr class="my-hr3">
+                  `);
+                }
+              }
+            }
+
+            return commentsArea.offsetParent;
+          })
+          .then((response) => {
+            commentUpdateBtn(response);
+            replyBtn(response);
+            commentLike(response);
+            commentUpdate(response);
+            commentCreate(response);
+            commentDelete(response);
+            replyCreate(response);
+          })
+        })
+      })
+    }
+
+    function replyCreate(dom) {
+      const replyCreateForms = dom.querySelectorAll(".reply-create-form");
+      replyCreateForms.forEach((replyCreateForm) => {
+        replyCreateForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const reviewId = event.currentTarget.dataset.reviewId;
+          const commentId = event.currentTarget.dataset.commentId;
+          axios({
+            method: "POST",
+            url: `/cafes/${reviewId}/reply_create/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            },
+            data: new FormData(replyCreateForm), // 폼에 있는 정보를 data로 넘겨줄 수 있도록 변환
+          })
+          .then((response) => {
+            console.log(response.data);
+            dom.querySelector(`.comment-${reviewId}-count`).innerText = response.data.comments_count;
+            const comments = response.data.comments;
+            const commentsArea = document.querySelector(`#comment-area-${reviewId}`);
+
+            while (commentsArea.hasChildNodes()) {
+              commentsArea.removeChild(commentsArea.firstChild);
+            }
+
+            if (response.data.request_is_authenticated) {
+              commentsArea.insertAdjacentHTML("beforeend", `
+                <form class="comment-create-form" data-review-id="${reviewId}">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                  <div class="comment-create">
+                    <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true"/>
+                    <input class="comment-create-button btn btn-primary" type="submit" value="등록"/>
+                  </div>
+                </form>
+                <hr>
+              `);
+            }
+
+            for (let i = 0; i < comments.length; i++) {
+              if (comments[i].parent == null) {
+                commentsArea.insertAdjacentHTML("beforeend", `
+                  <div id="comment-${comments[i].pk}">
+                    <div id="comment-${comments[i].pk}-block" class="d-flex mb-1 d-block">
+                    </div>
+                    <div id="comment-${comments[i].pk}-update" class="d-none">
+                    </div>
+                    <div id="comment-${comments[i].pk}-btn" class="d-flex justify-content-between">
+                    </div>
+                    <div id="reply-form-${comments[i].pk}" class="d-none">
+                    </div>
+                  </div>
+                  <hr class="my-hr3">
+                `);
+
+                if (comments[i].profile == null) {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                } 
+                else {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="${comments[i].profile}" class="sub-profile-img" alt="자신의 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-update-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-update">
+                        <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="${comments[i].content}">
+                        <input class="comment-update-button btn btn-primary" type="submit" value="수정">
+                      </div>
+                    </form>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  } 
+                  else {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart fs-5"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  }
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <i class="bi bi-pencil yellow fs-5"></i>
+                      </button>
+                      <form class="comment-delete-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          <i class="bi bi-trash fs-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  dom.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <hr class="my-hr3">
+                    <form class="reply-create-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-create">
+                        <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                        <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                      </div>
+                    </form>
+                    <hr class="my-hr3">
+                  `);
+                }
+              } 
+              else {
+                dom.querySelector(`#comment-${comments[i].parent}`).insertAdjacentHTML("beforeend", `
+                  <div class="d-flex">
+                    <a href="#comment-${comments[i].parent}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+                    <div class="flex-fill">
+                      <div id="comment-${comments[i].pk}">
+                        <div id="comment-${comments[i].pk}-block" class="d-flex mb-1 d-block">
+                        </div>
+                        <div id="comment-${comments[i].pk}-update" class="d-none">
+                        </div>
+                        <div id="comment-${comments[i].pk}-btn" class="d-flex justify-content-between">
+                        </div>
+                        <div id="reply-form-${comments[i].pk}" class="d-none">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `);
+
+                if (comments[i].profile == null) {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                } 
+                else {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="${comments[i].profile}" class="sub-profile-img" alt="자신의 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-update-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-update">
+                        <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="${comments[i].content}">
+                        <input class="comment-update-button btn btn-primary" type="submit" value="수정">
+                      </div>
+                    </form>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  } 
+                  else {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart fs-5"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  }
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <i class="bi bi-pencil yellow fs-5"></i>
+                      </button>
+                      <form class="comment-delete-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          <i class="bi bi-trash fs-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  dom.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <hr class="my-hr3">
+                    <form class="reply-create-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-create">
+                        <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                        <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                      </div>
+                    </form>
+                    <hr class="my-hr3">
+                  `);
+                }
+              }
+            }
+
+            return commentsArea.offsetParent;
+          })
+          .then((response) => {
+            commentUpdateBtn(response);
+            replyBtn(response);
+            commentLike(response);
+            commentUpdate(response);
+            commentCreate(response);
+            commentDelete(response);
+            replyCreate(response);
+          })
+        })
+      })
+    }
+
+    function commentCreate(dom) {
+      const commentCreateForms = dom.querySelectorAll(".comment-create-form");
+      commentCreateForms.forEach((commentCreateForm) => {
+        commentCreateForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const reviewId = event.currentTarget.dataset.reviewId;
+          axios({
+            method: "POST",
+            url: `/cafes/${reviewId}/comment_create/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            },
+            data: new FormData(commentCreateForm), // 폼에 있는 정보를 data로 넘겨줄 수 있도록 변환
+          })
+          .then((response) => {
+            console.log(response.data);
+            dom.querySelector(`.comment-${reviewId}-count`).innerText = response.data.comments_count;
+            const comments = response.data.comments;
+            const commentsArea = document.querySelector(`#comment-area-${reviewId}`);
+
+            while (commentsArea.hasChildNodes()) {
+              commentsArea.removeChild(commentsArea.firstChild);
+            }
+
+            if (response.data.request_is_authenticated) {
+              commentsArea.insertAdjacentHTML("beforeend", `
+                <form class="comment-create-form" data-review-id="${reviewId}">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                  <div class="comment-create">
+                    <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true"/>
+                    <input class="comment-create-button btn btn-primary" type="submit" value="등록"/>
+                  </div>
+                </form>
+                <hr>
+              `);
+            }
+
+            for (let i = 0; i < comments.length; i++) {
+              if (comments[i].parent == null) {
+                commentsArea.insertAdjacentHTML("beforeend", `
+                  <div id="comment-${comments[i].pk}">
+                    <div id="comment-${comments[i].pk}-block" class="d-flex mb-1 d-block">
+                    </div>
+                    <div id="comment-${comments[i].pk}-update" class="d-none">
+                    </div>
+                    <div id="comment-${comments[i].pk}-btn" class="d-flex justify-content-between">
+                    </div>
+                    <div id="reply-form-${comments[i].pk}" class="d-none">
+                    </div>
+                  </div>
+                  <hr class="my-hr3">
+                `);
+
+                if (comments[i].profile == null) {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                } 
+                else {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="${comments[i].profile}" class="sub-profile-img" alt="자신의 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-update-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-update">
+                        <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="${comments[i].content}">
+                        <input class="comment-update-button btn btn-primary" type="submit" value="수정">
+                      </div>
+                    </form>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  } 
+                  else {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart fs-5"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  }
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <i class="bi bi-pencil yellow fs-5"></i>
+                      </button>
+                      <form class="comment-delete-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          <i class="bi bi-trash fs-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  dom.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <hr class="my-hr3">
+                    <form class="reply-create-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-create">
+                        <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                        <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                      </div>
+                    </form>
+                    <hr class="my-hr3">
+                  `);
+                }
+              } 
+              else {
+                dom.querySelector(`#comment-${comments[i].parent}`).insertAdjacentHTML("beforeend", `
+                  <div class="d-flex">
+                    <a href="#comment-${comments[i].parent}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+                    <div class="flex-fill">
+                      <div id="comment-${comments[i].pk}">
+                        <div id="comment-${comments[i].pk}-block" class="d-flex mb-1 d-block">
+                        </div>
+                        <div id="comment-${comments[i].pk}-update" class="d-none">
+                        </div>
+                        <div id="comment-${comments[i].pk}-btn" class="d-flex justify-content-between">
+                        </div>
+                        <div id="reply-form-${comments[i].pk}" class="d-none">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `);
+
+                if (comments[i].profile == null) {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                } 
+                else {
+                  dom.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <img src="${comments[i].profile}" class="sub-profile-img" alt="자신의 프로필 사진">
+                    <div class="comment-contents">
+                      <div class="name-and-contents">
+                        <a href="/accounts/profile/${comments[i].username}/" class="detail_name">${comments[i].username}</a>
+                        <div id="comment-${comments[i].pk}-content" class="my-2">${comments[i].content}</div>
+                      </div>
+                    </div>
+                  `);
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-update-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-update">
+                        <input type="text" name="content" placeholder="댓글을 남겨보세요 💬" class="form-control" required="true" value="${comments[i].content}">
+                        <input class="comment-update-button btn btn-primary" type="submit" value="수정">
+                      </div>
+                    </form>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  } 
+                  else {
+                    dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                      <div class="d-flex">
+                        <button class="btn btn-sm border-0 text-secondary reply-btn" data-comment-id="${comments[i].pk}">
+                          <i class="bi bi-chat-left-dots yellow fs-5"></i>
+                          <span class="ms-2 reply-count yellow">${comments[i].reply_count}</span>
+                        </button>
+                        <form class="comment-like-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="btn btn-sm border-0 text-danger" type="submit">
+                            <i class="bi bi-heart fs-5"></i>
+                            <span class="ms-2 comment-like-count">${comments[i].like_count}</span>
+                          </button>
+                        </form>
+                      </div>
+                    `);
+                  }
+                }
+
+                if (comments[i].username == response.data.request_username) {
+                  dom.querySelector(`#comment-${comments[i].pk}-btn`).insertAdjacentHTML("beforeend", `
+                    <div class="d-flex">
+                      <button class="btn btn-sm border-0 text-black comment-update-btn" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <i class="bi bi-pencil yellow fs-5"></i>
+                      </button>
+                      <form class="comment-delete-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn btn-sm border-0 text-danger" type="submit">
+                          <i class="bi bi-trash fs-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  `);
+                }
+
+                if (response.data.request_is_authenticated) {
+                  dom.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <hr class="my-hr3">
+                    <form class="reply-create-form" data-review-id="${reviewId}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="comment-create">
+                        <input type="text" name="content" placeholder="대댓글을 남겨보세요 💬" class="form-control" required="true">
+                        <input class="comment-create-button btn btn-primary" type="submit" value="등록">
+                      </div>
+                    </form>
+                    <hr class="my-hr3">
+                  `);
+                }
+              }
+            }
+
+            return commentsArea.offsetParent;
+          })
+          .then((response) => {
+            commentUpdateBtn(response);
+            replyBtn(response);
+            commentLike(response);
+            commentUpdate(response);
+            commentCreate(response);
+            commentDelete(response);
+            replyCreate(response);
+          })
+        })
+      })
+    }
+
+    const reviewAreaAll = document.querySelectorAll(".review-area");
+    reviewAreaAll.forEach((reviewArea) => {
+      commentUpdateBtn(reviewArea)
+      replyBtn(reviewArea)
+      commentLike(reviewArea)
+      commentUpdate(reviewArea)
+      commentDelete(reviewArea)
+      replyCreate(reviewArea)
+      commentCreate(reviewArea)
+    })
+  </script>
+{% endblock js %}

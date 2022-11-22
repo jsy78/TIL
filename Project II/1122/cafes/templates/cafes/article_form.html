@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+{{ form.media }}
+<link rel="stylesheet" href="{% static 'cafes/css/article_form.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<div class="welcome-text">
+  {% if request.resolver_match.url_name == "cafe_create" %}
+  <p><span class="cafe-name">새로운 카페</span>에 대해 알려주세요!</p>
+  {% elif request.resolver_match.url_name == "cafe_update" %}
+  <p><span class="cafe-name">{{ article.name }}</span>의 바뀐 점을 알려주세요!</p>
+  {% endif %}
+</div>
+<form action="" method="POST" enctype="multipart/form-data" class="c-create">
+  <div id="froala-editor">
+    {% csrf_token %}
+    {% bootstrap_form form %}</div>
+  <div class="buttons">
+    {% if request.resolver_match.url_name == "cafe_create" %}
+    <button type="submit" class="c-create-button">작성</button>
+    {% elif request.resolver_match.url_name == "cafe_update" %}
+    <button type="submit" class="c-create-button">수정</button>
+    {% endif %}
+    {% if request.resolver_match.url_name == "cafe_create" %}
+    <button type="button" class="back-button" onclick="location.href='{% url 'main' %}'">취소</button>
+    {% elif request.resolver_match.url_name == "cafe_update" %}
+    <button type="button" class="back-button"
+      onclick="location.href='{% url 'cafes:cafe_detail' article.pk %}'">취소</button>
+    {% endif %}
+  </div>
+</form>
+{% endblock content %}
+
+{% block js %}
+<!-- 주소 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- 지도 API -->
+<script type="text/javascript"
+  src="//dapi.kakao.com/v2/maps/sdk.js?appkey={% include 'cafes/appkey.txt' %}&libraries=services"></script>
+<script>
+  document.querySelectorAll(".mb-3").item(1).insertAdjacentHTML("beforeend", `
+      <div id="map" class="mt-3 d-none rounded" style="width: 100%; height: 350px;"></div>
+    `);
+  const addressInput = document.querySelector("#id_address");
+  const sidoInput = document.querySelector("#id_sido");
+  const sigunguInput = document.querySelector("#id_sigungu");
+  const roadnameInput = document.querySelector("#id_roadname");
+  const mapContainer = document.querySelector("#map");
+  const mapOption = {
+    center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심 좌표
+    level: 2, // 지도의 확대 레벨
+  };
+  //지도를 미리 생성
+  const map = new kakao.maps.Map(mapContainer, mapOption);
+  // 주소-좌표 변환 객체를 생성
+  const geocoder = new kakao.maps.services.Geocoder();
+  //마커를 미리 생성
+  const marker = new kakao.maps.Marker({
+    position: new kakao.maps.LatLng(37.537187, 127.005476),
+    map: map
+  });
+
+  addressInput.addEventListener("click", function () {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 주소 정보를 해당 필드에 넣는다.
+        addressInput.value = data.address;
+        sidoInput.value = data.sido;
+        sigunguInput.value = data.sigungu;
+        roadnameInput.value = data.roadname;
+        // 주소로 상세 정보를 검색
+        geocoder.addressSearch(data.address, function (results, status) {
+          // 정상적으로 검색이 완료됐으면
+          if (status === daum.maps.services.Status.OK) {
+            const result = results[0]; //첫번째 결과의 값을 활용
+            // 해당 주소에 대한 좌표를 받아서
+            const coords = new kakao.maps.LatLng(result.y, result.x);
+            // 지도를 보여준다.
+            mapContainer.classList.remove("d-none");
+            mapContainer.classList.add("d-block");
+            map.relayout();
+            // 지도 중심을 변경한다.
+            map.setCenter(coords);
+            // 마커를 결과값으로 받은 위치로 옮긴다.
+            marker.setPosition(coords);
+          }
+        });
+      }
+    }).open();
+  });
+</script>
+{% endblock js %}

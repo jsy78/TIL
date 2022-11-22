@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}"/>
+{% endblock css %}
+
+{% block content %}
+  <!-- 메뉴 위 상단 부분 -->
+  <div class="personal-info">
+    <!-- 프로필 사진이 설정되어 있으면 프로필 사진을 띄움 -->
+    {% if user.profile %}
+      <img src="{{ user.profile.url }}" alt="직접 설정해둔 프로필 사진"/>
+    {% else %}
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" alt="기본 프로필 사진"/>
+    {% endif %}
+    <div class="info-letter">
+      <div class="info-upper">
+        <p>{{ user }}</p>
+        <!-- 로그인 했을 경우 버튼이 뜸-->
+        {% if request.user.is_authenticated %}
+          <!-- 회원정보 수정 -->
+          {% if user == request.user %}
+            <button type="submit" class="edit-button" onclick="location.href='{% url 'accounts:update' %}'">
+              회원정보 수정
+            </button>
+          {% else %}
+            <!-- 팔로우 버튼 -->
+            {% if request.user != user %}
+              <form id="follow-form" data-user-name="{{ user.username }}">
+                {% csrf_token %}
+                {% if request.user in user.followers.all %}
+                  <input type="submit" value="팔로우 취소" class="follow-button"/>
+                {% else %}
+                  <input type="submit" value="팔로우" class="follow-button"/>
+                {% endif %}
+              </form>
+            {% endif %}
+          {% endif %}
+
+        {% endif %}
+      </div>
+      <div class="info-lower">
+        <button type="button" id="followings-count" class="follow btn btn-outline-white text-white" data-bs-toggle="modal" data-bs-target="#followingsModal">
+          팔로우
+          {{ user.followings.count }}
+        </button>
+        <button type="button" id="followers-count" class="follower btn btn-outline-white text-white" data-bs-toggle="modal" data-bs-target="#followersModal">
+          팔로워
+          {{ user.followers.all|length }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메뉴 -->
+  <ul class="personal-tabs">
+    <li class="active" rel="tab1">작성한 글</li>
+    <li class="li" rel="tab2">즐겨찾기한 글</li>
+    <li class="li" rel="tab3">좋아요한 글</li>
+  </ul>
+
+  <!-- 메뉴 내용 -->
+  <div class="tab-container">
+    <!-- 작성한 글 -->
+    <div id="tab1" class="tab-content">
+      {% if user.article_set.all %}
+        <ul class="listwrap">
+          {% for cafe_info in user.article_set.all %}
+            <a href="{% url 'cafes:cafe_detail' cafe_info.pk %}">
+              <img src="{{ cafe_info.image1.url }}" alt="작성한 글의 이미지"/>
+            </a>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="no-contents">
+          작성한 글이 없습니다.<br/>카페 탐색을 시작해보세요!
+        </p>
+      {% endif %}
+    </div>
+    <!-- 즐겨찾기한 글 -->
+    <div id="tab2" class="tab-content">
+      {% if bookmark_articles %}
+        {% for bookmark_article in bookmark_articles%}
+          <a href="{% url 'cafes:cafe_detail' bookmark_article.pk %}">
+            <img src="{{ bookmark_article.image1.url }}" alt="북마크한 글의 이미지"/>
+          </a>
+        {% endfor %}
+      {% else %}
+        <p class="no-contents">
+          북마크한 글이 없습니다.<br/>카페 탐색을 시작해보세요!
+        </p>
+
+      {% endif %}
+    </div>
+    <!-- 좋아요한 글 -->
+    <div id="tab3" class="tab-content">
+      {% if like_articles %}
+        {% for like_article in like_articles %}
+          <a href="{% url 'cafes:cafe_detail' like_article.pk %}">
+            <img src="{{ like_article.image1.url }}" alt="좋아요한 글의 이미지"/>
+          </a>
+        {% endfor %}
+      {% else %}
+        <p class="no-contents">
+          좋아요한 글이 없습니다.<br/>카페 탐색을 시작해보세요!
+        </p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="followingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" id="followingsModalLabel">팔로우</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for user in following_users %}
+            <div class="d-flex justify-content-center align-items-center">
+              {% if user.profile %}
+                <img src="{{ user.profile.url }}" class="profile-img" alt="프로필 사진"/>
+              {% else %}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진"/>
+              {% endif %}
+              <div class="follower-user-name flex-fill ms-2">
+                <a href="{% url 'accounts:profile' user.username %}" class="detail_name">{{ user.username }}</a>
+              </div>
+            </div>
+          {% empty %}
+            <p class="no-follow">팔로우 중인 유저가 없습니다</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" id="followersModalLabel">팔로워</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for user in user.followers.all %}
+            <div class="d-flex justify-content-center align-items-center">
+              {% if user.profile %}
+                <img src="{{ user.profile.url }}" class="profile-img" alt="프로필 사진"/>
+              {% else %}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg" class="profile-img" alt="기본 프로필 사진"/>
+              {% endif %}
+              <div class="flex-fill ms-2">
+                <a href="{% url 'accounts:profile' user.username %}" class="detail_name">{{ user.username }}</a>
+              </div>
+            </div>
+          {% empty %}
+            <p class="no-follow">팔로우 하는 유저가 없습니다</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock content %}
+
+{% block js %}
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="{% static 'accounts/js/profile.js' %}"></script>
+  <script>
+    const form = document.querySelector("#follow-form");
+    const csrftoken = document
+      .querySelector("[name=csrfmiddlewaretoken]")
+      .value;
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const username = event.target.dataset.userName;
+      axios({
+        method: "post",
+        url: `/accounts/follow/${username}/`,
+        headers: {
+          "X-CSRFToken": csrftoken
+        }
+      })
+        .then((response) => {
+          const isFollowed = response.data.is_followed;
+          const followBtn = document.querySelector("#follow-form > input[type=submit]");
+          if (isFollowed === true) {
+            followBtn.value = "팔로우 취소";
+          } else {
+            followBtn.value = "팔로우";
+          }
+          const followersCountTag = document.querySelector("#followers-count");
+          const followingsCountTag = document.querySelector("#followings-count");
+          const followersCount = response.data.followersCount;
+          const followingsCount = response.data.followingsCount;
+          followersCountTag.innerText = "팔로워 " + followersCount;
+          followingsCountTag.innerText = "팔로우 " + followingsCount;
+        })
+        .catch((error) => {
+          console.log("error : ", error.response);
+        });
+    });
+  </script>
+{% endblock js %}

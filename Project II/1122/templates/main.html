@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<div id="carouselExampleCaptions" class="carousel slide my-5" data-bs-ride="false">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+      aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'image/carousel_1.jpg' %}" class="d-block w-100" alt="carousel_1">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>어서오세요, 별다방입니다!</h5>
+        <p>카페를 추천해드려요</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'image/carousel_2.jpg' %}" class="d-block w-100" alt="carousel_2">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>테마별 추천</h5>
+        <p>가고싶은 카페를 테마별로 분류하여 추천해요</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'image/carousel_3.jpg' %}" class="d-block w-100" alt="carousel_3">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>인기 카페</h5>
+        <p>인기가 많은 카페를 알 수 있어요</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+{% if request.resolver_match.url_name == 'main' %}
+<!-- 카페가 준비되어 있어요 -->
+<p class="result-text">
+  당신을 위해 준비된 카페
+</p>
+
+<div id="scroll_data" class="infinite-container cafe-list">
+  {% for article in page_obj %}
+  <div class="a-cafe infinite-item">
+    <!-- 카페 위치 -->
+    <div class="cafe-address">
+      <img src="https://cdn-icons-png.flaticon.com/512/67/67872.png" alt="위치 아이콘" />
+      <p>{{ article.address }}</p>
+    </div>
+
+    <!-- 카페 이미지-->
+    <a href="{% url 'cafes:cafe_detail' article.pk %}"><img src="{{ article.image1.url }}" alt="카페 사진" /></a>
+
+    <div class="cafe-text">
+      <div class="name-hash">
+        <!-- 카페 이름 -->
+        <a href="{% url 'cafes:cafe_detail' article.pk %}" class="name">
+          <p>{{ article.name }}</p>
+        </a>
+
+        <!-- 짭해시태그 -->
+        <div class="hash">
+          <!-- 카테고리 -->
+          {% if article.cafeType == '분위기가 좋은' %}
+          <form action="{% url 'cafes:category' '분위기가 좋은' %}">
+            <button type="submit" class="a-hash">
+              <p>#{{ article.cafeType }}</p>
+              <input type="button" value="{{ article.cafeType }}" name="button" class="category-value" />
+            </button>
+          </form>
+
+          {% elif article.cafeType == '디저트가 맛있는' %}
+          <form action="{% url 'cafes:category' '디저트가 맛있는' %}">
+            <button type="submit" class="a-hash">
+              <p>#{{ article.cafeType }}</p>
+              <input type="button" value="{{ article.cafeType }}" name="button" class="category-value" />
+            </button>
+          </form>
+
+          {% elif article.cafeType == '커피가 맛있는' %}
+          <form action="{% url 'cafes:category' '커피가 맛있는' %}">
+            <button type="submit" class="a-hash">
+              <p>#{{ article.cafeType }}</p>
+              <input type="button" value="{{ article.cafeType }}" name="button" class="category-value" />
+            </button>
+          </form>
+
+          {% elif article.cafeType == '작업하기 좋은' %}
+          <form action="{% url 'cafes:category' '작업하기 좋은' %}">
+            <button type="submit" class="a-hash">
+              <p>#{{ article.cafeType }}</p>
+              <input type="button" value="{{ article.cafeType }}" name="button" class="category-value" />
+            </button>
+          </form>
+
+          {% elif article.cafeType == '커피가 저렴한' %}
+          <form action="{% url 'cafes:category' '커피가 저렴한' %}">
+            <button type="submit" class="a-hash">
+              <p>#{{ article.cafeType }}</p>
+              <input type="button" value="{{ article.cafeType }}" name="button" class="category-value" />
+            </button>
+          </form>
+
+          {% elif article.cafeType == '이색적인' %}
+          <form action="{% url 'cafes:category' '이색적인' %}">
+            <button type="submit" class="a-hash">
+              <p>#{{ article.cafeType }}</p>
+              <input type="button" value="{{ article.cafeType }}" name="button" class="category-value" />
+            </button>
+          </form>
+          {% endif %}
+
+          <!-- 별점 -->
+          <form action="">
+            <button type="button" class="a-hash">
+              {% if article.average_rate != None %}
+              <p>#{{ article.average_rate|floatformat }}점</p>
+              <input type="button" value="{{ article.average_rate }}" name="button" class="category-value" />
+              {% endif %}
+            </button>
+          </form>
+
+          <!-- 맛집 -->
+          <form action="">
+            <button type="button" class="a-hash">
+              {% if article.average_rate >= 4.0 %}
+              <p>#맛집</p>
+              <input type="button" name="button" class="category-value" />
+              {% endif %}
+            </button>
+          </form>
+
+          <!-- 주소 -->
+          <form action="">
+            <button type="button" class="a-hash">
+              {% if article.sido == '서울' %}
+              <p>#{{ article.sido }} {{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sido }} {{ article.sigungu }}" name="button"
+                class="category-value" />
+
+              {% elif article.sido == '부산' %}
+              <p>#{{ article.sido }} {{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sido }} {{ article.sigungu }}" name="button"
+                class="category-value" />
+
+              {% elif article.sido == '대구' %}
+              <p>#{{ article.sido }} {{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sido }} {{ article.sigungu }}" name="button"
+                class="category-value" />
+
+              {% elif article.sido == '인천' %}
+              <p>#{{ article.sido }} {{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sido }} {{ article.sigungu }}" name="button"
+                class="category-value" />
+
+              {% elif article.sido == '광주' %}
+              <p>#{{ article.sido }} {{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sido }} {{ article.sigungu }}" name="button"
+                class="category-value" />
+
+              {% elif article.sido == '대전' %}
+              <p>#{{ article.sido }} {{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sido }} {{ article.sigungu }}" name="button"
+                class="category-value" />
+
+              {% elif article.sido == '울산' %}
+              <p>#{{ article.sido }} {{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sido }} {{ article.sigungu }}" name="button"
+                class="category-value" />
+
+              {% else %}
+              <p>#{{ article.sigungu }}</p>
+              <input type="button" value="{{ article.sigungu }}" name="button" class="category-value" />
+              {% endif %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% if page_obj.has_next %}
+  <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock content %}
+
+{% block js %}
+<!-- 무한 스크롤 -->
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+  crossorigin="anonymous"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
+<script>
+  var infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    offset: 'bottom-in-view',
+    onBeforePageLoad: () => { },
+    onAfterPageLoad: () => { }
+  })
+</script>
+{% endblock js %}

@@ -1,0 +1,109 @@
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+{% endblock css %}
+
+<div class="navbar navbar-light bg-dark fixed-top content_block">
+  <div class="container-fluid">
+    <!-- 로고 -->
+    <a href="{% url 'main' %}" class="logo">
+      <img src="{% static 'image/logo.png' %}" alt="별다방 로고">
+    </a>
+
+    <!-- 검색창 -->
+    <form role="search" class="search search-bar" action="{% url 'cafes:cafe_search' %}">
+      <input class="search" name="q" type="search" placeholder="카페 탐색하기" aria-label="Search">
+      <button type="submit" class="search-button">
+        <img src="https://cdn-icons-png.flaticon.com/512/16/16492.png" alt="검색 아이콘">
+      </button>
+    </form>
+
+    <!-- 햄버거 -->
+    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLightNavbar"
+      aria-controls="offcanvasLightNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- 사이드 메뉴 -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasLightNavbar"
+      aria-labelledby="offcanvasLightNavbarLabel">
+      <div class="cafe">
+        <div class="offcanvas-header">
+          <!-- 안녕하세요, ( ) 님! -->
+          {% if request.user.is_authenticated %}
+          {% if request.user.profile %}
+          <img src="{{ request.user.profile.url }}" alt="직접 설정해둔 프로필 사진">
+          {% else %}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/1200px-Roasted_coffee_beans.jpg"
+            alt="기본 프로필 사진" />
+          {% endif %}
+          <p class="offcanvas-title" id="offcanvasLightNavbarLabel">안녕하세요, <br>
+            <a href="{% url 'accounts:profile' request.user.username %}" class="name">{{ request.user }}</a> 님!
+          </p>
+          {% else %}
+
+          <!-- 로그인이 필요합니다. -->
+          <div class="login-letter">
+            <p class="line-one">
+              <a href="{% url 'accounts:login' %} " class="nav-link">로그인</a>이
+            </p>
+            <p class="line-two">필요합니다.</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- 카테고리 부분 -->
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <ul class="cate-menu">
+              <li>
+                <a class="dropdown-item" href="{% url 'cafes:category' '분위기가 좋은' %}">분위기가 좋은</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'cafes:category' '디저트가 맛있는' %}">디저트가 맛있는</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'cafes:category' '커피가 맛있는' %}">커피가 맛있는</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'cafes:category' '작업하기 좋은' %}">작업하기 좋은</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'cafes:category' '커피가 저렴한' %}">커피가 저렴한</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'cafes:category' '이색적인' %}">이색적인</a>
+              </li>
+            </ul>
+            <div class="personal">
+              <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'cafes:cafe_create' %}" role="button" class="cafe-create">카페 추가하기</a>
+                {% else %}
+                <a href="{% url 'accounts:signup' %}" class="signups" aria-current="page">회원 가입</a>
+                {% endif %}
+              </li>
+              <!-- 시간 안 되면 없애기 -->
+              <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'accounts:logout' %}" class="logout">로그아웃</a>
+                {% else %}
+                <a href="{% url 'accounts:login' %}" role="button" class="cafe-create">카페 추가하기</a>
+                {% endif %}
+              </li>
+            </div>
+            <!-- personal 끝남 -->
+          </ul>
+          <!-- navbar-nav 끝남 -->
+        </div>
+        <!--offcanvas-body 끝남 -->
+      </div>
+      <!-- cafe 끝남 -->
+    </div>
+    <!-- side menu 끝남 -->
+  </div>
+  <!-- container-fluid 끝남 -->
+</div>
+<!-- navbar 끝남 -->

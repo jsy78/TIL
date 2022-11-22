@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/signup.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="bg-effect">
+  <form action="" method="POST" enctype="multipart/form-data" class="signup-form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <p class="go-login">
+      <a href="{% url 'accounts:login' %}">이미 회원이신가요?</a>
+    </p>
+
+    <button type="submit" class="signup-button">회원가입</button>
+  </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- 주소 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  const addressInput = document.querySelector('#id_address')
+  const sidoInput = document.querySelector('#id_sido')
+  const sigunguInput = document.querySelector('#id_sigungu')
+  const roadnameInput = document.querySelector('#id_roadname')
+
+  addressInput.addEventListener('click', function () {
+    new daum
+      .Postcode({
+        oncomplete: function (data) {
+          // 주소 정보를 해당 필드에 넣는다.
+          addressInput.value = data.address
+          sidoInput.value = data.sido
+          sigunguInput.value = data.sigungu
+          roadnameInput.value = data.roadname
+          // 주소로 상세 정보를 검색
+        }
+      })
+      .open()
+  })
+</script>
+{% endblock js %}

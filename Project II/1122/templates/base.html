@@ -1,0 +1,95 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cafe</title>
+    {% bootstrap_css %}
+    {% block css %}{% endblock css %}
+    <!-- 따로 css 파일 만들면 상속이 안 돼서 여기다 만듦 -->
+    <style>
+      @charset "UTF-8";
+      @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
+
+      /* 배경 화면 */
+      body {
+        background-image: url("/static/image/background.jpg");
+        background-repeat: repeat;
+        font-family: 'NanumSquare', sans-serif;
+        width: 100%;
+      }
+
+      /* 위로 버튼 */
+      .to-the-top {
+        bottom: 10%;
+        cursor: pointer;
+        position: fixed;
+        right: 3%;
+        z-index: 40;
+      }
+
+      .top-button img {
+        filter: invert(95%) sepia(9%) saturate(990%) hue-rotate(4deg) brightness(89%) contrast(90%);
+        height: 1.6rem;
+        padding: 0.2rem;
+        width: 1.6rem;
+      }
+
+      .top-button img:hover {
+        border: transparent;
+        filter: invert(95%) sepia(9%) saturate(990%) hue-rotate(4deg) brightness(120%) contrast(90%);
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 메시지 -->
+    {% comment %} 
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+      {% endfor %}
+    {% endif %} 
+    {% endcomment %}
+
+    <!-- navbar -->
+    {% include "navbar.html" %}
+
+    <!-- body -->
+    <div class="container w-75" style="min-height: 100vh; margin-top: 5%">
+      {% block content %}{% endblock content %}
+    </div>
+
+    <!-- 맨위로 -->
+    <div class="to-the-top" onclick="window.scrollTo(0,0);">
+      <a href="#doz_header" class="top-button">
+        <img src="https://cdn-icons-png.flaticon.com/512/72/72436.png" alt="맨위로">
+      </a>
+    </div>
+
+    <!-- footer -->
+    {% include "footer.html" %}
+
+    <!-- 자바스크립트 -->
+    {% bootstrap_javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {% block js %}
+      <script type="text/javascript">
+        {% comment %}
+        document.body.style.backgroundColor = "rgb(0, 0, 0)";
+        {% endcomment %} 
+        {% comment %}
+        document.body.style.backgroundImage = "url('')";
+        {% endcomment %}
+      </script>
+      <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    {% endblock js %}
+  </body>
+
+</html>
