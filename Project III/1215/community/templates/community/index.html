@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/community.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+{% endblock %}
+{% block content %}
+  <div class='container' style="margin-top: 5%;">
+    <div class="pc d-flex justify-content-center" style='margin-bottom:20px'>
+      <a class='text-decoration-none fw-bold' style="color: black" href="{% url 'community:create' %}">
+        <div class='write d-flex justify-content-center align-items-center py-1' style='width:600px'>
+          <i class="bi bi-pencil"></i>여러분의 새로운 피드를 작성해 보세요!
+        </div>
+      </a>
+    </div>
+    <div class="mobile create_btn">
+      <a href="{% url 'community:create' %}">
+        <div class='write d-flex justify-content-center align-items-center create_text'>
+          <p>새로운 피드를 작성해 보세요!</p>
+        </div>
+      </a>
+    </div>
+    <div class='d-flex' style='justify-content: space-evenly'>
+      <div class='feed_list' width:'1000px;'>
+        {% for post in posts %}
+          {% if post.user not in request.user.blocking.all %}
+            <div class='pc feeds'>
+              <div style="width:830px;">
+                <!-- 프로필 이미지 설정 -->
+                <div class='d-flex' style='margin-top:10px'>
+                  {% if post.user.image %}
+                    <a href="{% url 'accounts:detail' post.user.pk %}"><img class=' user_img mx-3' id="profile_img" style="width:55px; height:55px;" src="{{ post.user.image.url }}" alt="{{ post.user.profile.image }}"></a>
+                  {% else %}
+                    <a href="{% url 'accounts:detail' post.user.pk %}"><img class=' user_img mx-3' id="profile_img" style="width:55px; height:55px;" src="{% static 'image/default_profile_img.jpg' %}" alt="{{ post.user.profile.image }}"></a>
+                  {% endif %}
+                  <a class='text-decoration-none align-self-center' href="{% url 'accounts:detail' post.user.pk %}">
+                    <span class='text-muted fw-bold' style='font-size:20px'>{{ post.user.nickname }}</span>
+                  </a>
+                </div>
+
+                <!-- 이미지 캐러셀 -->
+                <div class='slideShow' id='slides-{{forloop.counter0}}' style='margin-top:10px'>
+                  <a href="{% url 'community:detail' post.pk %}">
+                    <ul class='slides list-unstyled'>
+                      {% for photo in post.photo_set.all %}
+                        <!-- 이미지 설정 -->
+                        <li>
+                          <img class='feeds_img' src="{{ photo.image.url }}" alt="{{ photo.image.image }}" style="width: 800px; height: 500px;">
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </a>
+
+                  <p class="controller">
+                    <!-- &lang: 왼쪽 방향 화살표 &rang: 오른쪽 방향 화살표 -->
+                    <span class="prev carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="next carousel-control-next-icon" aria-hidden="true"></span>
+                  </p>
+                </div>
+                <div class='d-flex flex-column align-items-center'>
+                  <div class='feeds_content'>
+                    <div class='d-flex justify-content-center my-2'>
+                      <div class="feed_info">
+                        <div class='d-flex'>
+                          <p class='px-1'>
+                            <i class="bi bi-eye"></i> {{post.hits}}</p>
+                          <p class='px-1'>
+                            <i class="bi bi-heart"></i> {{post.like.count}}</p>
+                          <p class='px-1'>
+                            <i class="bi bi-chat"></i> {{post.comment_set.count}}</p>
+                        </div>
+                        <div>
+                          <small class='text-muted'>
+                            <i class="bi bi-calendar"></i> {{post.created_at}}</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='d-flex justify-content-center mt-3'>
+                      <div>
+                        <div class='d-flex justify-content-center'>
+                          <div class='d-flex flex-column' style='width:800px; margin-bottom:10px'>
+                            <h3>
+                              <a class='text-decoration-none main_title' href="{% url 'community:detail' post.pk%}">{{post.title}}</a>
+                            </h3>
+                            <div class="p-1">
+                              {{post.summary}}
+                              <a class='text-decoration-none' style='color:#979AA0' href="{%url 'community:detail' post.pk%}">...more</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mobile feeds">
+              <div class="profile">
+                {% if post.user.image %}
+                  <a href="{% url 'accounts:detail' post.user.pk %}"><img src="{{ post.user.image.url }}" alt="{{ post.user.profile.image }}"></a>
+                {% else %}
+                  <a href="{% url 'accounts:detail' post.user.pk %}"><img src="{% static 'image/default_profile_img.jpg' %}" alt="기본 이미지"></a>
+                {% endif %}
+                <div>
+                  <a class="mute_text" href="{% url 'accounts:detail' post.user.pk %}">{{post.user.nickname}}</a>
+                  <p class="create_text">{{post.created_at}}</p>
+                </div>
+              </div>
+              <div class="content">
+                {% if post.photo_set.first.image %}
+                <div>
+                  <a href="{% url 'community:detail' post.pk %}">
+                    <img src="{{ post.photo_set.first.image.url }}" alt="">
+                  </a>
+                </div>
+                {% endif %}
+                <div class="feed_info">
+                  <div class='d-flex'>
+                    <p class='px-1'>
+                      <i class="bi bi-eye"></i> {{post.hits}}</p>
+                    <p class='px-1'>
+                      <i class="bi bi-heart"></i> {{post.like.count}}</p>
+                    <p class='px-1'>
+                      <i class="bi bi-chat"></i> {{post.comment_set.count}}</p>
+                  </div>
+                </div>
+                <div class="post_text_wrap">
+                  <a class='text-decoration-none main_title' href="{% url 'community:detail' post.pk %}">
+                    <p class="over">{{post.title}}</p>
+                  </a>
+                  <p class="post_text">{{ post.content }}</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 피드 추가 버튼 -->
+  <a href="{% url 'community:create' %}" class='plus-btn'>
+    <div>
+      <i class="bi bi-plus"></i>
+    </div>
+  </a>
+
+  <!-- 이미지 캐러셀 설정 -->
+  <script>
+    const feeds = document.querySelectorAll('.feeds')
+    feeds.forEach(function (feed, Idx) {
+      console.log(feed, Idx)
+      const slides = document.querySelector(`#slides-${Idx} ul.slides`)
+      const slideImg = document.querySelectorAll(`#slides-${Idx} .slides li`); //모든 슬라이드들
+      const prev = document.querySelector(`#slides-${Idx} .prev`); //이전 버튼
+      const next = document.querySelector(`#slides-${Idx} .next`); //다음 버튼
+      const slideCount = slideImg.length; // 슬라이드 개수
+      const slideWidth = 800; //한개의 슬라이드 넓이
+      const slideMargin = 0; //슬라이드간의 margin 값
+      let currentIdx = 0; //현재 슬라이드 index 초기값 0
+
+      //전체 슬라이드 컨테이너 넓이 설정
+      slides.style.width = (slideWidth + slideMargin) * slideCount + 'px';
+
+      function moveSlide(num) {
+        slides.style.left = -num * 800 + 'px';
+        currentIdx = num;
+      }
+      prev.addEventListener('click', function () {
+        if (currentIdx !== 0) 
+          moveSlide(currentIdx - 1);
+        }
+      );
+      next.addEventListener('click', function () {
+        if (currentIdx !== slideCount - 1) {
+          moveSlide(currentIdx + 1);
+        }
+      });
+    });
+  </script>
+{% endblock content %}

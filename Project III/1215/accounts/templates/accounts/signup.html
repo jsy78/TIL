@@ -1,0 +1,409 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <h1 class="login_banner text-center">회원가입</h1>
+    <form id="myForm" name="myForm" action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data" autocomplete="off" onsubmit="stopEvent(e)">
+      {% csrf_token %}
+      <div class="slide">
+        <!-- 첫번째 페이지 (ID, PW)-->
+        <div class="slide_item">
+          <div class="form_list">
+            {% if messages %}
+              <div class="messages">
+                {% for msg in messages %}
+                  <div>
+                    <div class="alert alert-danger" role="alert">
+                      {{msg.message}}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <!-- input : 아이디, -->
+            <div class="form_field">
+              {% render_field form.username id="id" class="user_input" placeholder="아이디" %}
+              <div class="error_next_box"></div>
+            </div>
+            <!-- input : 비밀번호 -->
+            <div class="form_field">
+              {% render_field form.password1 id="pswd1" class="user_input" placeholder="비밀번호"%}
+              <div class="error_next_box"></div>
+            </div>
+            <!-- input : 비밀번호 재확인 -->
+            <div class="form_field">
+              {% render_field form.password2 id="pswd2" class="user_input" placeholder="비밀번호 재확인"%}
+              <div class="error_next_box mb-3"></div>
+            </div>
+            <!-- input : 닉네임 -->
+            <div class="form_field">
+              {% render_field form.nickname id="nickname" class="user_input" placeholder="닉네임"%}
+              <div class="error_next_box"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 두번째 페이지 (인적사항) -->
+        <div class="slide_item">
+          <div class="form_list">
+            <!-- input : 생년월일 -->
+            <div class="form_field">
+              <label class="birth_label">생년월일</label>
+              <input tabindex="-1" type="date" id="birth" class="user_input" name="birth" value="2000-01-01">
+            </div>
+            <!-- input : 성별 -->
+            <div class="select">
+              <input tabindex="-1" type="radio" id="select" name="gender" value="M">
+              <label for="select">남자</label>
+              <input tabindex="-1" type="radio" id="select2" name="gender" value="F">
+              <label for="select2">여자</label>
+            </div>
+            <!-- input : 우편번호, 검색 기능 -->
+            <div class="form_field">
+              <div class="address_box">
+                <input tabindex="-1" type="text" id="postcode" placeholder="우편번호" class="sm_user_input">
+                <input tabindex="-1" type="button" id="search_address" value="주소 찾기" class="address_btn">
+              </div>
+            </div>
+            <!-- input : 도로명 주소 -->
+            <div class="form_field">
+              <input tabindex="-1" type="text" id="roadAddress" name="address" placeholder="도로명주소" class="user_input" required>
+            </div>
+            <!-- input : 상세 주소 -->
+            <div class="form_field">
+              {% render_field form.address_detail class="user_input" placeholder="상세주소 (선택)" tabindex="-1" %}
+            </div>
+          </div>
+        </div>
+        <!-- 세번째 페이지 (프로필 이미지) -->
+        <div class="slide_item">
+          <div class="form_list">
+            <div class="form_field">
+              <div class="profile">
+                <div>
+                  <img id="image_section" src="{% static 'image/default_profile_img.jpg' %}">
+                </div>
+                <div>
+                  {% render_field form.image id="imgInput" class="image_input" placeholder="프로필 이미지" %}
+                  <label class="input-file-button" for="imgInput">
+                    프로필 사진 지정
+                    <small>(필수)</small>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 네번째 페이지 (카테고리) -->
+        <div class="slide_item">
+          <div class="category_form">
+            <div class="category_list">
+              <div>
+                <label class="birth_label">취미
+                  <small>(선택)</small>
+                </label>
+              </div>
+              <label class="form-label">Sports</label>
+              <div id="id_sports">
+                {% for value, text in form.sports.field.choices %}
+                  <span class="category_select">
+                    <input id="id_sprots_{{ forloop.counter0 }}" name="{{ form.sports.name }}" type="checkbox" value="{{ value }}">
+                    <label for="id_sprots_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+              <label class="form-label">Art</label>
+              <div id="id_art">
+                {% for value, text in form.art.field.choices %}
+                  <span class="category_select">
+                    <input id="id_art_{{ forloop.counter0 }}" name="{{ form.art.name }}" type="checkbox" value="{{ value }}">
+                    <label for="id_art_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+              <label class="form-label">Food</label>
+              <div id="id_food">
+                {% for value, text in form.food.field.choices %}
+                  <span class="category_select">
+                    <input id="id_food_{{ forloop.counter0 }}" name="{{ form.food.name }}" type="checkbox" value="{{ value }}">
+                    <label for="id_food_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 다섯번째 페이지 (카테고리) -->
+        <div class="slide_item">
+          <div class="category_wrap">
+            <div class="category_form">
+              <div class="category_list">
+                <label class="form-label">Travel</label>
+                <div class="" id="id_travel">
+                  {% for value, text in form.travel.field.choices %}
+                    <span class="category_select">
+                      <input id="id_travel_{{ forloop.counter0 }}" name="{{ form.travel.name }}" type="checkbox" value="{{ value }}">
+                      <label for="id_travel_{{ forloop.counter0 }}">{{ text }}</label>
+                    </span>
+                  {% endfor %}
+                </div>
+                <label class="form-label">Develop</label>
+                <div id="id_develop" class="mb-5">
+                  {% for value, text in form.develop.field.choices %}
+                    <span class="category_select">
+                      <input id="id_develop_{{ forloop.counter0 }}" name="{{ form.develop.name }}" type="checkbox" value="{{ value }}">
+                      <label for="id_develop_{{ forloop.counter0 }}">{{ text }}</label>
+                    </span>
+                  {% endfor %}
+                </div>
+                <div id="html_element" data-callback="successCaptcha"></div>
+                <input name="captchatoken" type="hidden" required>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 페이지 or  가입 제출 버튼 -->
+      <div class="page_btn_group">
+        <button type="button" class="page_btn slide_prev_button">이전</button>
+        <button type="button" class="page_btn slide_next_button">다음</button>
+        <button id="submit_btn" class="signup_btn">가입</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <!-- sweetalert -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- reCaptcha -->
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+    function onloadCallback() {
+        grecaptcha.render('html_element', {
+          'sitekey' : '6Le-rWMjAAAAAOGdCaktt6BXwNuG81jSV4HqaPw5'
+        });
+      };
+    function stopEvent(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    };
+    let isCaptchaSuccess = false;
+    function successCaptcha(token) {
+      document.myForm.captchatoken.value = token
+      isCaptchaSuccess = true;
+      console.log(isCaptchaSuccess)
+    };
+    const htmlSave = document.querySelector('#submit_btn');
+    htmlSave.addEventListener('click', testSubmit);
+    
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const myForm = document.querySelector('#myForm')
+    const addressInput = document.querySelector('#roadAddress')
+    const nicknameInput = document.querySelector('#nickname')
+    const pswd2Input = document.querySelector('#pswd2')
+    const pswd1Input = document.querySelector('#pswd1')
+    const idInput = document.querySelector('#id')
+    function testSubmit(e) {
+      e.preventDefault()
+      if (addressInput.value === "" || nicknameInput.value === "" || pswd2Input.value === "" || pswd1Input.value === "" || idInput.value === "" ){
+        swal('필수 정보를 입력해 주세요!', {
+              icon: 'error',
+              button: true,
+            })  
+      } else{
+        if (!isCaptchaSuccess)  {
+        swal("'로봇이 아닙니다'를 선택해주세요.")
+      } else {
+        axios({
+          method:'post',
+          url: `/accounts/signup/`,
+          headers: { 'X-CSRFToken': csrftoken},
+          data: new FormData(myForm),
+        })
+        .then(response => {
+          console.log(response.data.result)
+          if (!response.data.result){
+            swal('새로고침 후에 다시 입력해주세요.', {
+              icon: 'success',
+              button: true,
+            })
+            grecaptcha.reset('html_element', {
+            'sitekey' : '6Le-rWMjAAAAAOGdCaktt6BXwNuG81jSV4HqaPw5'
+            })
+          } else {
+            window.location.replace('/')
+          }
+          })
+      };
+    
+    };
+      }
+  </script>
+  <!-- 폼 페이지 -->
+  <script src="{% static 'js/signup_form.js' %}"></script>
+  <!-- 주소 찾기 -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="{% static 'js/search_address.js' %}"></script>
+  <!-- 제이쿼리 -->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <!-- ID, 닉네임 중복, 빈칸 체크 -->
+  <script>
+    var id = document.querySelector('#id');
+    var nickname = document.querySelector('#nickname');
+    var pw1 = document.querySelector('#pswd1');
+    var pw2 = document.querySelector('#pswd2');
+
+    var error = document.querySelectorAll('.error_next_box');
+
+    id.addEventListener("focusout", checkId);
+    // 입력할때마다 함수실행 로컬에선 빠른데 서버에선..?? 느릴 수도 있음. 그럼 바로 수정
+    nickname.addEventListener("input", checknickname);
+    pw1.addEventListener("focusout", checkPw);
+    pw2.addEventListener("focusout", comparePw);
+
+    // 아이디 중복 체크
+    function checkId() {
+      // input 빈 칸이면 실행
+      if (id.value === "") {
+        error[0].innerHTML = "필수 정보입니다.";
+        error[0].style.color = "red";
+        error[0].style.display = "block";
+        error[0].style.fontSize = "12px";
+      } else {
+        // input 입력된 후 실행
+        $.ajax({
+          // get으로 DB를 가져온다
+          type: "get",
+          // json 파일 가져올 url 설정
+          url: "{% url 'accounts:id_check' %}",
+          // 받아오는 데이터 유형 설정
+          dataType: "json",
+          // 성공
+          success: function (data) {
+            // DB에 저장된 유저들의 username을 배열에 저장
+            var arr = [];
+            for (let i in data.accounts) {
+              arr[i] = data.accounts[i]
+            }
+            // 배열 안에 input으로 입력한 값이 있다면 실행
+            if (arr.includes(id.value)) {
+              error[0].innerHTML = "중복된 아이디입니다.";
+              error[0].style.color = "red";
+              error[0].style.display = "block";
+              error[0].style.fontSize = "12px";
+            } else {
+              // 배열 안에 input으로 입력한 값이 없다면
+              error[0].innerHTML = "사용 가능합니다.";
+              error[0].style.color = "#08A600";;
+              error[0].style.display = "block";
+              error[0].style.fontSize = "12px";
+            }
+          },
+          // 실패 (대부분 url 문제)
+          error: function () {
+            console.log("error");
+          }
+        })
+      }
+    }
+
+    
+    // 비밀번호 체크
+    function checkPw() {
+      var pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
+      if (pw1.value === "") {
+        error[1].innerHTML = "필수 정보입니다.";
+        error[1].style.display = "block";
+        error[1].style.color = "red";
+        error[1].style.fontSize = "12px";
+      } else if (!pwPattern.test(pw1.value)) {
+        error[1].innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
+        error[1].style.display = "block";
+        error[1].style.color = "red";
+        error[1].style.fontSize = "12px";
+      } else {
+        error[1].style.display = "block";
+        error[1].innerHTML = "사용 가능합니다.";
+        error[1].style.color = "#08A600";
+        error[1].style.fontSize = "12px";
+      }
+    }
+    
+    // 비밀번호 재입력 체크
+    function comparePw() {
+      if (pw2.value === pw1.value && pw2.value != "") {
+        error[2].style.display = "none";
+      } else if (pw2.value !== pw1.value) {
+        error[2].innerHTML = "비밀번호가 일치하지 않습니다.";
+        error[2].style.display = "block";
+        error[2].style.color = "red";
+        error[2].style.fontSize = "12px";
+      }
+      
+      if (pw2.value === "") {
+        error[2].innerHTML = "필수 정보입니다.";
+        error[2].style.display = "block";
+        error[2].style.color = "red";
+        error[2].style.fontSize = "12px";
+      }
+    }
+
+    // 닉네임 중복 체크
+    function checknickname() {
+      // input 빈 칸이면 실행
+      if (nickname.value === "") {
+        error[3].innerHTML = "필수 정보입니다.";
+        error[3].style.color = "red";
+        error[3].style.display = "block";
+        error[3].style.fontSize = "12px";
+      } else {
+        // input 입력된 후 실행
+        $.ajax({
+          // get으로 DB를 가져온다
+          type: "get",
+          // json 파일 가져올 url 설정
+          url: "{% url 'accounts:nickname_check' %}",
+          // 받아오는 데이터 유형 설정
+          dataType: "json",
+          // 성공
+          success: function (data) {
+            // DB에 저장된 유저들의 username을 배열에 저장
+            var arr = [];
+            for (let i in data.accounts) {
+              arr[i] = data.accounts[i]
+            }
+            // 배열 안에 input으로 입력한 값이 있다면 실행
+            if (arr.includes(nickname.value)) {
+              error[3].innerHTML = "중복된 닉네임입니다.";
+              error[3].style.color = "red";
+              error[3].style.display = "block";
+              error[3].style.fontSize = "12px";
+            } else {
+              // 배열 안에 input으로 입력한 값이 없다면
+              error[3].innerHTML = "사용 가능합니다.";
+              error[3].style.color = "#08A600";;
+              error[3].style.display = "block";
+              error[3].style.fontSize = "12px";
+            }
+          },
+          // 실패 (대부분 url 문제)
+          error: function () {
+            console.log("error");
+          }
+        })
+      }
+    }
+  </script>
+  <!-- 이미지 미리보기 -->
+  <script src="{% static 'js/imagepreview.js'%}"></script>
+
+{% endblock js %}

@@ -1,0 +1,677 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/accounts_detail.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+  <!-- 팔로워 모달 -->
+  <div class="modal fade title-font" id="followerModal" tabindex="-1" aria-labelledby="followerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center fw-bold" id="followerModalLabel">Followers</h5>
+        </div>
+        <div class="modal-body">
+          {% if user.followers.all %}
+            {% for follower in user.followers.all %}
+              <a href="{% url 'accounts:detail' follower.pk %}" class="modal-participater" style="color: black; text-decoration: none;">
+                <div class="d-flex align-items-center justify-content-center">
+                  {% if follower.image %}
+                  <!-- 프로필 이미지가 있으면 -->
+                  <div class="follow_profile">
+                  <img src="{{ follower.image.url }}">
+                  </div>
+                  {% endif %}
+                  <div style="font-size: 18px;">{{ follower.nickname }}</div>
+                  </div>
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="text-center">팔로워가 없습니다.</div>
+          {% endif %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 팔로잉 모달 -->
+  <div class="modal fade title-font" id="followingModal" tabindex="-1" aria-labelledby="followingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center" id="followingModalLabel">Followings</h5>
+        </div>
+        <div class="modal-body">
+          {% if user.followings.all %}
+            {% for following in user.followings.all %}
+              <a href="{% url 'accounts:detail' following.pk %}" class="modal-participater" style="color: black; text-decoration: none;">
+                <div class="d-flex align-items-center justify-content-center">
+                  {% if following.image %}
+                  <div class="follow_profile">
+                  <img src="{{ following.image.url }}">
+                  </div>
+                  {% endif %}
+                  <div style="font-size: 18px;">{{ following.nickname }}</div>
+                </div>
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="text-center">팔로우 중인 사람이 없습니다.</div>
+          {% endif %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="content">
+  <!-- 사이드 바 -->
+  <aside>
+    <div class="side_wrap">
+      <!-- 프로필 영역 -->
+      <div class="profile">
+        {% if user.image %}
+            <img src="{{ user.image.url }}" alt="사용자 사진">
+        {% else %}
+            <img src="{% static 'image/default_profile_img.jpg'%}" alt="기본 프로필 이미지">
+        {% endif %}
+        <h4>{{ user.nickname }}</h4>
+        {% if request.user.is_authenticated %}
+          {% if request.user != user %}
+          <!-- 팔로우 팔로잉 -->
+          <form action="{% url 'accounts:follow' user.pk %}" method="POST">
+            {% csrf_token %}
+            {% if request.user in user.followers.all %}
+            <button type="submit" id="follow-btn" class="follow_btn">언팔로우</button>
+            {% else %}
+            <!-- problem : 팔로우 색상 변경 ?-->
+            <button type="submit" id="follow-btn" class="follow_btn">팔로우</button>
+            {% endif %}
+          </form>
+          {% else %}
+          <!-- 유저 정보 수정 링크 -->
+            <a href="{% url 'accounts:update' user.pk %}">
+              <button class="follow_btn">수정</button>
+            </a>
+          {% endif %}
+        {% endif %}
+        <!-- 메일, 팔로우(카운트) + 모달 -->
+        <div class="follow_box">
+          <div class="mail_btn follow">
+            {% if request.user == user %}
+            <a href="{% url 'notes:received_box' %}"><span><i class="mail bi bi-envelope-fill"></i></span></a>
+            <span class="mute_text">{{ user.received_note_set.all.count }}</span>
+            {% else %}
+            <form action="{% url 'notes:send' %}" method="GET">
+              <input type="hidden" class="form-control" value="{{ user.nickname }}" name="to">
+              <button class="btn btn-outline-danger me-2"><i class="bi bi-cursor-fill"></i></button>
+            </form>
+            {% endif %}
+          </div>
+          <div class="follow">
+            <span>{{ user.followings.count }}</span>
+            <span class="mute_text" data-bs-target="#followingModal" data-bs-toggle="modal">팔로잉 ></span>
+          </div>
+          <div class="follow">
+            <span>{{ user.followers.count }}</span>
+            <span class="mute_text" data-bs-target="#followerModal" data-bs-toggle="modal">팔로워 ></span>
+          </div>
+        </div>     
+      </div>
+      
+      <!-- 버튼 그룹 -->
+      <nav class="tap_nav" id="tab-button-nav">
+        <!-- 큰 화면 버튼 -->
+        <button id="feed" class="desk tab-button active" data-tab-section="tab-section-1">작성한 피드</button>
+        <button id="liked_feed" class="desk tab-button" data-tab-section="tab-section-2">좋아요</button>
+        <button id="accepted" class="desk tab-button" data-tab-section="tab-section-3">참여 중 소셜</button>
+        <button id="waiting" class="desk tab-button" data-tab-section="tab-section-4">참여 대기 소셜</button>
+        <button id="product" class="desk tab-button" data-tab-section="tab-section-5">판매 중</button>
+        <button id="cart" class="desk tab-button" data-tab-section="tab-section-6">찜</button>
+        <!-- 작은 화면 버튼 -->
+        <button class="mobile tab-button active bi bi-subtract" data-tab-section="tab-section-1"></button>
+        <button class="mobile tab-button bi bi-heart" data-tab-section="tab-section-2"></button>
+        <button class="mobile tab-button bi bi-people" data-tab-section="tab-section-3"></button>
+        <button class="mobile tab-button bi bi-person-gear" data-tab-section="tab-section-4"></button>
+        <button class="mobile tab-button bi bi-box-seam" data-tab-section="tab-section-5"></button>
+        <button class="mobile tab-button bi bi-cart" data-tab-section="tab-section-6"></button>
+          <!-- 차단 모달 -->
+        <div class="modal fade title-font" id="blockModal" tabindex="-1" aria-labelledby="blockModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title w-100 text-center fw-bold" id="blockModalLabel">차단목록</h5>
+              </div>
+              <div class="modal-body">
+                {% if blockers %}
+                  {% for block_user in blockers %}
+                    {% if block_user.image %}
+                    <div class="d-flex justify-content-center">
+                    <img src="{{ block_user.image.url }}" class="rounded-circle" alt="" style="height: 50px; width:50px;">
+                      <p class="align-self-center pt-3 ms-4">{{ block_user.nickname }}</p>
+                        <a class="ms-5 align-self-center text-decoration-none text-white fw-bold btn btn-danger"
+                            href="{% url 'accounts:block' block_user.pk %}">차단 취소</a>
+                    </div>
+                    {% else %}
+                    <div class="d-flex justify-content-center">
+                      <p class="align-self-center pt-3 ms-4">{{ block_user.nickname }}</p>
+                        <a class="ms-5 align-self-center text-decoration-none text-white fw-bold btn btn-danger"
+                            href="{% url 'accounts:block' block_user.pk %}">차단 취소</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                  {% else %}
+                  <div class="text-center">차단 유저가 없습니다.</div>
+                {% endif %}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 로그인한 유저는 회원탈퇴, 아니면 차단 버튼 -->
+        {% if request.user == user %}
+        <!-- 차단 목록 버튼 -->
+        <button class="delete_btn" data-bs-target="#blockModal" data-bs-toggle="modal">차단목록</button>
+        <button class="delete_btn" id="confirmStart" style="margin-top: 2rem;">회원탈퇴</button>
+        {% else %}
+          <a href="{% url 'accounts:block' user.pk %}">
+            {% if request.user in user.blockers.all %}
+              <button type="button" class="delete_btn">차단 취소</button>
+            {% else %}
+              <button type="button" class="delete_btn">차단</button>
+            {% endif %}
+          </a>
+        {% endif %}
+      </nav>
+    </div>
+  </aside>
+  <!-- 메인 컨텐츠 영역 -->
+  <main>
+    <!-- 선택한 취미가 나오는 영역 작은 화면에선 비활성 -->
+    <div class="select_hobby_wrap">
+      <div class="mute_text">
+        내 취미
+      </div>
+      <div id="my_hobby" class="hobbys">
+        {% for sports in user.sports %}
+          <a href="{% url 'hobby:tag' sports %}">
+              <div class="all-tag">
+                #{{ sports }}&nbsp
+              </div>
+          </a>
+        {% endfor %}
+        {% for travel in user.travel %}
+          <a href="{% url 'hobby:tag' travel %}">
+              <div class="all-tag">
+                #{{ travel }}&nbsp
+              </div>
+          </a>
+        {% endfor %}
+        {% for art in user.art %}
+          <a href="{% url 'hobby:tag' art %}">
+              <div class="all-tag">
+                #{{ art }}&nbsp
+              </div>
+          </a>
+        {% endfor %}
+        {% for food in user.food %}
+          <a href="{% url 'hobby:tag' food %}">
+              <div class="all-tag">
+                #{{ food }}&nbsp
+              </div>
+          </a>
+        {% endfor %}
+        {% for develop in user.develop %}
+          <a href="{% url 'hobby:tag' develop %}">
+              <div class="all-tag">
+                #{{ develop }}&nbsp
+              </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- 내가 (직접) 작성한 피드 -->
+    <section id="tab-section-1" class="tab-section">
+      <div class="mute_text mt-3">
+        작성한 피드
+      </div>
+      <hr>
+      <div class="community_wrap">
+        {% for community in my_community %}
+          <div class="community_item">
+            {% if community.photo_set.first.image %}
+              <a href="{% url 'community:detail' community.pk %}">
+                <img src="{{ community.photo_set.first.image.url }}" alt="community">
+              </a>
+            {% else %}
+              <!-- 사진이 없으면 콘텐츠를 보여 준다 -->
+              <a href="{% url 'community:detail' community.pk %}">
+                <div class="community_text">
+                  <p>{{ community.content }}</p>
+                </div>
+              </a>
+            {% endif %}
+          </div>
+        {% empty %}
+          <!-- 피드가 없을 시 발생하는 이벤트 -->
+          <div class="mute_text m-5 grid_text">
+            <h4> 작성한 피드가 없습니다. </h4>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+    <!-- 내가 좋아요 누른 피드 -->
+    <section id="tab-section-2" class="tab-section" hidden="hidden">
+      <div class="mute_text mt-3">
+        관심 피드
+      </div>
+      <hr>
+      <div class="community_wrap">
+        {% for community in like_community %}
+          <div class="community_item">
+            {% if community.photo_set.first.image %}
+              <a href="{% url 'community:detail' community.pk %}">
+                <img src="{{ community.photo_set.first.image.url }}" alt="community">
+              </a>
+            {% else %}
+              <!-- 사진이 없으면 콘텐츠를 보여 준다 -->
+              <a href="{% url 'community:detail' community.pk %}">
+                <div class="community_text">
+                  <p>{{ community.content }}</p>
+                </div>
+              </a>
+            {% endif %}
+          </div>
+        {% empty %}
+        <!-- 피드가 없을 시 발생하는 이벤트 -->
+        <div class="mute_text m-5 grid_text">
+          <h4> 관심 피드가 없습니다. </h4>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    <!-- 참여 중인 소셜 (내가 개설한 것도 포함 )-->
+    <section id="tab-section-3" class="tab-section" hidden="hidden">
+      <div class="mute_text mt-3">
+        참여 중 소셜
+      </div>
+      <hr>
+      <!-- 소셜 정보 (가능한 디자인 통일을 위해 메인과 같음) -->
+      <div class="hobby_wrap">
+        <!-- 승인된 소셜 -->
+        {% for hobby in accepted %}
+        <a href="{% url 'hobby:detail' hobby.hobby.pk %}" class="tag_a">
+          <div class='d-flex my-2 post'>
+            <div class="col-4">
+              {% if hobby.hobby.image %}
+                <img class='post_img' src="{{ hobby.hobby.image.url }}" style='width:100%; height: 250px;'>
+              {% else %}
+                <img class='post_img' src="{% static 'images/noimage.png' %}" alt="...">
+              {% endif %}
+            </div>
+            <div class="d-flex align-items-center">
+              <div class='mx-5'>
+                <div class='my-3'>
+                  <small class="tag p-1"> {{ hobby.hobby.tags }}</small>
+                </div>
+                <p class="post_title">{{ hobby.hobby.title }}</p>
+                <small class='text-muted post_detail'>
+                  <span class="detail">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    {{ hobby.hobby.address }}&nbsp;
+                  </span>
+                  <span class="detail">
+                    <i class="bi bi-calendar-check-fill"></i>
+                    {{ hobby.hobby.meeting_day|date:'m.d(D) af' }}&nbsp;
+                  </span>
+                  <span class="detail">
+                    <i class="bi bi-people-fill"></i>
+                    {{ hobby.hobby.joinmembers }}/{{ hobby.hobby.limit }}</small>
+                </span>
+                <div class="profil_box d-flex">
+                  {% for member in hobby.hobby.accepted.all %}
+                    {% if forloop.counter <= 6 %}
+                      {% if member.joined == 1 %}
+                        {% if member.user.image %}
+                        <img class="tag_profil" src="{{ member.user.image.url }}">
+                        {% else %}
+                        <img class="tag_profil" src="{% static 'images/프로필.png' %}">
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                  <i class="bi bi-plus-circle"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% empty %}
+        <div class="mute_text m-5">
+          <h4> 참여 중인 소셜이 없습니다.</h4>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    <!-- 참여 대기 소셜 -->
+    <section id="tab-section-4" class="tab-section" hidden="hidden">
+      <div class="mute_text mt-3">
+        참여 대기 소셜
+      </div>
+      <hr>
+      <!-- 소셜 정보 (가능한 디자인 통일을 위해 메인과 같음) -->
+      <div class="hobby_wrap">
+        {% for hobby in waiting %}
+        <a href="{% url 'hobby:detail' hobby.hobby.pk %}" class="tag_a">
+          <div class='d-flex my-2 post'>
+            <div class="col-4">
+              {% if hobby.hobby.image %}
+                <img class='post_img' src="{{ hobby.hobby.image.url }}" style='width:100%; height: 250px;'>
+              {% else %}
+                <img class='post_img' src="{% static 'images/noimage.png' %}" alt="...">
+              {% endif %}
+            </div>
+            <div class="d-flex align-items-center">
+              <div class='mx-5'>
+                <div class='my-3'>
+                  <small class="tag p-1"> {{ hobby.hobby.tags }}</small>
+                </div>
+                <p class="post_title">{{ hobby.hobby.title }}</p>
+                <small class='text-muted post_detail'>
+                  <span class="detail">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    {{ hobby.hobby.address }}&nbsp;
+                  </span>
+                  <span class="detail">
+                    <i class="bi bi-calendar-check-fill"></i>
+                    {{ hobby.hobby.meeting_day|date:'m.d(D) af' }}&nbsp;
+                  </span>
+                  <span class="detail">
+                    <i class="bi bi-people-fill"></i>
+                    {{ hobby.hobby.joinmembers }}/{{ hobby.hobby.limit }}</small>
+                </span>
+                <div class="profil_box d-flex">
+                  {% for member in hobby.hobby.accepted.all %}
+                    {% if forloop.counter <= 6 %}
+                      {% if member.joined == 1 %}
+                        {% if member.user.image %}
+                        <img class="tag_profil" src="{{ member.user.image.url }}">
+                        {% else %}
+                        <img class="tag_profil" src="{% static 'images/프로필.png' %}">
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                  <i class="bi bi-plus-circle"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% empty %}
+        <div class="mute_text m-5">
+          <h4> 참여 대기 중인 소셜이 없습니다.</h4>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    <!-- 만물상 판매 중인 물건 -->
+    <section id="tab-section-5" class="tab-section" hidden="hidden">
+      <div class="mute_text mt-3">
+        판매 중
+      </div>
+      <hr>
+      <div class="product_wrap">
+        <div class="row row-cols-1 row-cols-md-5">
+          {% for product in my_product %}
+            <a class="btn p-2" href="{% url 'products:product_detail' product.pk %}">
+              <div class="card">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" class="img-feed" alt="product">
+                {% else %}
+                  <img src="{% static 'images/noimage.png' %}" class="img-feed" alt="">
+                {% endif %}
+                <div class="card-body p-2">
+                  <h6 class="card-title text-start" style="font-size: 14px;">
+                    {{ product.title }}</h6>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <p class="card-text text-start fw-bold mb-0">
+                      {{ product.price|safe }}<small>원</small>
+                    </p>
+                    <p class="mute_text  mb-0">
+                      {% if product.created_at_string == False %}
+                        {{ product.created_at|date:'m월 d일' }}
+                      {% else %}
+                        {{ product.created_at_string }}
+                      {% endif %}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          {% empty %}
+            <div class="mute_text m-5"> 
+              <h4> 게시글이 없습니다.</h4>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- 좋아요, 찜한 물건 -->
+    <section id="tab-section-6" class="tab-section" hidden="hidden">
+      <div class="mute_text mt-3">
+        찜
+      </div>
+      <hr>
+      <div class="product_wrap">
+        <div class="row row-cols-1 row-cols-md-5">
+          {% for product in like_product %}
+            <a class="btn p-2" href="{% url 'products:product_detail' product.pk %}">
+              <div class="card">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" class="img-feed" alt="product">
+                {% else %}
+                  <img src="{% static 'images/noimage.png' %}" class="img-feed" alt="">
+                {% endif %}
+                <div class="card-body p-2">
+                  <h6 class="card-title text-start" style="font-size: 14px;">
+                    {{ product.title }}</h6>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <p class="card-text text-start fw-bold mb-0">
+                      {{ product.price|safe }}<small>원</small>
+                    </p>
+                    <p class="mute_text  mb-0">
+                      {% if product.created_at_string == False %}
+                        {{ product.created_at|date:'m월 d일' }}
+                      {% else %}
+                        {{ product.created_at_string }}
+                      {% endif %}
+                    </p>
+                  </div>
+                  <p class="card-text text-end"><small class="text-muted">작성자 : {{ product.user.nickname }}</small></p>
+                </div>
+              </div>
+            </a>
+          {% empty %}
+            <div class="mute_text m-5"> 
+              <h4> 게시글이 없습니다.</h4>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- 스위트 알러트 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<script>
+  document.querySelector("#confirmStart").addEventListener('click', function () {
+    Swal.fire({
+      title: 'Mohobby 탈퇴 전 확인하세요',
+      text: "삭제된 계정은 복구할 수 없습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#888888',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '승인',
+      cancelButtonText: '취소',
+      reverseButtons: true, // 버튼 순서 거꾸로
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          '삭제가 완료되었습니다.',
+          ).then(function(){
+          location.replace("{% url 'accounts:delete' %}");
+        })
+      }
+    })
+  });
+</script>
+<!-- 팔로우 팔로잉 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const followBtn = document.querySelector('#follow-btn')
+  followBtn.addEventListener('click', function (event) {
+    axios({method: 'get', url: `/accounts/${event.target.dataset.postId}/follow/`})
+  })
+</script>
+<!-- 버튼으로 원하는 슬라이드 출력 -->
+<script>
+  const $nav = document.querySelector('#tab-button-nav')
+  const $sections = document.querySelectorAll('.tab-section');
+
+  $nav.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('tab-button')) {
+      return;
+    }
+
+    const focusedTabId = e.target.dataset.tabSection;
+
+    $sections.forEach(($section) => {
+      if ($section.id === focusedTabId) {
+        $section.removeAttribute('hidden');
+      } else {
+        $section.setAttribute('hidden', true);
+      }
+    });
+  });
+</script>
+<!-- 취미 선택하지 않을 시 들어갈 문구 -->
+<script>
+  const myhobby = document.getElementById("my_hobby")
+
+  if (!String.prototype.trim) {
+    String.prototype.trim = function() { return this.replace(/^\s+|\s+$/, ''); };
+  } 
+
+  if (myhobby.innerHTML.trim() == "") {
+    myhobby.innerHTML = "취미를 선택해주세요!"
+  }
+</script>
+<!-- 클릭한 버튼 active 클래스 추가 -->
+<script>
+  for(let item of document.querySelectorAll(".tab-button")) {
+    item.addEventListener('click', event => {
+      // Remove active class from all li
+      for(let i of document.querySelectorAll(".tab-button")) {
+        i.classList.remove('active')
+      }
+      item.classList.add('active')
+    })
+  }
+</script>
+<!-- 아이콘 문제생기면 직접 글자 넣어주기 (사용 안함) -->
+<!-- 
+<script>
+  var mql = window.matchMedia("screen and (max-width: 768px)");
+  const feed = document.querySelector("#feed");
+  const liked_feed = document.querySelector("#liked_feed");
+  const accepted = document.querySelector("#accepted");
+  const waiting = document.querySelector("#waiting");
+  const product = document.querySelector("#product");
+  const cart = document.querySelector("#cart");
+
+  if (mql.matches) {
+    feed.classList.add('material-symbols-outlined');
+    feed.innerHTML = 'library_books';
+
+    liked_feed.classList.add('material-symbols-outlined');
+    liked_feed.innerHTML = 'favorite';
+
+    accepted.classList.add('material-symbols-outlined');
+    accepted.innerHTML = 'groups';
+
+    waiting.classList.add('material-symbols-outlined');
+    waiting.innerHTML = 'reduce_capacity';
+
+    product.classList.add('material-symbols-outlined');
+    product.innerHTML = 'inventory_2';
+
+    cart.classList.add('material-symbols-outlined');
+    cart.innerHTML = 'add_shopping_cart';
+
+  } else {
+    feed.classList.remove('material-symbols-outlined');
+    feed.innerHTML = '작성한 피드';
+    liked_feed.classList.remove('material-symbols-outlined');
+    liked_feed.innerHTML = '좋아요';
+
+    accepted.classList.remove('material-symbols-outlined');
+    accepted.innerHTML = '참가 중인 소셜';
+
+    waiting.classList.remove('material-symbols-outlined');
+    waiting.innerHTML = '참여 대기 소셜';
+
+    product.classList.remove('material-symbols-outlined');
+    product.innerHTML = '판매 중';
+
+    cart.classList.remove('material-symbols-outlined');
+    cart.innerHTML = '찜';
+  }
+
+  mql.addListener(function(e) {
+    if(e.matches) {
+      feed.classList.add('material-symbols-outlined');
+      feed.innerHTML = 'library_books';
+      liked_feed.classList.add('material-symbols-outlined');
+      liked_feed.innerHTML = 'favorite';
+      accepted.classList.add('material-symbols-outlined');
+      accepted.innerHTML = 'groups';
+      waiting.classList.add('material-symbols-outlined');
+      waiting.innerHTML = 'reduce_capacity';
+      product.classList.add('material-symbols-outlined');
+      product.innerHTML = 'inventory_2';
+      cart.classList.add('material-symbols-outlined');
+      cart.innerHTML = 'add_shopping_cart';
+    } else {
+      feed.classList.remove('material-symbols-outlined');
+      feed.innerHTML = '작성한 피드';
+      liked_feed.classList.remove('material-symbols-outlined');
+      liked_feed.innerHTML = '좋아요';
+      accepted.classList.remove('material-symbols-outlined');
+      accepted.innerHTML = '참가 중인 소셜';
+      waiting.classList.remove('material-symbols-outlined');
+      waiting.innerHTML = '참여 대기 소셜';
+      product.classList.remove('material-symbols-outlined');
+      product.innerHTML = '판매 중';
+      cart.classList.remove('material-symbols-outlined');
+      cart.innerHTML = '찜';
+    }
+  })
+</script>
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
+{% endblock js %}

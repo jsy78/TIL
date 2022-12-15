@@ -1,0 +1,39 @@
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+
+.body {
+    background-color: #f8f9faa6;
+}
+
+.nav_main {
+    background-color: rgb(232, 69, 69);
+    text-align: center;
+}
+
+.nav_text {
+    padding: 0.75rem;
+    font-weight: bold;
+}
+
+.nav_person {
+    color: white;
+}
+
+.effict:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.click:active {
+    background-color: rgb(232, 69, 69) !important;
+    color: white !important;
+
+}
+
+.click:hover {
+    background-color: rgb(232, 69, 69) !important;
+    color: white !important;
+
+}

@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<style>
+  .plus-btn {
+  z-index: 3;
+  position: fixed;
+  bottom: 150px;
+  right: 23px;
+}
+
+.plus-btn div {
+  color: #E84545;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 4px 4px 25px 0px #0714271f;
+}
+</style>
+{% endblock %}
+{% block content %}
+
+<!-- 카테고리별 태그 버튼 -->
+<div style="margin-top:120px;">
+  <div class="container">
+    <h2 class="index_title fw-bold">{{ category_name }}</h2>
+    <div class="d-flex flex-wrap">
+      {% for tag in tags %}
+        <a href="{% url 'hobby:tag' tag.tag  %}" >
+          <div class="tag_button position-relative">
+            <span class="tag_text">
+              # {{ tag.tag }}
+            </span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- 카테고리별 태그 버튼 -->
+
+  <div class='container justify-content-center post_page'>
+    <div style='width:100%'>
+      <!-- 인기 모임 글 -->
+      <div class='my-5'>
+        <h3 class="main_color fw-bold">인기 소셜링</h3>
+        <div class="d-flex justify-content-center">
+          <div class='d-flex flex-column post_size'>
+            {% for tag_post in category_posts_hit %}
+            {% if tag_post.host not in request.user.blocking.all %}
+            <a href="{% url 'hobby:detail' tag_post.pk %}" class="tag_a">
+              <div class='d-flex my-2 post'>
+                <div class="col-4">
+                  {% if tag_post.image %}
+                  <img class='post_img' src="{{ tag_post.image.url }}" style='width:100%; height: 250px;'>
+                  {% else %}
+                  <img class='post_img' src="{% static 'images/더미이미지.png' %}" alt="...">
+                  {% endif %}
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class='mx-5'>
+                    <div class='my-3'>
+                      <small class="tag p-1"> {{ tag_post.tags }}</small>
+                    </div>
+                    <p class="post_title">{{ tag_post.title }}</p>
+                    <small class='text-muted post_detail'>
+                      <span class="detail">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        {{ tag_post.address }}&nbsp;
+                      </span>
+                      <span class="detail">
+                        <i class="bi bi-calendar-check-fill"></i>
+                        {{ tag_post.meeting_day|date:'m.d(D) af' }}&nbsp;
+                      </span>
+                      <span class="detail">
+                        <i class="bi bi-people-fill"></i>
+                        {{ tag_post.joinmembers }}/{{ tag_post.limit }}</small>
+                    </span>
+                    <div class="profil_box d-flex">
+                      {% for member in tag_post.accepted.all %}
+                      {% if forloop.counter <= 6 %} 
+                      {% if member.joined == 1 %} 
+                      {% if member.user.image %}
+                       <img class="tag_profil" src="{{ member.user.image.url }}">
+                      {% else %}
+                      <img class="tag_profil" src="{% static 'images/프로필.png' %}">
+                      {% endif %}
+                      {% endif %}
+                      {% endif %}
+                      {% endfor %}
+                      <i class="bi bi-plus-circle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+      <!-- 카데고리 전체 글 -->
+      <div class='my-5'>
+        <h3 class="main_color fw-bold">전체 소셜링</h3>
+        <div class="d-flex justify-content-center">
+          <div class='d-flex flex-column post_size infinite-container' id="scroll_data"
+            data-scroll="{{ category_posts }}">
+            {% for tag_post in page_obj %}
+            {% if tag_post.host not in request.user.blocking.all %}
+            <div class="infinite-item">
+              <a href="{% url 'hobby:detail' tag_post.pk %}" class="tag_a">
+                <div class='d-flex my-2 post'>
+                  <div class="col-4">
+                    {% if tag_post.image %}
+                    <img class='post_img' src="{{ tag_post.image.url }}" style='width:100%; height: 250px;'>
+                    {% else %}
+                    <img class='post_img' src="{% static 'images/더미이미지.png' %}" alt="...">
+                    {% endif %}
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class='mx-5'>
+                      <div class='my-3'>
+                        <small class="tag p-1"> {{ tag_post.tags }}</small>
+                      </div>
+                      <p class="post_title">{{ tag_post.title }}</p>
+                      <small class='text-muted post_detail'>
+                        <span class="detail">
+                          <i class="bi bi-geo-alt-fill"></i>
+                          {{ tag_post.address }}&nbsp;
+                        </span>
+                        <span class="detail">
+                          <i class="bi bi-calendar-check-fill"></i>
+                          {{ tag_post.meeting_day|date:'m.d(D) af' }}&nbsp;
+                        </span>
+                        <span class="detail">
+                          <i class="bi bi-people-fill"></i>
+                          {{ tag_post.joinmembers }}/{{ tag_post.limit }}</small>
+                      </span>
+                      <div class="profil_box d-flex">
+                        {% for member in tag_post.accepted.all %}
+                        {% if forloop.counter <= 6 %} 
+                        {% if member.joined == 1 %} 
+                        {% if member.user.image %} 
+                        <img class="tag_profil" src="{{ member.user.image.url }}">
+                        {% else %}
+                        <img class="tag_profil" src="{% static 'images/프로필.png' %}">
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        <i class="bi bi-plus-circle"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<a href="{% url 'hobby:create' %}" class='plus-btn'>
+  <div>
+    <i class="bi bi-plus"></i>
+  </div>
+</a>
+<!-- JQuery CDN !-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- WayPoints CDN !-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+<script>
+  let infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    offset: 'bottom-in-view',
+    onBeforePageLoad: () => { },
+    onAfterPageLoad: () => { }
+  })
+</script>
+
+{% endblock content %}

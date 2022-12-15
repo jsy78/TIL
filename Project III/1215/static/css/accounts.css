@@ -1,0 +1,613 @@
+/* 초기화 */
+.form_field a { 
+    text-decoration:none;
+    color: #FFF;
+}
+
+a:hover { 
+    text-decoration:none;
+}
+
+/* .page_wrap {
+    height: 680px;
+    display: flex;
+    overflow: hidden;
+    flex-wrap: nowrap;
+} */
+
+
+/* .page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 0px;
+    width: 100%;
+    height: 700px;
+    flex-shrink: 0;
+    transition: left 0.9s;
+} */
+
+.update_botton {
+    background-color: #E84545;
+    width: 500px;
+    height: 55px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0px;
+    outline: 0px;
+    margin: 20px 0px 20px 0px; 
+}
+
+
+.update_wrap {
+    display: flex;
+}
+
+/* 768px 이하에서 작동 (Mobile) */ 
+@media screen and (max-width: 768px) {
+	.update_wrap {
+        min-height: 1950px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .update_wrapper {
+        padding: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 30px;
+    }
+
+    .update_botton {
+        display: none;
+    }
+
+    .mobile_update_botton {
+        background-color: #E84545;
+        width: 250px;
+        height: 55px;
+        border-radius: 30px;
+        color: #ffffff;
+        border: 0px;
+        outline: 0px;
+        margin: 20px 0px 20px 0px; 
+    }
+    
+    .form_field {
+        max-width: 250px;
+    }
+    
+    .address_btn {
+        max-width: 100px;
+    }
+
+    .user_input {
+        max-width: 300px;
+    }
+    
+    .login_button {
+        width: 300px;
+    }
+
+    .login_button {
+        background-color: #E84545;
+        width: 350px;
+        height: 55px;
+        border-radius: 30px;
+        color: #ffffff;
+        border: 0px;
+        outline: 0px;
+        margin-bottom: 20px;
+    }
+
+    .kakao_login_button {
+        background-color: #FEE500;
+        width: 350px;
+        height: 55px;
+        border-radius: 30px;
+        color: #000000, 90%;
+        border: 0px;
+        outline: 0px;
+        margin-bottom: 20px;
+    }
+
+    .category_select input[type=checkbox]+label{
+        border-radius: 7px;
+        height: 33px;
+        line-height: 31px;
+        border: 1px solid #c5c5c5;
+        font-weight:bold;
+        font-size: 11px;
+        padding: 0 10px;
+        outline: none;
+        background: none;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+}
+
+/* 769px 이상에서 작동 (PC) */ 
+@media screen and (min-width: 769px) {
+    .mobile_update_botton {
+        display: none;
+    }
+
+    .update_wrapper {
+        width: 600px;
+        max-width: 100%;
+        padding: 50px 0px 50px 0px;
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 30px;
+    }
+
+    .login_button {
+        background-color: #E84545;
+        width: 600px;
+        height: 55px;
+        border-radius: 30px;
+        color: #ffffff;
+        border: 0px;
+        outline: 0px;
+        margin-bottom: 20px;
+    }
+
+    .kakao_login_button {
+        background-color: #FEE500;
+        width: 600px;
+        height: 55px;
+        border-radius: 30px;
+        color: #000000, 90%;
+        border: 0px;
+        outline: 0px;
+        margin-bottom: 20px;
+    }
+
+    .category_select input[type=checkbox]+label{
+        border-radius: 7px;
+        height: 40px;
+        line-height: 38px;
+        border: 1px solid #c5c5c5;
+        font-weight:bold;
+        font-size: 14px;
+        padding: 0 10px;
+        outline: none;
+        background: none;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+}
+
+
+.side_bar {
+    width: 300px;
+    height: 500px;
+    margin-top: 130px;
+}
+
+.side_bar_menu a:hover {
+    background-color: transparent;
+    color: #888888;
+}
+  
+.side_bar_menu.active a {
+    color: #fff;
+}
+
+.side_bar_menu.active a:hover {
+background-color: transparent;
+}
+
+.side_bar_item {
+    border-radius: 8px;
+    padding: 10px;
+    color: #888888;
+    border: 1px solid #DADCE0;
+}
+
+.side_bar_item.active, .side_bar_item.active:focus, .side_bar_item.active:hover {
+    background-color: #e45454;
+    color: #fff;
+}
+
+
+.side_bar ul li {
+    list-style: none;
+
+}
+
+.side_bar_title {
+    color: #e45454;
+    font-weight: bold;
+}
+
+.side_bar_menu {
+    margin-bottom: 20px;
+    width: 350px;
+}
+
+
+.update_label {
+    color: #E84545;
+    
+}
+.prev_button {
+    background: none;
+    border: none;
+}
+
+.input-file-button {
+    padding: 6px 25px;
+    background-color:#E84545;
+    border-radius: 7px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+
+.image_input {
+    display: none;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    margin-bottom: 10px;
+}
+
+.slide {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.slide_item {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 0px;
+    width: 100%;
+    height: 500px;
+    flex-shrink: 0;
+    transition: left 0.6s;
+}
+
+.page_btn_group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    justify-items: center;
+    padding: 0px 50px 0 50px;
+}
+
+.page_btn {
+    background-color: #E84545;
+    width: 100%;
+    height: 55px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0px;
+    outline: 0px;
+}
+
+.error_msg {
+    color: #E84545;
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 1050px;
+    justify-content: center;
+}
+
+.wrapper {
+    width: 750px;
+    max-width: 100%;
+    background: var(--white);
+    margin: 100px auto 20px;
+    padding: 50px;
+    border-radius: 5px;
+    margin-top: 50px;
+}
+
+.login_banner {
+    margin-bottom: 20px;
+    font-size: 36px;
+    color: #e45454;
+    font-weight: bold;
+}
+
+.login_text {
+    font-weight: bolder;
+    font-size: 16px;
+    color: #E84545;
+    text-decoration: none;
+}
+
+.login_text:hover {
+    color: #E84545;
+    text-decoration: none;
+}
+
+.login_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+   
+}
+
+.form_list {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 성별 선택 버튼 그룹 */
+.select {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.select input[type=radio]{
+    display: none;
+}
+
+.select input[type=radio]+label{
+    border-radius: 7px;
+    height: 56px;
+    width: 100%;
+    border: 1px solid #a6a8ae;
+    line-height: 55px;
+    font-weight:bold;
+    font-size: 14px;
+    padding: 0 10px;
+    outline: none;
+    background: none;
+    text-align: center;
+}
+
+.select input[type=radio]+label{
+    color: #aaaaaa;
+    transition: 0.2s;
+}
+
+.select input[type=radio]:checked+label{
+    background-color: #e45454;
+    color: #fff;
+    transition: 0.2s;
+}
+/* 성별 선택 버튼 그룹 */
+
+/* 카테고리 버튼 그룹 */
+.category_select {
+
+}
+.category_select input[type=checkbox]{
+    display: none;
+}
+
+.category_select input[type=checkbox]+label{
+    color: 	#888888;
+    transition: 0.4s;
+}
+.category_select input[type=checkbox]:checked+label{
+    background-color: #e45454;
+    color: #fff;
+    transition: 0.4s;
+}
+/* 카테고리 버튼 그룹 */
+
+
+.birth_label {
+    color: #888888;
+    padding-left: 5px;
+    font-size: 12px;
+}
+
+.form_field {
+    width: 520px;
+    margin-bottom: 20px;
+}
+
+.user_input {
+    height: 56px;
+    width: 100%;
+    border: 1px solid #a6a8ae;
+    border-radius: 7px;
+    font-size: 14px;
+    padding: 0 10px;
+    outline: none;
+    background: none;
+    z-index: 1;
+}
+
+.sm_user_input {
+    height: 36px;
+    width: 40%;
+    border: 1px solid #a6a8ae;
+    border-radius: 7px;
+    font-size: 14px;
+    padding: 0 10px;
+    outline: none;
+    background: none;
+    z-index: 1;
+}
+
+.address_box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.address_btn {
+    color: #ffffff;
+    font-size: 16px;
+    width: 200px;
+    height: 36px;
+    border-radius: 7px;
+    border: 0px;
+    padding: 0 10px;
+    outline: none;
+    background: #E84545;
+}
+
+.category_wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.category_form {
+    max-width: 520px;
+    height: 500px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+
+.signup_btn {
+    background-color:  #2DB400;
+    width: 100%;
+    height: 55px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0px;
+    outline: 0px; 
+    display: none;
+}
+
+.password_change_btn {
+    background-color:  #E84545;
+    width: 100%;
+    height: 55px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0px;
+    outline: 0px;
+}
+
+.social_button {
+    width: 600px;
+    height: 55px;
+    color: #ffffff;
+    border: 0px;
+    outline: 0px;
+    margin-bottom: 20px;
+
+}
+
+.logintext {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: -999;
+    background-color: #1EC800;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    color: white;
+}
+
+.kakao-logintext {
+    color: black;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: -999;
+    background-color: #fbe300;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+}
+
+.img-feed {
+    width: 100%;
+    height: 259px;
+}
+.tab-title{
+    background-color: #E84545;
+    width: 250px;
+    height: 55px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0px;
+    outline: 0px;
+    margin: 20px; 
+    padding-top: 10px;
+}
+.tab-div{
+    display: flex;
+    margin-right: 70px;
+    margin-left: 70px;
+    justify-content: space-around;
+}
+.tab-button{
+    background-color: #E84545;
+    width: 150px;
+    height: 55px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0px;
+    outline: 0px;
+    margin: 20px; 
+}
+.tab-button:focus {
+    background-color: rgb(177, 12, 12);
+    }
+.accounts-hoddys{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 20%;
+    min-width: 300px;
+}    
+.all-tag{
+    background-color: #E84545;
+    background-size: contain;
+    color: #ffffff;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0.2rem;
+}
+
+
+
+.block{
+    margin-top: 10rem;
+}
+
+.block-text{
+    margin-bottom: 3rem;
+}

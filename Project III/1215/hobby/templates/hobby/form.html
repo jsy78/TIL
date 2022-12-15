@@ -1,0 +1,370 @@
+{% extends 'base_form.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="{% static 'css/datepicker.min.css' %}">
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/datepicker.min.js' %}"></script>
+<script src="{% static 'js/datepicker.ko.js' %}"></script>
+{% endblock css %}
+{% block content %}
+<div class="wrapper create-height">
+    <div class="progress">
+        <div id="progress_bar" class="progress-bar bg-danger" role="progressbar" aria-label="Danger example"
+            style="width: 10%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="button" class="slide_prev_button slide_button">
+            <ion-icon class="tap_icon" name="chevron-back-outline"></ion-icon>
+        </button>
+    </div>
+    <form name="myform" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="slide">
+            <!-- 1페이지/ 소셜링, 클럽 소셜링 -->
+            <div class="slide_item">
+                <h2 class="mt-3 fw-bold">어떤 소셜링을 열어볼까요?</h2>
+                <p class="text-muted mb-5">
+                    '소셜링'은 원데이로 만나 취향 활동을 함께하는 모임이에요
+                    장기간 함께 활동하는 모임을 원하실 경우 '클럽'으로 열어주세요!
+                </p>
+                <!-- radio input / 소셜or클럽 -->
+                <input class="d-none" type="radio" name="temp" id="social" value="social">
+                <input class="d-none" type="radio" name="temp" id="club" value="club">
+
+                <label id="social_label" for="social" class="social-btn">
+                    <ion-icon name="earth-sharp" size="large"></ion-icon>
+                    <div>
+                        <h6>소셜링</h6>
+                        <p>누구나 자유롭게 참여할 수 있는 소셜링을 열어요.</p>
+                    </div>
+                </label>
+                <label id="club_label" for="club" class="social-btn">
+                    <ion-icon name="people-circle-outline" size="large"></ion-icon>
+                    <div>
+                        <h6>클럽 소셜링</h6>
+                        <p>내가 가입했거나 운영하는 클럽에서 소셜링을 열어요.</p>
+                    </div>
+                </label>
+            </div>
+            <!-- 2페이지/ 소셜링 주제: 카테고리, 태그 -->
+            <div class="slide_item">
+                <h2 class="mt-3 fw-bold">소셜링 주제를 선택해볼까요?</h2>
+                <p class="text-muted mb-5">
+                    아래의 카테고리 중 하나를 선택해주세요!(필수)
+                </p>
+                <!-- 카테고리 인풋 -->
+                <div name="categories">
+                    <input class="d-none" type="radio" name="category" id="sports" value="sports" checked>
+                    <input class="d-none" type="radio" name="category" id="travel" value="travel">
+                    <input class="d-none" type="radio" name="category" id="art" value="art">
+                    <input class="d-none" type="radio" name="category" id="food" value="food">
+                    <input class="d-none" type="radio" name="category" id="develop" value="develop">
+                </div>
+                <!-- 태그 인풋 오프캔버스 -->
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasBottomLabel">소셜링 태그 등록</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <hr>
+                    <div class="offcanvas-body small">
+                        <h5>원하는 소셜링 태그를 직접 등록해 보세요</h5>
+                        <p class="text-muted">한글과 영어로 최대 10글자까지 등록할 수 있어요.</p>
+                        <input class="control-input mb-3" maxlength="10" type="text" name="tags" id="tag" placeholder="태그 입력" required>
+                        <div id="control-input-tags" class="d-flex justify-content-end"><span>0/10</span></div>
+                        <div class="text-center"><button type="button" class="input_btn" data-bs-dismiss="offcanvas"
+                                aria-label="Close" onclick="changeinner(this)">등록하기</button></div>
+                    </div>
+                </div>
+                <!-- 아코디언 카테고리 선택지 -->
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <label id="sports_label" for="sports" class="accordion-button collapsed categories social-btn"
+                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
+                        aria-controls="flush-collapseOne">
+                        <ion-icon name="bicycle" size="large"></ion-icon>
+                        <div>
+                            <h6>운동·액티비티</h6>
+                            <p>러닝·등산·클라이밍·헬스·서핑·산책</p>
+                        </div>
+                    </label>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body row row-cols-3 g-3">
+                            <button type="button" class="tag-btn col mx-2" value="축구">축구</button>
+                            <button type="button" class="tag-btn col mx-2" value="농구">농구</button>
+                            <button type="button" class="tag-btn col mx-2" value="야구">야구</button>
+                            <button type="button" class="tag-btn col mx-2" value="클라이밍">클라이밍</button>
+                            <button type="button" class="tag-btn col mx-2" value="등산">등산</button>
+                            <button type="button" class="tag-btn col mx-2" value="테니스">테니스</button>
+                            <button type="button" class="tag-btn col mx-2" value="트래킹">트래킹</button>
+                            <button type="button" class="tag-btn col mx-2" value="볼링">볼링</button>
+                            <button type="button" class="tag-btn col mx-2" value="러닝">러닝</button>
+                            <button type="button" class="tag-btn col mx-2" value="스키">스키</button>
+                            <button type="button" class="tag-btn col mx-2" value="보드">보드</button>
+                            <button type="button" class="tag-btn col mx-2" value="헬스">헬스</button>
+                            <button type="button" class="tag-btn col mx-2" value="산책">산책</button>
+                            <button type="button" class="tag-btn col mx-2" value="플로깅">플로깅</button>
+                            <button type="button" class="tag-btn col mx-2" value="자전거">자전거</button>
+                            <button type="button" class="tag-btn col mx-2" value="서핑">서핑</button>
+                            <button type="button" class="tag-btn col mx-2" value="배드민턴">배드민턴</button>
+                            <button type="button" class="tag-btn col mx-2" value="탁구">탁구</button>
+                            <button type="button" class="tag-btn col mx-2" value="골프">골프</button>
+                            <button type="button" class="tag-btn col mx-2" value="스포츠경기">스포츠경기</button>
+                            <button type="button" class="tag-btn col mx-2" value="" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">직접입력</button>
+                        </div>
+                    </div>
+                    <label id="travel_label" for="travel" class="accordion-button collapsed categories social-btn"
+                        data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                        aria-controls="flush-collapseTwo">
+                        <ion-icon name="boat" size="large"></ion-icon>
+                        <div>
+                            <h6>여행·나들이</h6>
+                            <p>복합문화공간·피크닉·드라이브·캠핑</p>
+                        </div>
+                    </label>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body row row-cols-3 g-3">
+                            <button type="button" class="tag-btn col mx-2 " value="복합문화공간">복합문화공간</button>
+                            <button type="button" class="tag-btn col mx-2 " value="테마파크">테마파크</button>
+                            <button type="button" class="tag-btn col mx-2 " value="피크닉">피크닉</button>
+                            <button type="button" class="tag-btn col mx-2 " value="드라이브">드라이브</button>
+                            <button type="button" class="tag-btn col mx-2 " value="캠핑">캠핑</button>
+                            <button type="button" class="tag-btn col mx-2 " value="국내여행">국내여행</button>
+                            <button type="button" class="tag-btn col mx-2 " value="해외여행">해외여행</button>
+                            <button type="button" class="tag-btn col mx-2 " value="" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">직접입력</button>
+                        </div>
+                    </div>
+                    <label id="art_label" for="art" class="accordion-button collapsed categories social-btn"
+                        data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false"
+                        aria-controls="flush-collapseThree">
+                        <ion-icon name="easel" size="large"></ion-icon>
+                        <div>
+                            <h6>문화·예술</h6>
+                            <p>전시·영화·뮤지컬·공연·박물관·연극</p>
+                        </div>
+                    </label>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body row row-cols-3 g-3">
+                            <button type="button" class="tag-btn col mx-2 " value="전시">전시</button>
+                            <button type="button" class="tag-btn col mx-2 " value="영화">영화</button>
+                            <button type="button" class="tag-btn col mx-2 " value="뮤지컬">뮤지컬</button>
+                            <button type="button" class="tag-btn col mx-2 " value="공연">공연</button>
+                            <button type="button" class="tag-btn col mx-2 " value="디자인">디자인</button>
+                            <button type="button" class="tag-btn col mx-2 " value="박물관">박물관</button>
+                            <button type="button" class="tag-btn col mx-2 " value="연극">연극</button>
+                            <button type="button" class="tag-btn col mx-2 " value="콘서트">콘서트</button>
+                            <button type="button" class="tag-btn col mx-2 " value="연주회">연주회</button>
+                            <button type="button" class="tag-btn col mx-2 " value="페스티벌">페스티벌</button>
+                            <button type="button" class="tag-btn col mx-2 " value="" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">직접입력</button>
+                        </div>
+                    </div>
+                    <label id="food_label" for="food" class="accordion-button collapsed categories social-btn"
+                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false"
+                        aria-controls="flush-collapseFour">
+                        <ion-icon name="fast-food" size="large"></ion-icon>
+                        <div>
+                            <h6>푸드·드링크</h6>
+                            <p>맛집투어·카페·디저트·티룸·와인·비건</p>
+                        </div>
+                    </label>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body row row-cols-3 g-3">
+                            <button type="button" class="tag-btn col mx-2 " value="맛집투어">맛집투어</button>
+                            <button type="button" class="tag-btn col mx-2 " value="카페">카페</button>
+                            <button type="button" class="tag-btn col mx-2 " value="와인">와인</button>
+                            <button type="button" class="tag-btn col mx-2 " value="커피">커피</button>
+                            <button type="button" class="tag-btn col mx-2 " value="디저트">디저트</button>
+                            <button type="button" class="tag-btn col mx-2 " value="맥주">맥주</button>
+                            <button type="button" class="tag-btn col mx-2 " value="티룸">티룸</button>
+                            <button type="button" class="tag-btn col mx-2 " value="비건">비건</button>
+                            <button type="button" class="tag-btn col mx-2 " value="파인다이닝">파인다이닝</button>
+                            <button type="button" class="tag-btn col mx-2 " value="요리">요리</button>
+                            <button type="button" class="tag-btn col mx-2 " value="페어링">페어링</button>
+                            <button type="button" class="tag-btn col mx-2 " value="칵테일">칵테일</button>
+                            <button type="button" class="tag-btn col mx-2 " value="위스키">위스키</button>
+                            <button type="button" class="tag-btn col mx-2 " value="전통주">전통주</button>
+                            <button type="button" class="tag-btn col mx-2 " value="" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">직접입력</button>
+                        </div>
+                    </div>
+                    <label id="develop_label" for="develop" class="accordion-button collapsed categories social-btn"
+                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false"
+                        aria-controls="flush-collapseFive">
+                        <ion-icon name="pencil" size="large"></ion-icon>
+                        <div>
+                            <h6>성장·자기계발</h6>
+                            <p>습관만들기·스터디·재테크·커리어</p>
+                        </div>
+                    </label>
+                    <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body row row-cols-3 g-3">
+                            <button type="button" class="tag-btn col mx-2 " value="습관만들기">습관만들기</button>
+                            <button type="button" class="tag-btn col mx-2 " value="챌린지">챌린지</button>
+                            <button type="button" class="tag-btn col mx-2 " value="독서">독서</button>
+                            <button type="button" class="tag-btn col mx-2 " value="스터디">스터디</button>
+                            <button type="button" class="tag-btn col mx-2 " value="외국어">외국어</button>
+                            <button type="button" class="tag-btn col mx-2 " value="재테크">재테크</button>
+                            <button type="button" class="tag-btn col mx-2 " value="브랜딩">브랜딩</button>
+                            <button type="button" class="tag-btn col mx-2 " value="커리어">커리어</button>
+                            <button type="button" class="tag-btn col mx-2 " value="사이드프로젝트">사이드프로젝트</button>
+                            <button type="button" class="tag-btn col mx-2 " value="" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">직접입력</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 3페이지/ 타이틀 -->
+            <div class="slide_item">
+                <h2 class="mt-3 fw-bold">소셜링 제목을 작성해볼까요?</h2>
+                <p class="text-muted mb-5">
+                    ex) 연희동으로 함께 카페투어가요 :)
+                </p>
+                <input class="input-control" type="text" maxlength="80" name="title" id="title"
+                    placeholder="제목을 입력해 주세요.(필수)" required>
+                <div id="control-input-title" class="d-flex justify-content-end"><span>0/80</span></div>
+            </div>
+            <!-- 4페이지/ 사진, 상세내용 -->
+            <div class="slide_item">
+                <h2 class="mt-3 fw-bold">소셜링을 소개해볼까요?</h2>
+                <label class="image-control mt-3" for="image">
+                    <ion-icon name="image-outline" style="font-size:32px;"></ion-icon><br>사진 추가
+                </label>
+                <input class="d-none" id="image" accept="image/*" name="image" type="file">
+                <textarea class="area-control mt-3" rows="10" name="content" id="content"
+                    placeholder="내용을 입력해 주세요.(선택)"></textarea>
+                <p class="text-muted mb-5">
+                    소셜링 상세 내용을 자세히 작성할수록 멤버들의 신청률도 높아져요!
+                </p>
+            </div>
+            <!-- 5페이지/ 시간, 날짜 picker -->
+            <div class="slide_item">
+                <h2 class="mt-3 fw-bold">언제 만날까요?</h2>
+                <input class="datetimepick" id="meeting_day" name="meeting_day" placeholder="날짜와 시간을 입력해주세요.(필수)"
+                    autocomplete="off" required>
+
+            </div>
+            <!-- 6페이지/ 모임장소 -->
+            <div class="slide_item">
+                <!-- input addr *(in js) checkbox.checked = true or false -->
+                <input class="d-none" type="checkbox" id="address_type" name="address_type">
+                <input class="d-none" type="text" id="address" name="address" required>
+                <h2 class="mt-3 fw-bold">어디서 만날까요?</h2>
+                <div class="row row-cols-2 g-3 mt-3">
+                    <div class="col text-center"><button type="button" id="offline-btn" class="addr-btn">오프라인</button>
+                    </div>
+                    <div class="col text-center"><button type="button" id="online-btn" class="addr-btn">온라인</button>
+                    </div>
+                </div>
+                <!-- 오프캔버스 버튼 -->
+                <button type="button" id="offline-box" class="addr-control d-none" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasBottom2" aria-controls="offcanvasBottom">
+                    <ion-icon name="location"></ion-icon> <span id="offbuttonaddr" class="text-muted">장소를 입력해
+                        주세요.</span>
+                </button>
+                <!-- 오프라인 주소 입력 오프캔버스 -->
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom2">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasBottomLabel">장소 선택</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <hr>
+                    <div id="addrbody" class="offcanvas-body small">
+                        <input type="text" style="display:none;" />
+                        <input class="search-control mb-3" type="text" name="keysearch" id="keysearch"
+                            placeholder="어디에서 만나나요?">
+                        <!-- 검색결과 표출할 div -->
+                        <ul class="addrlist" id="addrlist">
+                        </ul>
+                        <div class="text-center mt-5">
+                            <p>
+                                <ion-icon name="map" size="large"></ion-icon>
+                            </p>
+                            <h5>장소 또는 지역을 검색해보세요</h5>
+                            <p class="text-muted">예시)마포구, 합정동, 강남역, 한가람미술관 등</p>
+                            <p style="cursor:pointer; color: #E84545;" id="testbtn" value="더보기">더보기</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 7페이지/ 인원제한 -->
+            <div class="slide_item">
+                <!-- input limit -->
+                <input class="d-none" type="text" id="limit" name="limit" value="3">
+                <h2 class="mt-3 fw-bold">몇 명과 함께할까요?</h2>
+                <p class="text-muted mb-5">
+                    본인을 포함한 총 참여 인원 수를 알려주세요.
+                </p>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button class="btn-none" type="button">
+                        <ion-icon class="min-icon" id="remove-circle" name="remove-circle"></ion-icon>
+                    </button>
+                    <p id="limit_n"
+                        style="font-size: 64px; font-weight:bold; margin: 40px; width:120px; text-align:center;">3</p>
+                    <button class="btn-none" type="button">
+                        <ion-icon class="plus-icon" id="add-circle" name="add-circle"></ion-icon>
+                    </button>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <p id="limit_addr" class="text-muted">오프라인</p>
+                </div>
+                <div class="info-box">
+                    <p class="fw-bold">소셜링 인원 제한 안내</p>
+                    <p class="text-muted">오프라인: 3명 ~ 15명<br>
+                        오프라인: 3명 ~ 15명</p>
+                </div>
+            </div>
+            <!-- 8페이지/ 참가비 설정 -->
+            <div class="slide_item">
+                <!-- 헤더 -->
+                <h2 class="mt-3 fw-bold">참가비가 있나요?</h2>
+                <div class="row row-cols-2 g-3 mt-3">
+                    <div class="col text-center"><button type="button" id="entryfee-btn" class="addr-btn">있음</button>
+                    </div>
+                    <div class="col text-center"><button type="button" id="entryfree-btn" class="addr-btn">없음</button>
+                    </div>
+                </div>
+                <!-- 인풋 -->
+                <div id="entry_box" class="d-none p-4">
+                    <label for="entry_fee">
+                        <ion-icon name="logo-usd"></ion-icon> 참가비
+                    </label>
+                    <input class="control-input" type="text" id="entry_fee" name="entry_fee" placeholder="참가비를 입력해주세요.">
+                    <div class="info-box">
+                        <p class="text-muted">- 소셜링 진행에 필요한 모든 금액을 참가비로 설정해주세요. 가이드 위반 시 소셜링 삭제 및 이용 제재를 받을 수 있어요.</p>
+                    </div>
+                </div>
+                <!-- 유효성 메시지 -->
+            </div>
+        </div>
+        <div class="container">
+            <button class="mt-3 submit_btn d-none slide_button" type="submit">소셜링 시작하기</button>
+            <button type="button" class="mt-3 next_btn slide_next_button slide_button">다음</button>
+            <div class="error-message"></div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+{% block js %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a296fe5c49ee5c07b18af90b459b38bb&libraries=services"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script src="{% static 'js/form.js' %}"></script>
+<script>
+    $("#meeting_day").datepicker({
+        language: 'ko',
+        timepicker: true,
+        timeFormat: "hh:ii",
+        minDate: new Date(),
+    });
+</script>
+{% endblock js %}

@@ -1,0 +1,629 @@
+p {
+  margin: 0px;
+}
+
+a {
+  text-decoration-line: none;
+}
+
+a:hover {
+  color: #E84545;
+}
+
+/* 768px 이하에서 작동 (Mobile) */ 
+@media screen and (max-width: 768px) {
+  .pc {
+    display: none !important;
+  }
+
+  .feeds {
+    background-color: white;
+    width: 360px;
+    height: 430px;
+    margin-bottom: 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+
+  .feeds:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.23);
+  }
+
+  .profile {
+    display: flex;
+    padding: 10px 10px 0px 10px;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .profile img {
+    border-radius: 50%;
+    width: 39px;
+    height: 39px;
+    margin-right: 10px;
+  }
+
+  .detail_profile {
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .detail_profile img {
+    border-radius: 50%;
+    width: 39px;
+    height: 39px;
+    margin-right: 10px;
+  }
+
+  .content {
+    height: 280px;
+    width: 360px;
+  }
+
+  .content img {
+    height: 280px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .mute_text {
+    color: #4A4F5A;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .mute_text:hover {
+    color: #4A4F5A;
+  }
+
+  .create_text {
+    color: #4A4F5A;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 10px;
+  }
+
+  .post_text_wrap {
+    padding: 0px 10px 5px 10px;
+  }
+
+  .post_text {
+    color: #4A4F5A;
+    font-size: 14px;
+    padding: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .detail_post_text {
+    color: #4A4F5A;
+    font-size: 14px;
+    padding: 0px 8px 0px 8px;
+  }
+
+  .over {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 4px;
+  }
+
+  .main_title {
+    color: #E84545;
+    font-size: 18px;
+  }
+
+  .detail_main_title {
+    color: #E84545;
+    font-size: 20px;
+    padding: 8px 0px 0px 0px;
+  }
+
+  .deatil_post_info {
+    padding: 0px 10px;
+  }
+
+  .create_btn {
+    margin-bottom: 20px;
+    margin-top: 100px;
+  }
+
+  .feed_info {
+    margin: 5px 0px 0px 0px;
+    padding: 0px 5px 0px 5px;
+  }
+
+  .write{
+    border: 3px solid #E84545;
+    height: 40px;
+    border-radius: 30px;
+    font-size: 20px;
+  }
+
+  .peed_image {
+    width: 370px;
+    height: 370px;
+    object-fit: cover;
+  }
+
+  .peed_wrap {
+    margin-bottom: 20px;
+    margin-top: 100px;
+    padding: 10px;
+    max-width: 400px;
+    background-color: #ffffff;
+  }
+
+  .profile_wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .user_img{
+    border-radius: 50%;
+    width:40px; 
+    height:40px;
+    object-fit: cover;
+    margin-top: 5px;
+  }
+
+  .profile_text {
+    font-size: 14px;
+  }
+
+  .comment_input {
+    width: 200px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0px 0px 5px rgb(214, 212, 212);
+    background-color: #fff;
+  }
+
+  .comment_content{
+    color: #4A4F5A;
+    padding: 0px 7px;
+    font-size: 12px;
+  }
+
+  .user_nickname {
+    font-size: 13px;
+    padding: 5px 0px 0px 0px;
+  }
+
+  .slideShow{
+    width: 370px;
+    height: 370px;
+    position: relative;
+    margin: 0px auto;
+    overflow: hidden;   
+  }
+
+  .slides{
+    position: absolute;
+    left: 0px;
+    top: 0;
+    transition: left 0.5s ease-out; 
+    /*ease-out: 처음에는 느렸다가 점점 빨라짐*/
+  }
+
+  .comment_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+  }
+  
+    /* 첫 번째 슬라이드 가운데에 정렬하기위해
+  첫번째 슬라이드만 margin-left조정 */
+  .slides li:first-child{
+    margin-left: 0px;
+  }
+
+  /* 슬라이드들 옆으로 정렬 */
+  .slides li:not(:last-child){
+    float: left;
+    margin-right: 0px;
+  }
+
+  .slides li{
+    float: left;
+  }
+}
+
+/* 769px 이상에서 작동 (PC) */ 
+@media screen and (min-width: 769px) {
+  .pc {
+    display: block;
+  }
+
+  .feed_info {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+  }
+
+  .slideShow{
+    width: 800px;
+    height: 500px;
+    position: relative;
+    margin: 0px auto;
+    overflow: hidden;   
+  }
+
+  .slides{
+    position: absolute;
+    left: 0px;
+    top: 0;
+    transition: left 0.5s ease-out; 
+    /*ease-out: 처음에는 느렸다가 점점 빨라짐*/
+  }
+
+  .feeds{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    margin-bottom: 40px;
+    background-color: #ffffff;
+    min-width: 830px;
+  }
+
+  .mute_text {
+    color: #4A4F5A;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .mute_text:hover {
+    color: #4A4F5A;
+  }
+
+  .create_text {
+    color: #4A4F5A;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  
+  .feeds:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.23);
+  }
+
+  .mobile {
+    display: none !important;
+  }
+
+  .write{
+    border: 3px solid #E84545;
+    height:60px;
+    border-radius: 30px;
+    font-size: 20px;
+    margin: 35px 0px;
+  }
+
+  .peed_wrap {
+    margin-bottom: 20px;
+    margin-top: 100px;
+    padding: 20px;
+    max-width: 840px;
+  }
+
+  .peed_image {
+    width: 800px;
+    height: 500px;
+    object-fit: cover;
+  }
+
+  .profile_wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .user_img{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-top: 5px;
+  }
+
+  .profile_text {
+    font-size: 20px;
+  }
+
+  .detail_profile {
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .detail_profile img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .detail_main_title {
+    color: #E84545;
+    padding: 8px 4px 0px 4px;
+  }
+
+  .detail_post_text {
+    color: #4A4F5A;
+    font-size: 16px;
+    padding: 0px 13px 0px 13px;
+  }
+
+  .deatil_post_info {
+    padding: 10px 4px;
+  }
+
+  .comment_input{
+    margin-top: 5px;
+    width: 600px;
+    height: 41px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0px 0px 5px rgb(214, 212, 212);
+    background-color: #fff;
+  }
+
+  .user_nickname {
+    font-size: 13px;
+    padding: 5px 0px 0px 0px;
+  }
+
+  .comment_content{
+    color: #4A4F5A;
+    padding: 0px 7px;
+  }
+
+  .comment_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+  }
+  /* 첫 번째 슬라이드 가운데에 정렬하기위해
+  첫번째 슬라이드만 margin-left조정 */
+  .slides li:first-child{
+    margin-left: 0px;
+  }
+
+  /* 슬라이드들 옆으로 정렬 */
+  .slides li:not(:last-child){
+    float: left;
+    margin-right: 0px;
+  }
+
+  .slides li{
+    float: left;
+  }
+}
+
+.post_user_menu {
+  text-decoration: none;
+}
+
+.post_user_menu a:hover{
+  color: #212529;
+}
+
+.comment_profile {
+  display: flex;
+  align-items: center;
+}
+
+.shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.page{
+  margin-top: 100px;
+}
+
+.main_title {
+  color: #E84545;
+}
+
+.feed_list{
+  border-radius: 30px;
+}
+
+.controller span{
+  position:absolute;
+  background-color: transparent;
+  color: black;
+  text-align: center;
+  border-radius: 50%;
+  padding: 10px 20px;
+  top: 50%;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+/* 이전, 다음 화살표에 마우스 커서가 올라가 있을때
+.controller span:hover{
+  background-color: rgba(128, 128, 128, 0.11);
+} */
+
+.prev{
+  left: 0px;
+}
+
+/* 이전 화살표에 마우스 커서가 올라가 있을때 
+이전 화살표가 살짝 왼쪽으로 이동하는 효과*/
+.prev:hover{
+  transform: translateX(-0px);
+}
+
+.next{
+  right: 0px;
+}
+
+/* 다음 화살표에 마우스 커서가 올라가 있을때 
+이전 화살표가 살짝 오른쪽으로 이동하는 효과*/
+.next:hover{
+  transform: translateX(0px);
+}
+
+.create_button {
+  background-color: #E84545;
+  width: 60%;
+  height: 55px;
+  border-radius: 30px;
+  color: #ffffff;
+  border: 0px;
+  outline: 0px;
+  margin: 20px;
+}
+
+.feeds_img{
+  border-top-left-radius:0px;
+  border-top-right-radius:0px;
+}
+
+.feeds_content{
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+  
+}
+
+/* create 이미지 슬라이드 */
+
+.album{
+  height: auto;
+  width: auto;
+  overflow: hidden;
+}
+
+.plus-btn {
+  position: fixed;
+  bottom: 150px;
+  right: 23px;
+}
+
+.plus-btn div {
+  color: #E84545;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 4px 4px 25px 0px #0714271f;
+}
+
+/* detail.html */
+.comment_sbmit{
+  margin-top: 5px;
+  width: 70px;
+  height: 41px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 0;
+  background-color:  #E84545;
+  color: #fff;
+}
+
+.comment_small_text{
+  font-size: 12px;
+  color:#979AA0;
+}
+.comment_small_btn{
+  font-size: 10px;
+  color:#979AA0;
+}
+.recomment_list{
+  margin-left: 30px;
+}
+.recomment_input{
+  width: 600px;
+  height: 60px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: 0px 0px 5px rgb(214, 212, 212);
+  background-color: #fff;
+}
+.recomment_sbmit{
+  height: 60px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 0;
+  background-color:  #E84545;
+  color: #fff;
+}
+
+.comment_update_btn{
+  border: 0;
+  background-color: #ffffff;
+}
+
+.feed_btn{
+  background-color: #fff;
+  color:#979AA0;
+}
+
+.feed_content{
+  border: 3px solid #E84545;
+  border-radius: 10px;
+  padding: 30px;
+}
+.create_feed_title{
+  outline: none;
+  margin-bottom: 10px;
+  border-left-width:0;
+  border-right-width:0;
+  border-top-width:0;
+  border-bottom-width:1;
+}
+.create_feed_content{
+  outline: none;
+  border-left-width:0;
+  border-right-width:0;
+  border-top-width:0;
+  border-bottom-width:1;
+}
+.create_img{
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 10px;
+}
+.create_img_in{
+  border: 3px dotted black;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+
+
+.file-label {
+  background-color: #E84545;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  width: 60%;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.file {
+  display: none;
+}

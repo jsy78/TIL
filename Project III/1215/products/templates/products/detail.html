@@ -1,0 +1,1289 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 8rem">
+      <h1 class="my-2" style="color: #E84545;">상세 페이지</h1>
+    </div>
+    <div class="p-0 p-lg-4">
+      <div class="row justify-content-center g-5">
+        <div class="col-12 col-sm-10 col-md-4 col-lg-3">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" class="img-fluid" alt="image">
+          {% else %}
+            <img src="https://dummyimage.com/800/000/fff" class="img-fluid" alt="dummyimage">
+          {% endif %}
+        </div>
+        <div class="col-12 col-sm-10 col-md-6 col-lg-4 position-relative">
+          <h4 class="mb-4">{{ product.title }}</h4>
+          <h3 class="mb-4 fw-bold">{{ product.price|intcomma }}원</h3>
+          <h6 class="mb-4">상품 상태 {{ product.productType }}</h6>
+          <h6 class="mb-4">배송 방법 {{ product.tradeType }}</h6>
+          <h6 class="mb-4">거래 위치 {{ product.location }}</h6>
+          <div class="d-flex">
+            <button class="btn btn-outline-secondary disabled me-2"><i class="bi bi-eye me-2"></i><span>{{ product.hits }}</span></button>
+            {% if request.user.is_authenticated %}
+              <form id="product-like-form" data-product-id="{{ product.pk }}">
+                {% csrf_token %}
+                {% if request.user in product.like_users.all %}
+                  <button id="product-like-btn" class="btn btn-outline-danger active me-2" type="submit"><i id="product-like-icon" class="bi bi-heart-fill me-2"></i><span id="product-like-count">{{ product.like_users.count }}</span></button>
+                {% else %}
+                  <button id="product-like-btn" class="btn btn-outline-danger me-2" type="submit"><i id="product-like-icon" class="bi bi-heart me-2"></i><span id="product-like-count">{{ product.like_users.count }}</span></button>
+                {% endif %}
+              </form>
+            {% else %}
+              <button class="btn btn-outline-danger disabled me-2" type="submit"><i class="bi bi-heart me-2"></i><span>{{ product.like_users.count }}</span></button>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+              <form action="{% url 'notes:send' %}" method="GET">
+                <input type="hidden" class="form-control" value="{{ product.user.nickname }}" name="to">
+                <button class="btn btn-outline-danger me-2"><i class="bi bi-cursor-fill"></i></button>
+              </form>
+            {% else %}
+              <button class="btn btn-outline-danger disabled me-2"><i class="bi bi-cursor-fill"></i></button>
+            {% endif %}
+          </div>
+          {% if request.user == product.user %}
+            <div class="position-absolute top-0 end-0">
+              <div class="dropdown">
+                <button class="btn btn-outline-secondary border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'products:product_update' product.pk %}">수정</a>
+                  </li>
+                  <li>
+                    <form action="{% url 'products:product_delete' product.pk %}" method="POST">
+                      {% csrf_token %}
+                      <button class="dropdown-item" type="submit">삭제</button>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div id="product-content" class="col-12 col-sm-10 col-md-10 col-lg-7">
+          <hr>
+          {{ product.content|safe }}
+          <hr>
+        </div>
+      </div>
+      <!-- 댓글 작성 폼 -->
+      {% if request.user.is_authenticated %}
+        <div class="row justify-content-center">
+          <div class="col-12 col-sm-10 col-md-10 col-lg-7">
+            <div class="comment-elem">
+              {% if request.user.image %}
+                <img class="comment-image" src="{{ request.user.image.url }}" alt="">
+              {% else %}
+                <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+              {% endif %}
+              <form id="comment-create-form" class="flex-fill" data-product-id="{{ product.pk }}">
+                {% csrf_token %}
+                <input name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true">
+                <input class="d-none" type="submit" value="제출">
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-10 col-lg-7">
+          <hr>
+          <div id="comment-area">
+            <!-- 댓글 목록 -->
+            {% for comment in comments %}
+              <div id="comment-{{ comment.pk }}">
+                <div id="comment-{{ comment.pk }}-block" class="d-flex justify-content-between d-block">
+                  <div class="comment-elem flex-fill">
+                    <a href="{% url 'accounts:detail' comment.user.pk %}">
+                      {% if comment.user.image %}
+                        <img class="comment-image" src="{{ comment.user.image.url }}" alt="">
+                      {% else %}
+                        <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      {% endif %}
+                    </a>
+                    <div class="flex-fill"> 
+                      <p>{{ comment.user.nickname }}</p>
+                      <p id="comment-{{ comment.pk }}-content">{{ comment.content }}</p>
+                      <div class="d-flex">
+                        <p class="text-muted" style="font-size: 12px;">
+                          <span id="comment-{{ comment.pk }}-time">{{ comment.updated_at_string }}</span> 
+                          <span>좋아요 <span class="comment-like-count">{{ comment.like_users.count }}</span>개</span> 
+                          {% if request.user.is_authenticated %}
+                            <span class="reply-btn" data-comment-id="{{ comment.pk }}" style="cursor: pointer;">답글달기</span>
+                          {% endif %}
+                        </p>
+                        {% if request.user == comment.user %}
+                          <div class="dropdown ms-1">
+                            <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <button class="dropdown-item comment-update-btn" data-comment-id="{{ comment.pk }}">수정</button>
+                              </li>
+                              <li>
+                                <form class="comment-delete-form" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+                                  {% csrf_token %}
+                                  <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                                </form>
+                              </li>
+                            </ul>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 댓글 좋아요 폼 -->
+                  {% if request.user.is_authenticated %}
+                    <form class="comment-like-form" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      {% if request.user in comment.like_users.all %}
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+                      {% else %}
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                      {% endif %}
+                    </form>
+                  {% else %}
+                    <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                  {% endif %}
+                </div>
+                <!-- 대댓글 작성 폼 -->
+                {% if request.user.is_authenticated %}
+                  <div id="reply-form-{{ comment.pk }}" class="recomment-elem">
+                    {% if request.user.image %}
+                      <img class="comment-image" src="{{ request.user.image.url }}" alt="">
+                    {% else %}
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                    {% endif %}
+                    <form class="reply-create-form flex-fill" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                      <input class="d-none" type="submit" value="제출">
+                    </form>
+                  </div>
+                {% endif %}
+                <!-- 댓글 수정 폼 -->
+                {% if request.user == comment.user %}
+                  <div id="comment-{{ comment.pk }}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+                    {% if request.user.image %}
+                      <img class="comment-image" src="{{ request.user.image.url }}" alt="">
+                    {% else %}
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                    {% endif %}
+                    <form class="comment-update-form flex-fill" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      <div class="d-flex">
+                        <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="{{ comment.content }}">
+                        <input class="d-none" type="submit" value="제출">
+                        <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="{{ comment.pk }}" style="font-size: 12px; min-width: 50px;">취소</button>
+                      </div>
+                    </form>
+                  </div>
+                {% endif %}
+                <!-- 대댓글 재귀 -->
+                {% with parent=comment reply_list=comment.reply_set.all %}
+                  {% include 'products/reply.html' %}
+                {% endwith %} 
+              </div>
+              <hr>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  </script>
+  <script>
+    const productContentImgs = document.querySelectorAll("#product-content img")
+    productContentImgs.forEach((productContentImg) => {
+      productContentImg.style.cssText = "max-width: 100%;"
+    })
+  </script>
+  <script>
+    const productLikeForm = document.querySelector("#product-like-form")
+    productLikeForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const productId = event.currentTarget.dataset.productId;
+      axios({
+        method: "POST",
+        url: `/products/${productId}/product_like/`,
+        headers: {
+          "X-CSRFToken": csrftoken
+        }
+      })
+      .then((response) => {
+        if (response.data.is_product_liked) {
+          productLikeForm.querySelector("#product-like-btn").classList.add("active")
+          productLikeForm.querySelector("#product-like-icon").classList.add("bi-heart-fill")
+          productLikeForm.querySelector("#product-like-icon").classList.remove("bi-heart")
+        } 
+        else {
+          productLikeForm.querySelector("#product-like-btn").classList.remove("active")
+          productLikeForm.querySelector("#product-like-icon").classList.remove("bi-heart-fill")
+          productLikeForm.querySelector("#product-like-icon").classList.add("bi-heart")
+        }
+        productLikeForm.querySelector("#product-like-count").innerText = response.data.product_like_count
+      })
+    })
+  </script>
+  <script>
+    function commentUpdateBtn() {
+      const commentUpdateBtns = document.querySelectorAll(".comment-update-btn");
+      commentUpdateBtns.forEach((commentUpdateBtn) => {
+        commentUpdateBtn.addEventListener("click", function (event) {
+          const commentId = event.currentTarget.dataset.commentId
+          document.querySelector(`#comment-${commentId}-block`).classList.toggle("d-none")
+          document.querySelector(`#comment-${commentId}-block`).classList.toggle("d-block")
+          document.querySelector(`#comment-${commentId}-update`).classList.toggle("d-block")
+          document.querySelector(`#comment-${commentId}-update`).classList.toggle("d-none")
+          document.querySelector(`#comment-${commentId}-update .comment-control`).value = document.querySelector(`#comment-${commentId}-content`).innerText
+        })
+      })
+    }
+    
+    function updateCancelBtn() {
+      const updateCancelBtns = document.querySelectorAll(".update-cancel-btn")
+      updateCancelBtns.forEach((updateCancelBtn) => {
+        updateCancelBtn.addEventListener("click", function (event) {
+          const commentId = event.currentTarget.dataset.commentId;
+          document.querySelector(`#comment-${commentId}-block`).classList.toggle("d-none")
+          document.querySelector(`#comment-${commentId}-block`).classList.toggle("d-block")
+          document.querySelector(`#comment-${commentId}-update`).classList.toggle("d-block")
+          document.querySelector(`#comment-${commentId}-update`).classList.toggle("d-none")
+        })
+      })
+    }
+
+    function replyBtn() {
+      const replyBtns = document.querySelectorAll(".reply-btn");
+      replyBtns.forEach((replyBtn) => {
+        replyBtn.addEventListener("click", function (event) {
+          const commentId = event.currentTarget.dataset.commentId
+          document.querySelector(`#reply-form-${commentId}`).classList.toggle("recomment-elem")
+          document.querySelector(`#reply-form-${commentId}`).classList.toggle("recomment-elem-active")
+        })
+      })
+    }
+
+    function commentLike() {
+      const commentLikeForms = document.querySelectorAll(".comment-like-form")
+      commentLikeForms.forEach((commentLikeForm) => {
+        commentLikeForm.addEventListener("submit", function (event) {
+          event.preventDefault()
+          const productId = event.currentTarget.dataset.productId
+          const commentId = event.currentTarget.dataset.commentId
+          axios({
+            method: "POST",
+            url: `/products/${productId}/comment_like/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            }
+          })
+          .then((response) => {
+            if (response.data.is_comment_liked) {
+              while (commentLikeForm.querySelector(".btn").hasChildNodes()) {
+                commentLikeForm.querySelector(".btn").removeChild(commentLikeForm.querySelector(".btn").firstChild)
+              }
+              commentLikeForm.querySelector(".btn").insertAdjacentHTML("beforeend", `
+                <ion-icon style="color:#E84545" name="heart"></ion-icon>
+              `)
+            } 
+            else {
+              while (commentLikeForm.querySelector(".btn").hasChildNodes()) {
+                commentLikeForm.querySelector(".btn").removeChild(commentLikeForm.querySelector(".btn").firstChild)
+              }
+              commentLikeForm.querySelector(".btn").insertAdjacentHTML("beforeend", `
+                <ion-icon style="color:#E84545" name="heart-outline"></ion-icon>
+              `)
+            }
+            document.querySelector(`#comment-${commentId} .comment-like-count`).innerText = response.data.comment_like_count;
+          })
+        })
+      })
+    }
+
+    function commentUpdate() {
+      const commentUpdateForms = document.querySelectorAll(".comment-update-form");
+      commentUpdateForms.forEach((commentUpdateForm) => {
+        commentUpdateForm.addEventListener("submit", function (event) {
+          event.preventDefault()
+          const productId = event.currentTarget.dataset.productId
+          const commentId = event.currentTarget.dataset.commentId
+          axios({
+            method: "POST",
+            url: `/products/${productId}/comment_update/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            },
+            data: new FormData(commentUpdateForm), // 폼에 있는 정보를 data로 넘겨줄 수 있도록 변환
+          }).then((response) => {
+            document.querySelector(`#comment-${commentId}-block`).classList.remove("d-none")
+            document.querySelector(`#comment-${commentId}-block`).classList.add("d-block")
+            document.querySelector(`#comment-${commentId}-update`).classList.remove("d-block")
+            document.querySelector(`#comment-${commentId}-update`).classList.add("d-none")
+            document.querySelector(`#comment-${commentId}-update .comment-control`).value = response.data.content
+            document.querySelector(`#comment-${commentId}-content`).innerText = response.data.content
+            document.querySelector(`#comment-${commentId}-time`).innerText = response.data.updated_at_string
+          })
+        })
+      })
+    }
+
+    function commentDelete() {
+      const commentDeleteForms = document.querySelectorAll(".comment-delete-form")
+      commentDeleteForms.forEach((commentDeleteForm) => {
+        commentDeleteForm.addEventListener("submit", function (event) {
+          event.preventDefault()
+          const productId = event.currentTarget.dataset.productId
+          const commentId = event.currentTarget.dataset.commentId
+          axios({
+            method: "POST",
+            url: `/products/${productId}/comment_delete/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            }
+          })
+          .then((response) => {
+            const comments = response.data.comments
+            const commentsArea = document.querySelector(`#comment-area`)
+
+            while (commentsArea.hasChildNodes()) {
+              commentsArea.removeChild(commentsArea.firstChild)
+            }
+
+            for (let i = 0; i < comments.length; i++) {
+              if (comments[i].parent == null) { // 댓글
+                commentsArea.insertAdjacentHTML("beforeend", `
+                  <div id="comment-${comments[i].pk}">
+                    <div id="comment-${comments[i].pk}-block" class="d-flex justify-content-between d-block">
+                      <div class="comment-elem flex-fill">
+                        <a href="/accounts/detail/${comments[i].user_pk}/">
+                          <img class="comment-image" src="" alt="">
+                        </a>
+                        <div class="flex-fill"> 
+                          <p>${comments[i].nickname}</p>
+                          <p id="comment-${comments[i].pk}-content">${comments[i].content}</p>
+                          <div class="d-flex">
+                            <p class="text-muted" style="font-size: 12px;">
+                              <span id="comment-${comments[i].pk}-time">${comments[i].updated_at_string}</span> 
+                              <span>좋아요 <span class="comment-like-count">${comments[i].like_count}</span>개</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                `)
+                if (comments[i].image == null) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = "https://dummyimage.com/80x80/000/fff"
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = comments[i].image
+                }
+
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("beforeend", `
+                    <span class="reply-btn" data-comment-id="${comments[i].pk}" style="cursor: pointer;">답글달기</span>
+                  `)
+                }
+
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("afterend", `
+                    <div class="dropdown ms-1">
+                      <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <button class="dropdown-item comment-update-btn" data-comment-id="${comments[i].pk}">수정</button>
+                        </li>
+                        <li>
+                          <form class="comment-delete-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                            <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                          </form>
+                        </li>
+                      </ul>
+                    </div>
+                  `)
+                }
+                // 댓글 좋아요 폼
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                      </form>
+                    `)
+                  }
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                  `)
+                }
+                // 대댓글 작성 폼
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="reply-form-${comments[i].pk}" class="recomment-elem">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  }
+                }
+                // 댓글 수정 폼
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="comment-${comments[i].pk}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  }
+                }
+
+              } else { // 답글
+                document.querySelector(`#comment-${comments[i].parent}`).insertAdjacentHTML("beforeend", `
+                  <div class="d-flex mt-2">
+                    <a href="#comment-${comments[i].parent}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+                    <div class="flex-fill">
+                      <div id="comment-${comments[i].pk}">
+                        <div id="comment-${comments[i].pk}-block" class="d-flex justify-content-between d-block">
+                          <div class="comment-elem flex-fill">
+                            <a href="/accounts/detail/${comments[i].user_pk}/">
+                              <img class="comment-image" src="" alt="">
+                            </a>
+                            <div class="flex-fill"> 
+                              <p>${comments[i].nickname}</p>
+                              <p id="comment-${comments[i].pk}-content">${comments[i].content}</p>
+                              <div class="d-flex">
+                                <p class="text-muted" style="font-size: 12px;">
+                                  <span id="comment-${comments[i].pk}-time">${comments[i].updated_at_string}</span> 
+                                  <span>좋아요 <span class="comment-like-count">${comments[i].like_count}</span>개</span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `)
+                if (comments[i].image == null) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = "https://dummyimage.com/80x80/000/fff"
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = comments[i].image
+                }
+
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("beforeend", `
+                    <span class="reply-btn" data-comment-id="${comments[i].pk}" style="cursor: pointer;">답글달기</span>
+                  `)
+                }
+
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("afterend", `
+                    <div class="dropdown ms-1">
+                      <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <button class="dropdown-item comment-update-btn" data-comment-id="${comments[i].pk}">수정</button>
+                        </li>
+                        <li>
+                          <form class="comment-delete-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                            <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                          </form>
+                        </li>
+                      </ul>
+                    </div>
+                  `)
+                }
+                // 댓글 좋아요 폼
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                      </form>
+                    `)
+                  }
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                  `)
+                }
+                // 대댓글 작성 폼
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="reply-form-${comments[i].pk}" class="recomment-elem">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  }
+                }
+                // 댓글 수정 폼
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="comment-${comments[i].pk}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  }
+                }
+              }
+            }
+          })
+          .then((response) => {
+            commentUpdateBtn()
+            updateCancelBtn()
+            replyBtn()
+            commentLike()
+            commentUpdate()
+            commentDelete()
+            replyCreate()
+          })
+        })
+      })
+    }
+
+    function replyCreate() {
+      const replyCreateForms = document.querySelectorAll(".reply-create-form")
+      replyCreateForms.forEach((replyCreateForm) => {
+        replyCreateForm.addEventListener("submit", function (event) {
+          event.preventDefault()
+          const productId = event.currentTarget.dataset.productId
+          const commentId = event.currentTarget.dataset.commentId
+          axios({
+            method: "POST",
+            url: `/products/${productId}/reply_create/${commentId}/`,
+            headers: {
+              "X-CSRFToken": csrftoken
+            },
+            data: new FormData(replyCreateForm), // 폼에 있는 정보를 data로 넘겨줄 수 있도록 변환
+          })
+          .then((response) => {
+            const comments = response.data.comments
+            const commentsArea = document.querySelector(`#comment-area`)
+
+            while (commentsArea.hasChildNodes()) {
+              commentsArea.removeChild(commentsArea.firstChild)
+            }
+
+            for (let i = 0; i < comments.length; i++) {
+              if (comments[i].parent == null) { // 댓글
+                commentsArea.insertAdjacentHTML("beforeend", `
+                  <div id="comment-${comments[i].pk}">
+                    <div id="comment-${comments[i].pk}-block" class="d-flex justify-content-between d-block">
+                      <div class="comment-elem flex-fill">
+                        <a href="/accounts/detail/${comments[i].user_pk}/">
+                          <img class="comment-image" src="" alt="">
+                        </a>
+                        <div class="flex-fill"> 
+                          <p>${comments[i].nickname}</p>
+                          <p id="comment-${comments[i].pk}-content">${comments[i].content}</p>
+                          <div class="d-flex">
+                            <p class="text-muted" style="font-size: 12px;">
+                              <span id="comment-${comments[i].pk}-time">${comments[i].updated_at_string}</span> 
+                              <span>좋아요 <span class="comment-like-count">${comments[i].like_count}</span>개</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                `)
+                if (comments[i].image == null) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = "https://dummyimage.com/80x80/000/fff"
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = comments[i].image
+                }
+
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("beforeend", `
+                    <span class="reply-btn" data-comment-id="${comments[i].pk}" style="cursor: pointer;">답글달기</span>
+                  `)
+                }
+
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("afterend", `
+                    <div class="dropdown ms-1">
+                      <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <button class="dropdown-item comment-update-btn" data-comment-id="${comments[i].pk}">수정</button>
+                        </li>
+                        <li>
+                          <form class="comment-delete-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                            <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                          </form>
+                        </li>
+                      </ul>
+                    </div>
+                  `)
+                }
+                // 댓글 좋아요 폼
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                      </form>
+                    `)
+                  }
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                  `)
+                }
+                // 대댓글 작성 폼
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="reply-form-${comments[i].pk}" class="recomment-elem">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  }
+                }
+                // 댓글 수정 폼
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="comment-${comments[i].pk}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  }
+                }
+
+              } else { // 답글
+                document.querySelector(`#comment-${comments[i].parent}`).insertAdjacentHTML("beforeend", `
+                  <div class="d-flex mt-2">
+                    <a href="#comment-${comments[i].parent}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+                    <div class="flex-fill">
+                      <div id="comment-${comments[i].pk}">
+                        <div id="comment-${comments[i].pk}-block" class="d-flex justify-content-between d-block">
+                          <div class="comment-elem flex-fill">
+                            <a href="/accounts/detail/${comments[i].user_pk}/">
+                              <img class="comment-image" src="" alt="">
+                            </a>
+                            <div class="flex-fill"> 
+                              <p>${comments[i].nickname}</p>
+                              <p id="comment-${comments[i].pk}-content">${comments[i].content}</p>
+                              <div class="d-flex">
+                                <p class="text-muted" style="font-size: 12px;">
+                                  <span id="comment-${comments[i].pk}-time">${comments[i].updated_at_string}</span> 
+                                  <span>좋아요 <span class="comment-like-count">${comments[i].like_count}</span>개</span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `)
+                if (comments[i].image == null) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = "https://dummyimage.com/80x80/000/fff"
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = comments[i].image
+                }
+
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("beforeend", `
+                    <span class="reply-btn" data-comment-id="${comments[i].pk}" style="cursor: pointer;">답글달기</span>
+                  `)
+                }
+
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("afterend", `
+                    <div class="dropdown ms-1">
+                      <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <button class="dropdown-item comment-update-btn" data-comment-id="${comments[i].pk}">수정</button>
+                        </li>
+                        <li>
+                          <form class="comment-delete-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                            <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                          </form>
+                        </li>
+                      </ul>
+                    </div>
+                  `)
+                }
+                // 댓글 좋아요 폼
+                if (response.data.request_is_authenticated) {
+                  if (comments[i].is_liked) {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                      <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                      </form>
+                    `)
+                  }
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                  `)
+                }
+                // 대댓글 작성 폼
+                if (response.data.request_is_authenticated) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="reply-form-${comments[i].pk}" class="recomment-elem">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                        <input class="d-none" type="submit" value="제출">
+                      </form>
+                    `)
+                  }
+                }
+                // 댓글 수정 폼
+                if (response.data.request_nickname == comments[i].nickname) {
+                  document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <div id="comment-${comments[i].pk}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+                    </div>
+                  `)
+                  if (response.data.request_image == null) {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  } else {
+                    document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                      <img class="comment-image" src="${response.data.request_image}" alt="">
+                      <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                        <div class="d-flex">
+                          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                          <input class="d-none" type="submit" value="제출">
+                          <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                        </div>
+                      </form>
+                    `)
+                  }
+                }
+              }
+            }
+          })
+          .then((response) => {
+            commentUpdateBtn()
+            updateCancelBtn()
+            replyBtn()
+            commentLike()
+            commentUpdate()
+            commentDelete()
+            replyCreate()
+          })
+        })
+      })
+    }
+
+    function commentCreate() {
+      const commentCreateForm = document.querySelector("#comment-create-form")
+      commentCreateForm.addEventListener("submit", function (event) {
+        event.preventDefault()
+        const productId = event.currentTarget.dataset.productId
+        axios({
+          method: "POST",
+          url: `/products/${productId}/comment_create/`,
+          headers: {
+            "X-CSRFToken": csrftoken
+          },
+          data: new FormData(commentCreateForm), // 폼에 있는 정보를 data로 넘겨줄 수 있도록 변환
+        })
+        .then((response) => {
+          const comments = response.data.comments
+          const commentsArea = document.querySelector(`#comment-area`)
+
+          while (commentsArea.hasChildNodes()) {
+            commentsArea.removeChild(commentsArea.firstChild)
+          }
+
+          for (let i = 0; i < comments.length; i++) {
+            if (comments[i].parent == null) { // 댓글
+              commentsArea.insertAdjacentHTML("beforeend", `
+                <div id="comment-${comments[i].pk}">
+                  <div id="comment-${comments[i].pk}-block" class="d-flex justify-content-between d-block">
+                    <div class="comment-elem flex-fill">
+                      <a href="/accounts/detail/${comments[i].user_pk}/">
+                        <img class="comment-image" src="" alt="">
+                      </a>
+                      <div class="flex-fill"> 
+                        <p>${comments[i].nickname}</p>
+                        <p id="comment-${comments[i].pk}-content">${comments[i].content}</p>
+                        <div class="d-flex">
+                          <p class="text-muted" style="font-size: 12px;">
+                            <span id="comment-${comments[i].pk}-time">${comments[i].updated_at_string}</span> 
+                            <span>좋아요 <span class="comment-like-count">${comments[i].like_count}</span>개</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+              `)
+              if (comments[i].image == null) {
+                document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = "https://dummyimage.com/80x80/000/fff"
+              } else {
+                document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = comments[i].image
+              }
+
+              if (response.data.request_is_authenticated) {
+                document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("beforeend", `
+                  <span class="reply-btn" data-comment-id="${comments[i].pk}" style="cursor: pointer;">답글달기</span>
+                `)
+              }
+
+              if (response.data.request_nickname == comments[i].nickname) {
+                document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("afterend", `
+                  <div class="dropdown ms-1">
+                    <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <button class="dropdown-item comment-update-btn" data-comment-id="${comments[i].pk}">수정</button>
+                      </li>
+                      <li>
+                        <form class="comment-delete-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                `)
+              }
+              // 댓글 좋아요 폼
+              if (response.data.request_is_authenticated) {
+                if (comments[i].is_liked) {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+                    </form>
+                  `)
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                    </form>
+                  `)
+                }
+              } else {
+                document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                  <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                `)
+              }
+              // 대댓글 작성 폼
+              if (response.data.request_is_authenticated) {
+                document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                  <div id="reply-form-${comments[i].pk}" class="recomment-elem">
+                  </div>
+                `)
+                if (response.data.request_image == null) {
+                  document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                    <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                      <input class="d-none" type="submit" value="제출">
+                    </form>
+                  `)
+                } else {
+                  document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="${response.data.request_image}" alt="">
+                    <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                      <input class="d-none" type="submit" value="제출">
+                    </form>
+                  `)
+                }
+              }
+              // 댓글 수정 폼
+              if (response.data.request_nickname == comments[i].nickname) {
+                document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                  <div id="comment-${comments[i].pk}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+                  </div>
+                `)
+                if (response.data.request_image == null) {
+                  document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                    <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="d-flex">
+                        <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                        <input class="d-none" type="submit" value="제출">
+                        <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                      </div>
+                    </form>
+                  `)
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="${response.data.request_image}" alt="">
+                    <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="d-flex">
+                        <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                        <input class="d-none" type="submit" value="제출">
+                        <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                      </div>
+                    </form>
+                  `)
+                }
+              }
+
+            } else { // 답글
+              document.querySelector(`#comment-${comments[i].parent}`).insertAdjacentHTML("beforeend", `
+                <div class="d-flex mt-2">
+                  <a href="#comment-${comments[i].parent}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+                  <div class="flex-fill">
+                    <div id="comment-${comments[i].pk}">
+                      <div id="comment-${comments[i].pk}-block" class="d-flex justify-content-between d-block">
+                        <div class="comment-elem flex-fill">
+                          <a href="/accounts/detail/${comments[i].user_pk}/">
+                            <img class="comment-image" src="" alt="">
+                          </a>
+                          <div class="flex-fill"> 
+                            <p>${comments[i].nickname}</p>
+                            <p id="comment-${comments[i].pk}-content">${comments[i].content}</p>
+                            <div class="d-flex">
+                              <p class="text-muted" style="font-size: 12px;">
+                                <span id="comment-${comments[i].pk}-time">${comments[i].updated_at_string}</span> 
+                                <span>좋아요 <span class="comment-like-count">${comments[i].like_count}</span>개</span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `)
+              if (comments[i].image == null) {
+                document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = "https://dummyimage.com/80x80/000/fff"
+              } else {
+                document.querySelector(`#comment-${comments[i].pk}-block .comment-image`).src = comments[i].image
+              }
+
+              if (response.data.request_is_authenticated) {
+                document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("beforeend", `
+                  <span class="reply-btn" data-comment-id="${comments[i].pk}" style="cursor: pointer;">답글달기</span>
+                `)
+              }
+
+              if (response.data.request_nickname == comments[i].nickname) {
+                document.querySelector(`#comment-${comments[i].pk}-block .text-muted`).insertAdjacentHTML("afterend", `
+                  <div class="dropdown ms-1">
+                    <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <button class="dropdown-item comment-update-btn" data-comment-id="${comments[i].pk}">수정</button>
+                      </li>
+                      <li>
+                        <form class="comment-delete-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                          <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                          <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                `)
+              }
+              // 댓글 좋아요 폼
+              if (response.data.request_is_authenticated) {
+                if (comments[i].is_liked) {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+                    </form>
+                  `)
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                    <form class="comment-like-form" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                    </form>
+                  `)
+                }
+              } else {
+                document.querySelector(`#comment-${comments[i].pk}-block`).insertAdjacentHTML("beforeend", `
+                  <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+                `)
+              }
+              // 대댓글 작성 폼
+              if (response.data.request_is_authenticated) {
+                document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                  <div id="reply-form-${comments[i].pk}" class="recomment-elem">
+                  </div>
+                `)
+                if (response.data.request_image == null) {
+                  document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                    <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                      <input class="d-none" type="submit" value="제출">
+                    </form>
+                  `)
+                } else {
+                  document.querySelector(`#reply-form-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="${response.data.request_image}" alt="">
+                    <form class="reply-create-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+                      <input class="d-none" type="submit" value="제출">
+                    </form>
+                  `)
+                }
+              }
+              // 댓글 수정 폼
+              if (response.data.request_nickname == comments[i].nickname) {
+                document.querySelector(`#comment-${comments[i].pk}`).insertAdjacentHTML("beforeend", `
+                  <div id="comment-${comments[i].pk}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+                  </div>
+                `)
+                if (response.data.request_image == null) {
+                  document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                    <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="d-flex">
+                        <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                        <input class="d-none" type="submit" value="제출">
+                        <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                      </div>
+                    </form>
+                  `)
+                } else {
+                  document.querySelector(`#comment-${comments[i].pk}-update`).insertAdjacentHTML("beforeend", `
+                    <img class="comment-image" src="${response.data.request_image}" alt="">
+                    <form class="comment-update-form flex-fill" data-product-id="${response.data.product_pk}" data-comment-id="${comments[i].pk}">
+                      <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+                      <div class="d-flex">
+                        <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="${comments[i].content}">
+                        <input class="d-none" type="submit" value="제출">
+                        <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="${comments[i].pk}" style="font-size: 12px; min-width: 50px;">취소</button>
+                      </div>
+                    </form>
+                  `)
+                }
+              }
+            }
+          }
+
+          commentCreateForm.reset()
+        })
+        .then((response) => {
+          commentUpdateBtn()
+          updateCancelBtn()
+          replyBtn()
+          commentLike()
+          commentUpdate()
+          commentDelete()
+          replyCreate()
+        })
+      })
+    }
+    commentUpdateBtn()
+    updateCancelBtn()
+    replyBtn()
+    commentLike()
+    commentUpdate()
+    commentDelete()
+    replyCreate()
+    commentCreate()
+  </script>
+{% endblock js %}

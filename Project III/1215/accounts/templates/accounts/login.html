@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login_form">
+  <!-- 로고 -->
+  <h1 class="login_banner">Mohobby</h1>
+  <!-- 메시지 -->
+  {% if messages %}
+  <div class="messages">
+    {% for msg in messages %}       
+      <div>
+        <div class="alert alert-{{msg.level_tag}}" role="alert">
+        {{msg.message}}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <!-- form -->
+  <form action="{% url 'accounts:login' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" class="form-control" name="next" value="{{ request.GET.next }}">
+    <div class="login_box">
+      <!-- input : 아이디 -->
+      {% render_field form.username class="user_input" placeholder="아이디"%}
+    </div>
+    <!-- input : 비밀번호 -->
+    <div class="login_box">
+      {% render_field form.password class="user_input" placeholder="비밀번호"%}
+    </div>
+    <!-- submit 버튼 -->
+    <button class="login_button" type="submit">로그인</button>
+  </form>
+  <!-- 카카오 로그인 버튼 -->
+  <a href="{% url 'accounts:kakao_login' %}">
+  <button class="kakao_login_button" type="button"><i class="bi bi-chat-fill"></i> 카카오 로그인</button>
+  </a> 
+  <!-- 회원가입 URL -->
+  <a class="login_text mb-3" href="{% url 'accounts:signup'%}">회원가입</a>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock js %}

@@ -1,0 +1,158 @@
+.main_color {
+  color: #E84545;
+  margin-left: 150px;
+
+}
+
+.tag {
+  background-color: #f1f3f5;
+  border-radius: 30px;
+  font-size: 15px;
+  margin: 3px;
+}
+
+.post_page {
+  background-color: #f8f9faa6;
+  ;
+}
+
+.post {
+  background-color: white;
+  border-radius: 20px;
+}
+
+.post_img {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+html,
+swipre-body {
+  position: relative;
+  height: 100%;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mySwiper {
+  height: 700px;
+  width: 100%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post_size {
+  width: 70%;
+}
+
+@media (max-width: 767px) {
+  .post_size {
+    width: 100%;
+  }
+
+  .main_color {
+    color: #E84545;
+    margin-left: 30px;
+  }
+}
+
+.more_button {
+  width: 100%;
+  height: 55px;
+  border: 0px;
+  outline: 0px;
+  margin-bottom: 20px;
+
+}
+
+.moretext {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #E84545;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  color: white;
+}
+
+.card {
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+  transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.section {
+  padding: 0 12rem;
+}
+
+.back {
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  left: 70px;
+  font-weight: 200;
+}
+
+.products_user {
+  color: black;
+
+}
+
+.products_user:hover{
+  color:#E84545;
+}

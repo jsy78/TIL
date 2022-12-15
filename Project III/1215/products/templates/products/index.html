@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock css %}
+
+{% block content %}
+  <div class="container-lg">
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 8rem">
+      <h1 class="my-2 fw-bold" style="color: #E84545;">만물상</h1>
+
+    </div>
+    <div class="p-0 p-lg-4">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2 g-md-4 mb-4">
+        {% for product in page_list %}
+          {% if product.user not in request.user.blocking.all %}
+            <div class="col" style="margin-bottom:20px">
+              <a href="{% url 'products:product_detail' product.pk %}" class="text-decoration-none">
+                <div class="card" style="min-width: 150px; min-height: 100%;">
+                  {% if product.thumbnail %}
+                    <img src="{{ product.thumbnail.url }}" class="card-img-top img-fluid" alt="thumbnail">
+                  {% else %}
+                    <img src="https://dummyimage.com/200/000/fff" class="card-img-top" alt="dummyimage">
+                  {% endif %}
+                  <div class="card-body">
+                    <h5 class="card-title text-black">{{ product.title }}</h5>
+                    <h4 class="card-text text-black fw-bold mb-2">{{ product.price|intcomma }}원</h4>
+                    <a href="{% url 'accounts:detail' product.user.pk %}" class="card-text text-decoration-none products_user">{{ product.user.nickname }}</a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endif %}
+        {% empty %}
+          <h5 class="fw-bold flex-fill text-center">데이터가 없습니다.</h5>
+        {% endfor %}
+      </div>
+      
+      <ul class="pagination justify-content-center mb-4" style="margin-top: 90px;">
+        {% if page_list.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_list.previous_page_number }}" style="min-width: 60px; color: gray;">이전</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" style="min-width: 60px;">이전</a>
+          </li>
+        {% endif %}
+        {% for page_number in page_list.paginator.page_range %}
+          {% if page_number >= page_list.number|add:-5 and page_number <= page_list.number|add:5 %}
+            {% if page_number == page_list.number %}
+              <li class="page-item active">
+                <a class="page-link bg-danger border-white"   href="?page={{ page_number }}">{{ page_number }}</a>
+              </li>
+            {% else %}
+              <li class="page-item">
+                <a class="page-link" style="color: #E84545;" href="?page={{ page_number }}">{{ page_number }}</a>
+              </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% if page_list.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_list.next_page_number }}" style="min-width: 60px; color: gray;">다음</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" style="min-width: 60px;">다음</a>
+          </li>
+        {% endif %}
+      </ul>
+
+      <div class="mx-auto mb-4">
+        <form action="{% url 'products:search' %}" method="GET">
+          <div class="row justify-content-center">
+            <div class="col-12 col-sm-7 col-md-5 col-lg-3">
+              <div class="d-flex">
+                <input type="search" class="form-control" name="q" required="true">
+                <button class="btn btn-main" type="submit">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <a href="{% url 'products:product_create' %}" class='plus-btn'>
+    <div>
+      <i class="bi bi-plus"></i>
+    </div>
+  </a>
+{% endblock content %}
+
+{% block js %}{% endblock js %}

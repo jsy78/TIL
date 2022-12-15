@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/community.css' %}">
+{% endblock %}
+{% block content %}
+
+  <div class='container page' style='max-width:1000px;'>
+    <div class="mb-2" style=" text-align: center;">
+      <h3 class='main_title fw-bold'>새 피드 작성하기</h3>
+      <small class='text-muted'>자유롭게 여러분의 일상을 공유해 주세요 !</small>
+    </div>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class='create_img '>
+        <div class='create_img_in d-flex flex-column'>
+          <div class=" image_container d-flex flex-wrap justify-content-center"></div>
+        </div>
+      </div>
+
+      <div class='d-flex justify-content-center my-3'>
+        <label class="file-label" for="images">파일선택</label>
+        <input class="file" type="file" name="images" multiple="multiple" id="images" accept="image/*" onchange="setThumbnail(event);">
+      </div>
+
+      <div class='d-flex flex-column feed_content my-5'>
+        <label for="title">title</label>
+        <input class='create_feed_title' type="text" name='title'>
+        <label for="content">content</label>
+        <textarea class='create_feed_content' name="content" id="content" cols="30" rows="10"></textarea>
+      </div>
+
+      <div style=" text-align: center;">
+        <button class='create_button' type="submit">
+          작성하기</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function setThumbnail(event) {
+      for (var image of event.target.files) {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+          var img = document.createElement("img");
+          img.setAttribute("src", event.target.result);
+          img.setAttribute("style", 'width:200px;height:200px')
+          document
+            .querySelector(".image_container")
+            .appendChild(img);
+        };
+
+        console.log(image);
+        reader.readAsDataURL(image);
+      }
+    }
+  </script>
+
+{% endblock content %}

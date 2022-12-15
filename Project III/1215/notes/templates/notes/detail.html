@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block css %}{% endblock css %}
+
+{% block content %}
+  <div class="container" style="margin-top: 10rem">
+      <div class="row">
+        <div class="col-12 col-lg-2 mb-5">
+          <div class="list-group">
+            <a href="{% url 'notes:send' %}" class="list-group-item list-group-item-action">쪽지 쓰기</a>
+            <a href="{% url 'notes:sent_box' %}" class="list-group-item list-group-item-action">보낸 쪽지함</a>
+            <a href="{% url 'notes:received_box' %}" class="list-group-item list-group-item-action">받은 쪽지함</a>
+            <a href="{% url 'notes:important_box' %}" class="list-group-item list-group-item-action">중요 쪽지함</a>
+            <a href="{% url 'notes:trash_box' %}" class="list-group-item list-group-item-action">휴지통</a>
+          </div>
+        </div>
+        <div class="col-12 col-lg-10">
+          <div class="list-group">
+            <p class="m-0 list-group-item"><span style="font-size:32px; font-weight:600;">{{ note.title }} </span> <span>From. {{ note.sent_username }}</span></p>
+            <p class="m-0 list-group-item">보낸 시간 : {{ note.sent_at }} ({{ note.sent_at_string }}) <br> 받은 시간 : {{ note.received_at }} ({{ note.received_at_string }})</p>
+            <pre class="m-0 list-group-item" style="min-height:300px; font-family: 'Noto Sans KR', sans-serif; font-size : 16px; font-weight: 500; overflow-wrap: normal; white-space: pre-wrap;">{{ note.content }}</pre>
+          </div>
+          <form action="{% url 'notes:send' %}" method="GET" class="mt-3"  style='float: right;'>
+            <input type="hidden" class="form-control" value="{{ note.sent_username }}" name="to">
+            <button class="btn btn-danger me-2 "><i class="bi bi-cursor-fill">답장</i></button>
+          </form>
+        </div>
+      </div>
+  </div>
+{% endblock content %}
+
+{% block js %}{% endblock js %}

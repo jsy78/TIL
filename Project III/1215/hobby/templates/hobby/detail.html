@@ -1,0 +1,602 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% load humanize %}
+{% load extra_timesince %}
+{% load age %}
+{% load gender %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock css %}
+{% block content %}
+<input id="request-user-id" type="hidden" value="{{ request.user.pk }}">
+<input id="hobby_id" type="hidden" value="{{ hobby.pk }}">
+<div class="detail-wrapper wrapper" style="margin-top: 100px;">
+  <!-- 이미지 배너 -->
+    {% if hobby.image %}
+      <div class="image-banner p-5" style="background-image: url('{{ hobby.image.url }}'); height:300px; ">
+    {% else %}
+      <div class="image-banner p-5" style="background-image: url('https://dummyimage.com/750x300/000/fff'); height:300px; ">
+    {% endif %}
+      <span class="badge bg-danger mx-1" style="height:20px">{{ accepted|length }}명 참여중</span>
+      <span class="badge bg-dark mx-1" style="height:20px">{{ hobby.tags }}</span>
+      {% if request.user == hobby.host %}
+      <a href="{% url 'hobby:update' hobby.pk %}" class="badge bg-warning mx-1" style="height:20px">수정하기</a>
+      {% endif %}
+    </div>
+    <!-- 본문 -->
+    <div class="transup">
+      <div class="card py-0">
+        <a class="circle-box" href="{% url 'accounts:detail' hobby.host.pk %}">
+          <div >
+            {% if hobby.host.image %}
+            <img class="circle-image" src="{{ hobby.host.image.url }}" alt="">
+            {% else %}
+            <img class="circle-image" src="{% static 'image/default_profile_img.jpg' %}" alt="">
+            {% endif %}
+            <p class="text-center text-muted">{{ hobby.host.nickname }}</p>
+          </div>
+        </a>
+        <p class="circle-title">{{hobby.title}}</p>
+      </div>
+      <p class="text-center mt-3" style="font-size:16px;">
+        <i class="bi bi-eye"></i>&nbsp;<span>{{ hobby.hits }}</span>
+        ⏰
+        {% if hobby.address == '온라인' %}
+        온라인
+        {% else %}
+        오프라인
+        {% endif %}
+        📅 {{ hobby.meeting_day|date:"m.d(l) A h:i" }}
+        
+      </p>
+    </div>
+    <div class="content-wrapper">
+    <pre class="detail-content">{{ hobby.content }}</pre>
+    <!-- 참여 중인 유저  -->
+    <ul id="accepted-user">
+      <li class="detail-title">멤버소개</li>
+      <li class="detail-subtitle">우리 반갑게 만나요</li>
+      {% for member in accepted %}
+      <a href="{% url 'accounts:detail' member.user.pk %}">
+        <li class="d-flex justify-content-between">
+          <div class="d-flex">
+            {% if member.user.image %}
+            <img class="member-image" src="{{ member.user.image.url }}" alt="">
+            {% else %}
+            <img class="member-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+            {% endif %}
+            <p class="m-3">
+              <span style="font-size:20px; font-weight:600;">{{ member.user.nickname }}</span><br>
+              <span class="text-muted" style="overflow:hidden">{{ member.user.gender|gender }} 만 {{ member.user.birth|age }}세</span>
+            </p>
+          </div>
+          <div>
+            {% if request.user == hobby.host %}
+              {% if request.user.pk != member.user.pk %}
+                <a style="color:#E84545" href="{% url 'hobby:reject' hobby.pk member.user.pk %}">강퇴하기</a>
+              {% endif %}
+            {% else %}
+              {% if request.user == member.user %}
+                <a style="color:#E84545" href="{% url 'hobby:reject' hobby.pk member.user.pk %}">탈퇴하기</a>
+              {% endif %}
+            {% endif %}
+            
+          </div>
+        </li>
+      </a>
+      {% endfor %}
+    </ul>
+    <!-- 승인 대기 멤버 -->
+    <ul>
+      <li class="detail-title d-flex justify-content-between">
+        <span>승인 대기 멤버</span>
+        <span class="text-muted fs-6 member-more" type="button" id="offline-box" class="" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasBottom2" aria-controls="offcanvasBottom">더보기》</span>
+      </li>
+      <li class="detail-subtitle d-flex justify-content-between">
+        <span>호스트의 승인을 기다리고 있어요</span>
+      </li>
+      <li class="d-flex" style="overflow:hidden;">
+        {% for member in waiting %}
+        <a href="{% url 'accounts:detail' member.user.pk %}">
+          {% if member.user.image %}
+          <img class="member-image" src="{{ member.user.image.url }}" alt="">
+          {% else %}
+          <img class="member-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+          {% endif %}
+        </a>
+        {% endfor %}
+      </li>
+      <!-- 현재 승락 대기중인 멤버 -->
+      <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom2">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasBottomLabel">호스트의 승인을 기다리고 있어요</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <hr>
+        <div class="offcanvas-body small">
+          {% if waiting %}
+          <ul id="addrlist">
+            {% for member in waiting %}
+            <li class="d-flex justify-content-between"><a class="d-flex"
+                href="{% url 'accounts:detail' member.user.pk %}">
+                {% if member.user.image %}
+                <img class="member-image" src="{{ member.user.image.url }}" alt="">
+                {% else %}
+                <img class="member-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                {% endif %}
+                <p class="m-3">
+                  <span style="font-size:20px; font-weight:600;">{{ member.user.nickname }}</span><br>
+                  <span class="text-muted" style="overflow:hidden">{{ member.user.gender|gender }} 만 {{ member.user.birth|age }}세</span>
+                </p>
+              </a>
+              <div>
+                {% if request.user == member.user %}
+                <a style="color:#E84545" href="{% url 'hobby:reject' hobby.pk member.user.pk %}">신청취소</a>
+                {% endif %}
+                {% if request.user == hobby.host %}
+                <a id="approveBtn" data-action="approve" data-user-id="{{ member.user.pk }}" style="color:forestgreen" href="{% url 'hobby:approve' hobby.pk member.user.pk %}">승인하기</a>
+                <a style="color:#E84545" href="{% url 'hobby:reject' hobby.pk member.user.pk %}">거절하기</a>
+                {% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <div class="text-center mt-5">
+            <p>
+              <ion-icon name="people" size="large"></ion-icon>
+            </p>
+            <h5>아직 신청한 멤버가 없습니다.</h5>
+            <p class="text-muted">조금만 더 기다려 주세요!</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </ul>
+    <!-- 안내사항 -->
+    <ul>
+      <li class="detail-title">안내사항</li>
+      <li class="detail-subtitle">자세한 정보를 알려드릴게요</li>
+      <li>👨‍👨‍👦 {{ hobby.limit }}명</li>
+      <li>💵
+        {% if hobby.entry_fee %}
+        {{ hobby.entry_fee }}원
+        {% else %}
+        없음
+        {% endif %}
+      </li>
+      <li>📅 {{ hobby.meeting_day|date:"m.d(l) A h:i" }}</li>
+      <li>🗺 {{ hobby.address }}</li>
+      <!-- 지도넣기 -->
+      {% if hobby.address == '온라인' %}
+      {% else %}
+      <div id="map" style="width:100%;height:350px; border-radius:10px; border: solid 5px #e7e7e7"></div>
+      {% endif %}
+    </ul>
+
+    <!-- 댓글 -->
+    <ul>
+      <li class="detail-title">커뮤니티</li>
+      <li class="detail-subtitle">소셜링이 궁금하다면 댓글을 남겨보세요</li>
+      <li>
+        <!-- Hobby 좋아요 -->
+        {% if request.user in hobby.like_user.all %}
+        <ion-icon onclick="likeHobby(this)" class="hobby-like-btn" data-hobby-id="{{ hobby.pk }}" style="color:#E84545"
+          name="heart" size="large"></ion-icon>
+        {% else %}
+        <ion-icon onclick="likeHobby(this)" class="hobby-like-btn" data-hobby-id="{{ hobby.pk }}" style="color:#E84545"
+          name="heart-outline" size="large"></ion-icon>
+        {% endif %}
+        <span id="like-count" style="font-size:24px; width:40px;">{{ hobby.like_user.count }} </span>
+        <!-- 댓글의 수, 모든 댓글보기 -->
+        <ion-icon style="cursor:pointer;" name="chatbubble-outline" size="large" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom"></ion-icon>
+        <span id="comment-count" style="font-size:24px; width:40px;">{{ comments_len }} </span>
+        <!-- 좋아요를 누른 사람 목록 보기... -->
+        <ion-icon style="cursor:pointer;" name="ellipsis-horizontal" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasBottom4" aria-controls="offcanvasBottom"></ion-icon>
+      </li>
+      <!-- 댓글 삭제 모달 -->
+      <div class="modal fade" id="comment-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">더보기</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button id="comment-report-btn" data-bs-dismiss="modal" class="mt-3 close_btn slide_button"
+                type="button">창 닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 댓글작성 폼 -->
+      <div class="comment-elem">
+        {% if user.image %}
+        <img class="comment-image" src="{{ user.image.url }}" alt="">
+        {% else %}
+        <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+        {% endif %}
+        <form id="comment-form" data-hobby-id="{{ hobby.pk }}" action=""
+          method="POST" class="w-100" data-action="comment-form">
+          {% csrf_token %}
+          <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기...">
+          <input class="d-none" type="submit" value="제출">
+          <input type="hidden" name="parent">
+        </form>
+      </div>
+      <li id="comment-list">
+        <!-- 댓글목록 -->
+        {% for comment in comments|slice:":7" %}
+        <hr>
+        <div class="d-flex justify-content-between">
+          <div class="comment-elem">
+            <a href="{% url 'accounts:detail' comment.user.pk %}">
+              {% if comment.user.image %}
+              <img class="comment-image" src="{{ comment.user.image.url }}" alt="">
+              {% else %}
+              <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+              {% endif %}</a>
+            <div> 
+              <p>{{ comment.user.nickname }}</p>
+              <p>{{ comment.content }}</p>
+              <div>
+                <p class="text-muted" style="font-size:12px"><span>{{ comment.created_at|extra_timesince }}</span> 
+                  <span>좋아요 <span id="comment-{{ comment.pk }}-likecnt">{{ comment.like_user.count }}</span>개</span> <span data-action="reComment" data-comment-id="{{comment.pk}}" style="cursor:pointer;">답글달기</span>
+                  <ion-icon data-action="getDelete" type="button" data-bs-toggle="modal"
+                    data-bs-target="#comment-delete" data-comment-id="{{ comment.pk }}"
+                    data-user="{{ comment.user.pk }}" name="ellipsis-horizontal"></ion-icon>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            {% if request.user in comment.like_user.all %}
+            <ion-icon data-action="like" id="comment-{{comment.pk}}-likebtn" data-comment-id="{{ comment.pk }}"
+              class="comment-like-btn" style="color:#E84545" name="heart"></ion-icon>
+            {% else %}
+            <ion-icon data-action="like" id="comment-{{comment.pk}}-likebtn" data-comment-id="{{ comment.pk }}"
+              class="comment-like-btn" style="color:#E84545" name="heart-outline"></ion-icon>
+            {% endif %}
+          </div>
+        </div>
+        <!-- 대댓글 작성 폼 -->
+        <div id="recomment-form-{{ comment.pk }}" class="recomment-elem">
+          {% if user.image %}
+          <img class="comment-image" src="{{ user.image.url }}" alt="">
+          {% else %}
+          <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+          {% endif %}
+          <form id="comment-form" data-hobby-id="{{ hobby.pk }}" action="{% url 'hobby:comment_create' hobby.pk %}"
+            method="POST" class="w-100" data-action="comment-form">
+            {% csrf_token %}
+            <input id="commentinput" name="content" class="comment-control" type="text" placeholder="답글 달기...">
+            <input class="d-none" type="submit" value="제출">
+            <input type="hidden" name="parent" value="{{ comment.pk }}">
+          </form>
+        </div>
+        <!-- 대댓글 -->
+            {% for recomment in comment.recomment.all %}
+            <hr>
+            <div class="d-flex justify-content-between ms-5">
+              <div class="comment-elem">
+                <a href="{% url 'accounts:detail' recomment.user.pk %}">
+                  {% if recomment.user.image %}
+                  <img class="comment-image" src="{{ recomment.user.image.url }}" alt="">
+                  {% else %}
+                  <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                  {% endif %}</a>
+                <div> 
+                  <p>{{ recomment.user.nickname }}</p>
+                  <p>{{ recomment.content }}</p>
+                  <div>
+                    <p class="text-muted" style="font-size:12px"><span>{{ recomment.created_at|extra_timesince }}</span> <span>좋아요
+                        <span id="comment-{{ recomment.pk }}-likecnt">{{ recomment.like_user.count }}</span>개</span>
+                      <ion-icon data-action="getDelete" type="button" data-bs-toggle="modal"
+                        data-bs-target="#comment-delete" data-comment-id="{{ recomment.pk }}"
+                        data-user="{{ recomment.user.pk }}" name="ellipsis-horizontal"></ion-icon>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                {% if request.user in recomment.like_user.all %}
+                <ion-icon data-action="like" id="comment-{{recomment.pk}}-likebtn" data-comment-id="{{ recomment.pk }}"
+                  class="comment-like-btn" style="color:#E84545" name="heart"></ion-icon>
+                {% else %}
+                <ion-icon data-action="like" id="comment-{{recomment.pk}}-likebtn" data-comment-id="{{ recomment.pk }}"
+                  class="comment-like-btn" style="color:#E84545" name="heart-outline"></ion-icon>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+      </li>
+      <!-- 댓글 오프캔버스 -->
+      <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom3">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasBottomLabel">소셜링이 궁금하다면 댓글을 남겨보세요.</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <!-- 오프캔버스 댓글 작성 -->
+        <div class="comment-elem">
+          {% if user.image %}
+          <img class="comment-image" src="{{ user.image.url }}" alt="">
+          {% else %}
+          <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+          {% endif %}
+          <form id="comment-form-off" data-hobby-id="{{ hobby.pk }}" action=""
+            method="POST" class="w-100" data-action="comment-form">
+            {% csrf_token %}
+            <input id="commentinputoff" name="content" class="comment-control" type="text" placeholder="답글 달기...">
+            <input class="d-none" type="submit" value="제출">
+            <input type="hidden" name="parent">
+          </form>
+        </div>
+        <!-- 댓글들 -->
+        <div class="offcanvas-body small">
+          <ul id="comment-list-off">
+          {% if comments %}
+            {% for comment in comments %}
+            <hr>
+            <div class="d-flex justify-content-between">
+              <div class="comment-elem">
+                <a href="{% url 'accounts:detail' comment.user.pk %}">
+                  {% if comment.user.image %}
+                  <img class="comment-image" src="{{ comment.user.image.url }}" alt="">
+                  {% else %}
+                  <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                  {% endif %}</a>
+                <div> 
+                  <p>{{ comment.user.nickname }}</p>
+                  <p>{{ comment.content }}</p>
+                  <div>
+                    <p class="text-muted" style="font-size:12px"><span>{{ comment.created_at|extra_timesince }}</span> <span>좋아요
+                        <span id="comment-{{ comment.pk }}-likecnt-off">{{ comment.like_user.count }}</span>개</span> <span data-action="reComment" data-comment-id="{{comment.pk}}" style="cursor:pointer;">답글달기</span>
+                      <ion-icon data-action="getDelete" type="button" data-bs-toggle="modal"
+                        data-bs-target="#comment-delete" data-comment-id="{{ comment.pk }}"
+                        data-user="{{ comment.user.pk }}" name="ellipsis-horizontal"></ion-icon>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                {% if request.user in comment.like_user.all %}
+                <ion-icon data-action="like" id="comment-{{comment.pk}}-likebtn-off" data-comment-id="{{ comment.pk }}"
+                  class="comment-like-btn" style="color:#E84545" name="heart"></ion-icon>
+                {% else %}
+                <ion-icon data-action="like" id="comment-{{comment.pk}}-likebtn-off" data-comment-id="{{ comment.pk }}"
+                  class="comment-like-btn" style="color:#E84545" name="heart-outline"></ion-icon>
+                {% endif %}
+              </div>
+            </div>
+            <!-- 대댓글 작성 폼 -->
+            <div id="recomment-form-{{ comment.pk }}-off" class="recomment-elem">
+              {% if user.image %}
+              <img class="comment-image" src="{{ user.image.url }}" alt="">
+              {% else %}
+              <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+              {% endif %}
+              <form id="comment-form" data-hobby-id="{{ hobby.pk }}" action="{% url 'hobby:comment_create' hobby.pk %}"
+                method="POST" class="w-100" data-action="comment-form">
+                {% csrf_token %}
+                <input id="commentinput" name="content" class="comment-control" type="text" placeholder="답글 달기...">
+                <input class="d-none" type="submit" value="제출">
+                <input type="hidden" name="parent" value="{{ comment.pk }}">
+              </form>
+            </div>
+            <!-- 대댓글 -->
+                {% for recomment in comment.recomment.all %}
+                <hr>
+                <div class="d-flex justify-content-between ms-5">
+                  <div class="comment-elem">
+                    <a href="{% url 'accounts:detail' recomment.user.pk %}">
+                      {% if recomment.user.image %}
+                      <img class="comment-image" src="{{ recomment.user.image.url }}" alt="">
+                      {% else %}
+                      <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                      {% endif %}</a>
+                    <div> 
+                      <p>{{ recomment.user.nickname }}</p>
+                      <p>{{ recomment.content }}</p>
+                      <div>
+                        <p class="text-muted" style="font-size:12px"><span>{{ recomment.created_at|extra_timesince }}</span> <span>좋아요
+                            <span id="comment-{{ recomment.pk }}-likecnt-off">{{ recomment.like_user.count }}</span>개</span>
+                          <ion-icon data-action="getDelete" type="button" data-bs-toggle="modal"
+                            data-bs-target="#comment-delete" data-comment-id="{{ recomment.pk }}"
+                            data-user="{{ recomment.user.pk }}" name="ellipsis-horizontal"></ion-icon>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    {% if request.user in recomment.like_user.all %}
+                    <ion-icon data-action="like" id="comment-{{recomment.pk}}-likebtn-off" data-comment-id="{{ recomment.pk }}"
+                      class="comment-like-btn" style="color:#E84545" name="heart"></ion-icon>
+                    {% else %}
+                    <ion-icon data-action="like" id="comment-{{recomment.pk}}-likebtn-off" data-comment-id="{{ recomment.pk }}"
+                      class="comment-like-btn" style="color:#E84545" name="heart-outline"></ion-icon>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+            {% endfor %}
+          </ul>
+          {% else %}
+          <div class="text-center mt-5">
+            <p>
+              <ion-icon name="people" size="large"></ion-icon>
+            </p>
+            <h5>아직 댓글이 없습니다.</h5>
+            <p class="text-muted">다양한 의견을 공유해보세요!</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <!-- 좋아요 오프캔버스 -->
+      <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom4">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasBottom4Label">좋아요</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <hr>
+        <div class="offcanvas-body small">
+          <ul class="" id="like-list-off">
+          {% if hobby.like_user.all %}
+            {% for member in hobby.like_user.all %}
+            <a id="like-user-{{ member.pk }}" href="{% url 'accounts:detail' member.pk %}">
+              <li class="d-flex justify-content-between">
+                <div class="d-flex">
+                  {% if member.image %}
+                  <img class="member-image" src="{{ member.image.url }}" alt="">
+                  {% else %}
+                  <img class="member-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+                  {% endif %}
+                  <p class="m-3">
+                    <span style="font-size:20px; font-weight:600;">{{ member.nickname }}</span><br>
+                    <span class="text-muted" style="overflow:hidden">멤버 소개글</span>
+                  </p>
+                </div>
+              </li>
+            </a>
+            {% endfor %}
+            {% else %}
+            <div id="no-like-box" class="text-center mt-5">
+              <p>
+                <ion-icon name="people" size="large"></ion-icon>
+              </p>
+              <h5>아직 좋아요가 없습니다.</h5>
+              <p class="text-muted">소셜링을 홍보해 보세요!</p>
+            </div>
+          {% endif %}
+          </ul>
+        </div>
+      </div>
+    </ul>
+    {% if request.user == hobby.host %}
+    <a id="hobby-delete-btn" href="{% url 'hobby:delete_hobby' hobby.pk %}" class="accept-btn text-black">
+      <div>
+        <span class=" footer_accept">삭제</span>
+      </div>
+    </a>
+    {% else %}
+    {% if request.user not in hobby.host.blocking.all %}
+    <a id="hobby-call-btn" href="{% url 'hobby:call' hobby.pk %}" class="accept-btn text-black">
+      <div>
+        <span class=" footer_accept">참여</span>
+      </div>
+    </a>
+    {% endif %}
+    {% endif %}
+    <!-- 비슷한 소셜링 -->
+  </div>
+</div>
+<div id="load">
+  <img style="width:256px; height:256px;" class="translate-middle" src="{% static 'image/loading.gif' %}" alt="loading">
+</div>
+{% endblock content %}
+{% block js %}
+<script src="https://cdn.lordicon.com/fudrjiwc.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/ko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script type="text/javascript"
+  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a296fe5c49ee5c07b18af90b459b38bb&libraries=services"></script>
+<script type="text/javascript" src="{% static 'js/hobby_detail.js' %}"></script>
+<!-- 주소로 지도띄우기 스크립트 -->
+<script>
+  var places = new kakao.maps.services.Places();
+  var callback = function (result, status) {
+    // 주소가 유효할 경우
+    if (status === kakao.maps.services.Status.OK) {
+      var mapContainer = document.getElementById('map'),
+        mapOption = {
+          center: new kakao.maps.LatLng(result[0].y, result[0].x),
+          level: 3
+        };
+
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+      var markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+      var marker = new kakao.maps.Marker({
+        position: markerPosition
+      });
+      marker.setMap(map);
+    }
+  };
+  // 주소를 입력하면 콜백함수 실행
+  places.keywordSearch('{{ hobby.address }}', callback);
+</script>
+<!-- 로딩페이지 구현 -->
+<script src="https://code.jquery.com/jquery-1.8.0.js" integrity="sha256-00Fh8tkPAe+EmVaHFpD+HovxWk7b97qwqVi7nLvjdgs="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $(window).on('load', function () {
+    setTimeout(() => {
+      $("#load").hide();;
+    }, 1500);
+    
+  });
+</script>
+<!-- 소셜링 신청 승인하기 -->
+<script>
+const approveBtn = document.querySelector('#addrlist')
+approveBtn.addEventListener('click', approveHobby)
+function approveHobby(event) {
+  event.preventDefault();
+  if (event.target.dataset.action == 'approve'){
+  console.log('yese??')
+  if ({{hobby.limit}}>{{accepted|length}}) {
+    axios({
+      method: 'get',
+      url: `/hobby/{{hobby.pk}}/${event.target.dataset.userId}/approve`,
+    })
+    .then(response => {
+      swal("가입을 승인했습니다.",{
+        icon:'success',
+        button: true,
+      })
+      .then((result)=> {
+        window.location.replace(`/hobby/{{hobby.pk}}`)
+      })
+      
+    })
+  } else {
+    swal("소셜링 인원이 가득찼습니다.",{
+        icon:'warning',
+        button: true,
+      } )
+  };
+}};
+</script>
+<style type="text/css">
+  #load {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: block;
+    opacity: 0.8;
+    background: white;
+    z-index: 99;
+    text-align: center;
+  }
+
+  #load>img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+  }
+</style>
+{% endblock js %}

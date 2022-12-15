@@ -1,0 +1,73 @@
+{% load static %}
+
+<div>
+  <!-- nav -->
+  <nav class=" nav_main navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container nav_text">
+      <a class=" nav_home navbar-brand" href="{% url 'main' %}">Mohobby</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item effict dropdown">
+            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              취미
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item click text-danger" href="/hobby/index/sports/">운동·액티비티</a></li>
+              <li><a class="dropdown-item click text-danger" href="/hobby/index/travel/">여행·나들이</a></li>
+              <li><a class="dropdown-item click text-danger" href="/hobby/index/art/">문화·예술</a></li>
+              <li><a class="dropdown-item click text-danger" href="/hobby/index/food/">푸드·드링크</a></li>
+              <li><a class="dropdown-item click text-danger" href="/hobby/index/develop/">성장·자기계발</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'community:index' %}">피드</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'products:index' %}">만물상</a>
+          </li>
+        </ul>
+        {% if request.user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-5">
+          <li class='mt-2 mx-2'>
+            <a href="{% url 'accounts:detail' request.user.pk %}">
+              <i class="nav_person bi bi-person-fill"></i>
+            </a>
+          </li>
+          <li class="mt-2 mx-2">
+            <a href="{% url 'notes:received_box' %}">
+              <i class="nav_person bi bi-envelope-fill position-relative">
+                  {% if user.received_mail == 0 %}
+                  {% else %}
+                  <span class="position-absolute translate-middle badge rounded-pill top-0 start-100 text-center" style="--bs-badge-font-size: 0.4rem !important; font-weight:650; background-color: white; color: rgb(232, 69, 69);">
+                    {{ request.user.received_mail }}
+                  </span>
+                  {% endif %}
+              </i>
+            </a>
+          </li>
+          <li class='mt-2 mx-2'>
+            <a href="{% url 'hobby:create' %}">
+              <i class="nav_person bi bi-plus-square"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'accounts:logout' %}">로그아웃</a>
+          </li>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-5">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">로그인</a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <!-- nav -->
+</div>

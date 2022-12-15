@@ -1,0 +1,99 @@
+{% for comment in reply_list %}
+  <div class="d-flex mt-2">
+    <a href="#comment-{{ parent.pk }}" class="m-2"><i class="bi bi-arrow-return-right fs-5"></i></a>
+    <div class="flex-fill">
+      <div id="comment-{{ comment.pk }}">
+        <div id="comment-{{ comment.pk }}-block" class="d-flex justify-content-between d-block">
+          <div id="comment-{{ comment.pk }}" class="comment-elem flex-fill">
+            <a href="{% url 'accounts:detail' comment.user.pk %}">
+              {% if comment.user.image %}
+                <img class="comment-image" src="{{ comment.user.image.url }}" alt="">
+              {% else %}
+                <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+              {% endif %}
+            </a>
+            <div class="flex-fill"> 
+              <p>{{ comment.user.nickname }}</p>
+              <p id="comment-{{ comment.pk }}-content">{{ comment.content }}</p>
+              <div class="d-flex">
+                <p class="text-muted" style="font-size: 12px;">
+                  <span id="comment-{{ comment.pk }}-time">{{ comment.updated_at_string }}</span> 
+                  <span>좋아요 <span class="comment-like-count">{{ comment.like_users.count }}</span>개</span> 
+                  {% if request.user.is_authenticated %}
+                    <span class="reply-btn" data-comment-id="{{ comment.pk }}" style="cursor: pointer;">답글달기</span>
+                  {% endif %}
+                </p>
+                {% if request.user == comment.user %}
+                  <div class="dropdown ms-1">
+                    <ion-icon class="dropdown-toggle text-muted" type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal"></ion-icon>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <button class="dropdown-item comment-update-btn" data-comment-id="{{ comment.pk }}">수정</button>
+                      </li>
+                      <li>
+                        <form class="comment-delete-form" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+                          {% csrf_token %}
+                          <button class="dropdown-item comment-delete-btn" type="submit">삭제</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <!-- 댓글 좋아요 폼 -->
+          {% if request.user.is_authenticated %}
+            <form class="comment-like-form" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+              {% csrf_token %}
+              {% if request.user in comment.like_users.all %}
+                <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart"></ion-icon></button>
+              {% else %}
+                <button class="btn border-0 m-0 p-0 comment-like-btn" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+              {% endif %}
+            </form>
+          {% else %}
+            <button class="btn border-0 m-0 p-0 comment-like-btn disabled" type="submit"><ion-icon style="color:#E84545" name="heart-outline"></ion-icon></button>
+          {% endif %}
+        </div>
+        <!-- 대댓글 작성 폼 -->
+        {% if request.user.is_authenticated %}
+          <div id="reply-form-{{ comment.pk }}" class="recomment-elem">
+            {% if request.user.image %}
+              <img class="comment-image" src="{{ request.user.image.url }}" alt="">
+            {% else %}
+              <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+            {% endif %}
+            <form class="reply-create-form flex-fill" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+              {% csrf_token %}
+              <input type="text" name="content" placeholder="답글 달기..." class="comment-control" required="true">
+              <input class="d-none" type="submit" value="제출">
+            </form>
+          </div>
+        {% endif %}
+        <!-- 댓글 수정 폼 -->
+        {% if request.user == comment.user %}
+          <div id="comment-{{ comment.pk }}-update" class="d-flex align-items-center d-none" style="max-height: 500px;">
+            {% if request.user.image %}
+              <img class="comment-image" src="{{ request.user.image.url }}" alt="">
+            {% else %}
+              <img class="comment-image" src="https://dummyimage.com/80x80/000/fff" alt="">
+            {% endif %}
+            <form class="comment-update-form flex-fill" data-product-id="{{ product.pk }}" data-comment-id="{{ comment.pk }}">
+              {% csrf_token %}
+              <div class="d-flex">
+                <input id="commentinput" name="content" class="comment-control" type="text" placeholder="댓글 달기..." required="true" value="{{ comment.content }}">
+                <input class="d-none" type="submit" value="제출">
+                <button class="btn border-0 m-0 p-0 update-cancel-btn" type="button" data-comment-id="{{ comment.pk }}" style="font-size: 12px; min-width: 50px;">취소</button>
+              </div>
+            </form>
+          </div>
+        {% endif %}
+        <!-- 대댓글 재귀 -->
+        {% with parent=comment reply_list=comment.reply_set.all %}
+          {% include 'products/reply.html' %}
+        {% endwith %} 
+      </div>
+    </div>
+  </div>
+{% endfor %}

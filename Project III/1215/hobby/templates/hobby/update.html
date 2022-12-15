@@ -1,0 +1,132 @@
+{% extends 'base_form.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %} {% bootstrap_javascript %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="{% static 'css/datepicker.min.css' %}">
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/datepicker.min.js' %}"></script>
+<script src="{% static 'js/datepicker.ko.js' %}"></script>
+{% endblock css %}
+{% block content %}
+<div class="wrapper">
+    <div class="d-flex justify-content-between">
+        <button type="button" class="slide_prev_button slide_button">
+            <ion-icon class="tap_icon" name="chevron-back-outline"></ion-icon>
+        </button>
+    </div>
+    <div class="container">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token%}
+        {% bootstrap_form form %}
+        <!-- 오프라인 주소 입력 오프캔버스 -->
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom2">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">장소 선택</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <hr>
+            <div id="addrbody" class="offcanvas-body small">
+                <input type="text" style="display:none;" />
+                <input class="search-control mb-3" type="text" name="keysearch" id="keysearch"
+                    placeholder="어디에서 만나나요?">
+                <!-- 검색결과 표출할 div -->
+                <ul class="addrlist" id="addrlist">
+                </ul>
+                <div class="text-center mt-5">
+                    <p>
+                        <ion-icon name="map" size="large"></ion-icon>
+                    </p>
+                    <h5>장소 또는 지역을 검색해보세요</h5>
+                    <p class="text-muted">예시)마포구, 합정동, 강남역, 한가람미술관 등</p>
+                    <p style="cursor:pointer; color: #E84545;" id="testbtn" value="더보기">더보기</p>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <input class="btn btn-danger" type="submit" value="update">
+        </div>
+      </form>
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a296fe5c49ee5c07b18af90b459b38bb&libraries=services"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script>
+  const prevBtn = document.querySelector(".slide_prev_button");
+  prevBtn.addEventListener('click', () => {
+    window.history.back()
+  })
+  const addrOffBtn = document.querySelector('#id_address')
+  addrOffBtn.setAttribute('data-bs-toggle', 'offcanvas')
+  addrOffBtn.setAttribute('data-bs-target', '#offcanvasBottom2')
+
+  const keysearch = document.querySelector('#keysearch');
+  const addrdiv = document.querySelector('#addrlist');
+  const offbuttonaddr = document.querySelector('#id_address');
+  const testBtn = document.querySelector('#testbtn');
+  const addrBody = document.querySelector('#addrbody');
+  var places = new kakao.maps.services.Places();
+
+  var callback = function(result, status, pagination) {
+      console.log(result.length)
+      const nextPagination = function () {
+        // 속성 값으로 다음 페이지가 있는지 확인하고
+        if (pagination.hasNextPage) {
+            pagination.nextPage()
+            console.log('nextpage')
+        }
+      }
+      testBtn.onclick = nextPagination
+      if (status === kakao.maps.services.Status.OK && pagination.current == 1) {
+        console.log(pagination.current)
+        arr = []
+        for (let i = 0; i < (result.length); i++) {
+          arr += `<li class="m-3 addrelem" data-bs-dismiss="offcanvas" aria-label="Close"><p class="addr_title">${result[i].place_name}</p><p class="addr_addr">${result[i].address_name}</p></li><hr>`
+        };
+        addrdiv.innerHTML = arr
+        const addrelems = document.querySelectorAll('.addrelem');
+
+        [].forEach.call(addrelems, function(elem) {
+          elem.addEventListener('click', () => {
+            offbuttonaddr.value = elem.firstChild.innerText
+            address.value = elem.firstChild.innerText
+          })
+        });
+      } else if (status === kakao.maps.services.Status.OK) {
+        console.log(pagination.current)
+        arr = []
+        for (let i = 0; i < (result.length); i++) {
+          arr += `<li class="m-3 addrelem" data-bs-dismiss="offcanvas" aria-label="Close"><p class="addr_title">${result[i].place_name}</p><p class="addr_addr">${result[i].address_name}</p></li><hr>`
+        };
+        addrdiv.insertAdjacentHTML('beforeend', arr)
+        const addrelems = document.querySelectorAll('.addrelem');
+
+        [].forEach.call(addrelems, function(elem) {
+          elem.addEventListener('click', () => {
+            offbuttonaddr.value = elem.firstChild.innerText
+            address.value = elem.firstChild.innerText
+          })
+        });
+      }
+
+  };
+  keysearch.addEventListener('keyup', () => {
+    places.keywordSearch(`${keysearch.value}`, callback, {size: 6});
+  })
+
+</script>
+<script>
+    $("#id_meeting_day").datepicker({
+        language: 'ko',
+        timepicker: true,
+        timeFormat: "hh:ii",
+        minDate: new Date(),
+    });
+</script>
+{% endblock js %}

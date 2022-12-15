@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+  <div class="container d-flex justify-content-center">
+    <!-- 뒤로가기 버튼 -->
+    <div>
+      <button class="prev_button" type="submit" onclick="history.go(-1)">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+    </div>
+    <!-- 수정 폼 -->
+    <form action="{% url 'accounts:update' user.pk %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" class="form-control" name="next" value="{{ request.GET.next }}">
+      <div class="container update_wrap">
+        <div class="update_wrapper">
+          <div class="form_field">
+            <div>
+              <h6 style="color:#888888;">프로필 사진 변경</h6>
+              <hr>
+              <div class="profile">
+                {% if request.user.image %}
+                  <div>
+                    <img id="image_section" src="{{ request.user.image.url }}" alt="">
+                  </div>
+                {% else %}
+                  <div>
+                    <img id="image_section" src="{% static 'image/default_profile_img.jpg' %}">
+                  </div>
+                {% endif %}
+                <div>
+                  <input type="file" name="image" accept="image/*" placeholder="프로필 이미지" class="image_input" id="imgInput">
+                  <label class="input-file-button" for="imgInput">
+                    사진 업로드
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 소셜 로그인 사용자에겐 가린다. 값이 많아진다면 소셜과 일반 회원가입의 구분짓는 boolean필드 추가 예정-->
+          {% if user_info.kakao_id == None %}
+            <div class="form_field">
+              <div>
+                <h6 style="color:#888888;">비밀번호 변경</h6>
+                <hr>
+                <div>
+                  <a class="input-file-button" href="{% url 'accounts:password_change' request.user.pk %}">비밀번호 변경</a>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <div class="form_field">
+            <div>
+              <h6 style="color:#888888;">주소 수정</h6>
+              <hr>
+              <!-- input : 우편번호, 검색 기능 -->
+              <div class="form_field">
+                <div class="address_box">
+                  <input type="text" id="postcode" placeholder="우편번호" class="sm_user_input">
+                  <input type="button" id="search_address" value="주소 찾기" class="address_btn">
+                </div>
+              </div>
+              <!-- input : 도로명 주소 -->
+              <div class="form_field">
+                <input type="text" id="roadAddress" name="address" placeholder="도로명주소" class="user_input" value="{{ user_info.address }}">
+              </div>
+              <!-- input : 상세 주소 -->
+              <div class="form_field">
+                <input type="text" name="address_detail" class="user_input" placeholder="상세주소" {% if user_info.address_detail %} value="{{ user_info.address_detail }}" {% endif %}>
+              </div>
+            </div>
+          </div>
+          <div class="form_field text-center">
+            <button class="update_botton" type="submit">수정</button>
+          </div>
+        </div>
+        <div class="update_wrapper">
+          <div class="form_list">
+            <div class="form_field">
+              <div>
+                <h6 style="color:#888888;">카테고리 수정</h6>
+                <hr>
+              </div>
+              <label class="form-label">Sports</label>
+              <div id="id_sports">
+                <!-- Sports 카테고리-->
+                {% for value, text in user_form.sports.field.choices %}
+                  <span class="category_select">
+                    <input id="id_sports_{{ forloop.counter0 }}" name="{{ user_form.sports.name }}" type="checkbox" value="{{ value }}" {% if value in user_info.sports  %} checked="checked" {% endif %}>
+                    <label for="id_sports_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+              <label class="form-label">Art</label>
+              <div id="id_art">
+                <!-- Art 카테고리-->
+                {% for value, text in user_form.art.field.choices %}
+                  <span class="category_select">
+                    <input id="id_art_{{ forloop.counter0 }}" name="{{ user_form.art.name }}" type="checkbox" value="{{ value }}" {% if value in user_info.art  %} checked="checked" {% endif %}>
+                    <label for="id_art_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+              <label class="form-label">Food</label>
+              <div id="id_food">
+                <!-- Food 카테고리-->
+                {% for value, text in user_form.food.field.choices %}
+                  <span class="category_select">
+                    <input id="id_food_{{ forloop.counter0 }}" name="{{ user_form.food.name }}" type="checkbox" value="{{ value }}" {% if value in user_info.food  %} checked="checked" {% endif %}>
+                    <label for="id_food_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+              <label class="form-label">Travel</label>
+              <div id="id_travel">
+                <!-- Travel 카테고리-->
+                {% for value, text in user_form.travel.field.choices %}
+                  <span class="category_select">
+                    <input id="id_travel_{{ forloop.counter0 }}" name="{{ user_form.travel.name }}" type="checkbox" value="{{ value }}" {% if value in user_info.travel  %} checked="checked" {% endif %}>
+                    <label for="id_travel_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+              <label class="form-label">Develop</label>
+              <div id="id_develop">
+                <!-- Develop 카테고리-->
+                {% for value, text in user_form.develop.field.choices %}
+                  <span class="category_select">
+                    <input id="id_develop_{{ forloop.counter0 }}" name="{{ user_form.develop.name }}" type="checkbox" value="{{ value }}" {% if value in user_info.develop  %} checked="checked" {% endif %}>
+                    <label for="id_develop_{{ forloop.counter0 }}">{{ text }}</label>
+                  </span>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form_field">
+              <button class="mobile_update_botton" type="submit">수정</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- 제이쿼리 -->
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<!-- 주소 검색 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="{% static 'js/search_address.js' %}"></script>
+<!-- 이미지 미리보기-->
+<script src="{% static 'js/imagepreview.js'%}"></script>
+{% endblock js %}

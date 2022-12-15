@@ -1,0 +1,51 @@
+.footer_main {
+    background-color: rgb(232, 69, 69);
+}
+
+.footer_content {
+    color: white;
+}
+
+.top-btn {
+    position: fixed;
+    bottom: 85px;
+    right: 23px;
+    z-index: 4;
+}
+
+.top-btn div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 4px 4px 25px 0px #0714271f;
+}
+
+.footer_up {
+    color: rgb(232, 69, 69);
+    font-weight: bolder !important;
+}
+
+.back_btn {
+    position: fixed;
+    bottom: 20px;
+    right: 23px;
+    z-index: 4;
+}
+
+.btn_div {
+    background-color: #fff !important ;
+    color: rgb(232, 69, 69) !important;
+    border-radius: 50% !important;
+    box-shadow: 4px 4px 25px 0px #0714271f !important;
+    width: 60px;
+    height: 60px;
+}
+
+.btn_div:active {
+    border-color: white !important;
+
+}
