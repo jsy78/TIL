@@ -1,9 +1,11 @@
 # Mohobby (男남자의 자격)
 
 
-깃허브 저장소 주소 1: https://github.com/midhyun/Mohobby
-서비스 주소: http://mohobby-env.eba-v2kvw9tu.ap-northeast-2.elasticbeanstalk.com/
-팀 문서 주소: https://www.notion.so/hg-edu/14-a81608bcb8304bbe896bb943cd9e9ef7
+- 깃허브 저장소 주소 1: https://github.com/midhyun/Mohobby
+
+- 서비스 주소: http://mohobby-env.eba-v2kvw9tu.ap-northeast-2.elasticbeanstalk.com/
+
+- 팀 문서 주소: https://www.notion.so/hg-edu/14-a81608bcb8304bbe896bb943cd9e9ef7
 
 ![Untitled](./README.assets/Untitled.png)
 
