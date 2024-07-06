@@ -45,29 +45,29 @@ Django Auth를 활용한 회원 관리가 가능한 게시판 서비스를 개�
 
 회원가입
 
-- `POST` http://127.0.0.1:8000/accounts/signup/
+- `POST` `http://127.0.0.1:8000/accounts/signup/`
 - CustomUserCreationForm을 활용해서 회원가입 구현
 
 회원 목록 조회
 
-- `GET` http://127.0.0.1:8000/accounts/
+- `GET` `http://127.0.0.1:8000/accounts/`
 
 회원 정보 조회
 
-- `GET` http://127.0.0.1:8000/accounts/<user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<user_pk>/`
 
 로그인
 
-- `POST` http://127.0.0.1:8000/accounts/login/
+- `POST` `http://127.0.0.1:8000/accounts/login/`
 - **AuthenticationForm**를 활용해서 로그인 구현
 
 로그아웃
 
-- `POST` http://127.0.0.1:8000/accounts/logout/
+- `POST` `http://127.0.0.1:8000/accounts/logout/`
 
 회원 정보 수정
 
-- `POST` http://127.0.0.1:8000/accounts/<user_pk>/update/
+- `POST` `http://127.0.0.1:8000/accounts/<user_pk>/update/`
 - **CustomUserChangeForm**를 활용해서 회원 정보 수정 구현
 
 ### 화면 Template
@@ -86,25 +86,25 @@ Django Auth를 활용한 회원 관리가 가능한 게시판 서비스를 개�
 
 로그인 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/login/
+- `GET` `http://127.0.0.1:8000/accounts/login/`
 - 로그인 폼
 - 회원가입 페이지 이동 버튼
 
 회원가입 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/signup/
+- `GET` `http://127.0.0.1:8000/accounts/signup/`
 - 회원가입 폼
 
 회원 목록 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/
+- `GET` `http://127.0.0.1:8000/accounts/`
 - 회원 목록 출력
 - 회원 아이디를 클릭하면 해당 회원 조회 페이지로 이동
 
 회원 조회 페이지(프로필 페이지)
 
-- `GET` http://127.0.0.1:8000/accounts/<user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<user_pk>/`
 
 회원 정보 수정 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/<user_pk>/update/
+- `GET` `http://127.0.0.1:8000/accounts/<user_pk>/update/`

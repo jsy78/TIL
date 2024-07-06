@@ -126,7 +126,7 @@
 
 ### MTV 소프트웨어 디자인 패턴
 
-![https://ibb.co/ZNjcQJJ](https://i.ibb.co/wYkpnLL/1.png)
+![./img/MTV.png](./img/MTV.png)
 
 - Model - Template – View
   - Model
@@ -205,7 +205,7 @@
 
 6. 접속 테스트
 
-   http://localhost:8000
+   `http://localhost:8000`
 
 7. 서버 및 가상 환경 끄기
 

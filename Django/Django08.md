@@ -291,7 +291,7 @@ admin.site.register(User, UserAdmin)
 
 4. 회원 가입 진행 후 에러 발생
 
-   ![https://ibb.co/kSFrRSR](https://i.ibb.co/3CH8DCD/django.png)
+   ![./img/django.png](./img/django.png)
 
    - 회원 가입에 사용하는 UserCreationForm은 대체한 커스텀 User 모델이 아닌 기존 User 모델로 작성된 클래스이기 때문
 
@@ -350,11 +350,11 @@ admin.site.register(User, UserAdmin)
 
 7. 회원 가입 진행 후 테이블 확인
 
-   ![https://ibb.co/9c5CDfG](https://i.ibb.co/zQv0MLN/django.png)
+   ![./img/django2.png](./img/django2.png)
 
 - [참고] UserCreationForm의 save 메소드
 
-  ![https://ibb.co/tbXK052](https://i.ibb.co/mH8Tn7y/django.png)
+  ![./img/django3.png](./img/django3.png)
 
   - user를 반환하는 것을 확인
   - [django/forms.py at main · django/django (github.com)](https://github.com/django/django/blob/main/django/contrib/auth/forms.py#L139)

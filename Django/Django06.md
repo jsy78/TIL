@@ -137,7 +137,7 @@ class Meta:
 
 ## ModelForm with view function
 
-![form_handling_-_standard](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Forms/form_handling_-_standard.png)
+![form_handling_-_standard](./img/form_handling_-_standard.png)
 
 - 요청 방식에 따른 분기
   - HTML Form 전달

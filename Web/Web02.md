@@ -26,11 +26,11 @@
 
 - em vs rem
 
-  | ![https://ibb.co/QvKbz4T](https://i.ibb.co/yFQfGrZ/1.png) | ![https://ibb.co/2kZWGHQ](https://i.ibb.co/bKbQcDZ/2.png) |
-  | --------------------------------------------------------- | --------------------------------------------------------- |
+  | ![./img/1.png](./img/1.png) | ![./img/2.png](./img/2.png) |
+  | --------------------------- | --------------------------- |
 
-  | ![https://ibb.co/wpfDfGK](https://i.ibb.co/RQqLqrC/3.png) |
-  | :-------------------------------------------------------: |
+  | ![./img/3.png](./img/3.png) |
+  | :-------------------------: |
 
 - viewport
 
@@ -38,8 +38,8 @@
   - 디바이스의 viewport를 기준으로 상대적인 사이즈가 결정됨
   - vw, vh, vmin, vmax
 
-  | ![https://ibb.co/n1pDGbh](https://i.ibb.co/hd0K6yp/4.png) | ![https://ibb.co/Tg0LW5x](https://i.ibb.co/MC16BLx/5.png) |
-  | --------------------------------------------------------- | --------------------------------------------------------- |
+  | ![./img/4.png](./img/4.png) | ![./img/5.png](./img/5.png) |
+  | --------------------------- | --------------------------- |
 
 ### 색상 단위
 
@@ -52,7 +52,7 @@
   - 색상, 채도, 명도를 통해 특정 색을 표현하는 방식
 - a는 alpha(투명도)
 
-![https://ibb.co/VqgCjRm](https://i.ibb.co/jryw6mR/6.png)
+![./img/6.png](./img/6.png)
 
 ### CSS 문서 표현
 
@@ -90,7 +90,7 @@
 
 ### 우선순위
 
-![https://ibb.co/K5FvvgP](https://i.ibb.co/GdcSSD6/specificityimg.png)
+![./img/specificityimg.png](./img/specificityimg.png)
 
 1. 중요도 (Importance) : 만약 나중에 설정한 값이 적용되지 않게 하려면 속성값 뒤에 `!important`를 붙임
 
@@ -121,20 +121,20 @@
       - 그 외 기타 등등
   - 상속 가능 여부는 MDN 문서에서 확인할 것
 
-| ![https://ibb.co/HtzPGQs](https://i.ibb.co/R306QWm/7.png) | ![https://ibb.co/WcYqJ9B](https://i.ibb.co/7G68mcr/8.png) |
-| --------------------------------------------------------- | --------------------------------------------------------- |
+| ![img/7.png](./img/7.png) | ![./img/8.png](./img/8.png) |
+| ------------------------- | --------------------------- |
 
 - 상속이 되지 않아서 span에는 border가 없음
 
-  ![https://ibb.co/VCywnn2](https://i.ibb.co/kDnmbbQ/9.png)
+  ![./img/9.png](./img/9.png)
 
 - 상속이 되었다면 span에도 border가 적용되어야 함
 
-  ![https://ibb.co/SPWZDmC](https://i.ibb.co/KXR8csv/10.png)
+  ![./img/10.png](./img/10.png)
 
 ## CSS Box Model
 
-![https://ibb.co/gTC71Rj](https://i.ibb.co/cFdv5rg/11.png)
+![./img/11.png](./img/11.png)
 
 ### CSS 원칙 I
 
@@ -144,7 +144,7 @@
 >
 > (좌측 상단에 배치)
 
-![https://ibb.co/FYtxRXd](https://i.ibb.co/M1L2FfJ/12.png)
+![./img/12.png](./img/12.png)
 
 ### Box model
 
@@ -155,7 +155,7 @@
   - padding
   - content
 
-![https://ibb.co/KFMDg21](https://i.ibb.co/HnWCytJ/13.png)
+![./img/13.png](./img/13.png)
 
 ```css
 /* Box model 구성 (padding) */
@@ -165,7 +165,7 @@
 }
 ```
 
-![https://ibb.co/t8KG00F](https://i.ibb.co/0h2700v/14.png)
+![./img/14.png](./img/14.png)
 
 ```css
 /* Box model 구성 (margin/padding) */
@@ -184,9 +184,9 @@
 /* 시계 방향 */
 ```
 
-| ![https://ibb.co/9GcXzhF](https://i.ibb.co/b7QhqFS/15.png) |
-| ---------------------------------------------------------- |
-| ![https://ibb.co/pXcK29p](https://i.ibb.co/C0g9BTF/16.png) |
+| ![./img/15.png](./img/15.png) |
+| ----------------------------- |
+| ![./img/16.png](./img/16.png) |
 
 ```css
 /* Box model 구성 (border) */
@@ -202,13 +202,13 @@
 /* 동일한 모양 */
 ```
 
-![https://ibb.co/HVJ6zWy](https://i.ibb.co/PNSKh7y/17.png)
+![./img/17.png](./img/17.png)
 
-| ![https://ibb.co/Jj4bdYx](https://i.ibb.co/chHpvWb/18.png) | ![https://ibb.co/bHWfG9K](https://i.ibb.co/TKvCN3g/19.png) |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| ![./img/18.png](./img/18.png) | ![./img/19.png](./img/19.png) |
+| ----------------------------- | ----------------------------- |
 
-| ![https://ibb.co/WHxfJxv](https://i.ibb.co/wd04m0h/20.png) |
-| :--------------------------------------------------------: |
+| ![./img/20.png](./img/20.png) |
+| :---------------------------: |
 
 #### box-sizing
 
@@ -217,7 +217,7 @@
 - 다만, 우리가 일반적으로 영역을 볼 때는 border까지의 너비를 100px 보는 것을 원함
   - 그 경우 box-sizing을 border-box로 설정
 
-![https://ibb.co/VqVqwp0](https://i.ibb.co/jrhrJZ9/21.png)
+![./img/21.png](./img/21.png)
 
 ## CSS Display
 
@@ -239,8 +239,8 @@
   - 상하 여백은 `line-height`로 지정함
 
 ### 블록 레벨 요소 / 인라인 레벨 요소
-| ![https://ibb.co/fGfpM6Y](https://i.ibb.co/x8Wjh9S/22.png) | ![https://ibb.co/sWXcnFw](https://i.ibb.co/5KJCm58/23.png) |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| ![./img/22.png](./img/22.png) | ![./img/23.png](./img/23.png) |
+| ----------------------------- | ----------------------------- |
 - 블록 레벨 요소와 인라인 레벨 요소 구분 (HTML 4.1까지)
 - 대표적인 블록 레벨 요소 
   - `div` / `ul`, `ol`, `li` / `p` / `hr` / `form` 등
@@ -249,29 +249,29 @@
 
 #### block
 
-![https://ibb.co/8N6Wy5t](https://i.ibb.co/zQGy3RD/24.png)
+![./img/24.png](./img/24.png)
 
-![https://ibb.co/GttjXgg](https://i.ibb.co/0FF3kPP/25.png)
+![./img/25.png](./img/25.png)
 
 - block의 기본 너비는 가질 수 있는 너비의 100%
 
-![https://ibb.co/JzCGcZ3](https://i.ibb.co/jLHQ8tJ/26.png)
+![./img/26.png](./img/26.png)
 
-![https://ibb.co/HqZxCpv](https://i.ibb.co/jDtWzZK/27.png)
+![./img/27.png](./img/27.png)
 
 - 너비를 가질 수 없다면 자동으로 부여되는 `margin`
 
 #### inline
 
-![https://ibb.co/5njhWzv](https://i.ibb.co/WPzvWdF/28.png)
+![./img/28.png](./img/28.png)
 
-![https://ibb.co/Ybw0CsL](https://i.ibb.co/6NLXMCW/29.png)
+![./img/29.png](./img/29.png)
 
 - inline의 기본 너비는 content 영역만큼
 
 ### 속성에 따른 수평 정렬
 
-![https://ibb.co/tXNVgV1](https://i.ibb.co/pysYcYk/30.png)
+![./img/30.png](./img/30.png)
 
 ### 그 외 display
 

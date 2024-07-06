@@ -6,7 +6,7 @@
 
 ## Git 작업 요약
 
-![Working tree, staging area, and Git directory.](https://git-scm.com/book/en/v2/images/areas.png)
+![Working tree, staging area, and Git directory.](./areas.png)
 
 1. 파일 작업 (Working Directory, 1통)
 2. git add (Staging Area, 2통)
@@ -14,7 +14,7 @@
 
 ## Git 파일 생명 주기
 
-![파일의 라이프사이클.](https://git-scm.com/book/en/v2/images/lifecycle.png)
+![파일의 라이프사이클.](./lifecycle.png)
 
 - Tracked : 버전으로 관리되고 있는 상태
   - Unmodified : 커밋이 완료되어 git status에 나타나지 않음

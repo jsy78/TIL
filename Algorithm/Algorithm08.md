@@ -76,7 +76,7 @@ print(matrix[2][0])
     >>> [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]]
     ```
 
-    ![https://ibb.co/Ld3Rfmw](https://i.ibb.co/whfg1VH/image.png)
+    ![./image.png](./image.png)
 
 ## 입력 받기
 

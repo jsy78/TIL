@@ -48,11 +48,11 @@ Date: 2022년 10월 7일
 생성 및 수정은 ModelForm을 사용하여 구현합니다.
 
 - 데이터 목록 조회
-    - `GET` http://127.0.0.1:8000/reviews/
+    - `GET` `http://127.0.0.1:8000/reviews/`
 - 데이터 정보 조회
-    - `GET` http://127.0.0.1:8000/reviews/<int:pk>/
+    - `GET` `http://127.0.0.1:8000/reviews/<int:pk>/`
 - 데이터 생성
-    - `POST` http://127.0.0.1:8000/reviews/create/
+    - `POST` `http://127.0.0.1:8000/reviews/create/`
     
     사용자에게 아래 데이터를 입력 받습니다.
     
@@ -61,9 +61,9 @@ Date: 2022년 10월 7일
     - 영화 이름
     - 영화 평점
 - 데이터 수정
-    - `POST` http://127.0.0.1:8000/reviews/<int:pk>/update/
+    - `POST` `http://127.0.0.1:8000/reviews/<int:pk>/update/`
 - 데이터 삭제
-    - `POST` http://127.0.0.1:8000/reviews/<int:pk>/delete/
+    - `POST` `http://127.0.0.1:8000/reviews/<int:pk>/delete/`
 
 ### 화면 Template
 
@@ -81,12 +81,12 @@ Date: 2022년 10월 7일
 
 **메인 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/
+- `GET` `http://127.0.0.1:8000/reviews/`
 - 자유 디자인
 
 목록 페이지
 
-- `GET` http://127.0.0.1:8000/reviews/index/
+- `GET` `http://127.0.0.1:8000/reviews/index/`
 - 리뷰 목록 출력
     - 리뷰 제목
     - 영화 이름
@@ -94,16 +94,16 @@ Date: 2022년 10월 7일
 
 **리뷰 정보 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/<int:pk>/
+- `GET` `http://127.0.0.1:8000/reviews/<int:pk>/`
 - 해당 리뷰 정보 출력
 - 수정 / 삭제 버튼
 
 **리뷰 작성 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/create/
+- `GET` `http://127.0.0.1:8000/reviews/create/`
 - 리뷰 작성 폼
 
 **리뷰 수정 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/<int:pk>/update/
+- `GET` `http://127.0.0.1:8000/reviews/<int:pk>/update/`
 - 리뷰 수정 폼

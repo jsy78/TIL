@@ -156,7 +156,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 >
 > HTML form element를 통해 사용자와 애플리케이션 간의 상호작용 이해하기
 
-![HTTP란?](https://velog.velcdn.com/images/yong2/post/4abe9118-ba31-4e95-ba1f-94d4d16fddca/image.png)
+![HTTP란?](./img/image.png)
 
 - 웹은 다음과 같이 가장 기본적으로 클라이언트-서버 아키텍처를 사용
   -  클라이언트(일반적으로 웹 브라우저)가 서버에 요청을 보내고,  서버는 클라이언트의 요청에 응답
@@ -291,7 +291,7 @@ def throw(request):
 
 - 사용자가 입력 데이터를 전달하는 방법 중 하나로,  url 주소에 데이터를 파라미터를 통해 넘기는 것
 - 이러한 문자열은 앰퍼샌드(&)로 연결된 key=value 쌍으로 구성되며 기본 URL과 물음표(?) 로 구분됨
-  - ex) http://host:port/path?key=value&key=value
+  - ex) `http://host:port/path?key=value&key=value`
 
 - 정해진 주소 이후에 물음표를 쓰는 것으로 Query String이 시작함을 알림
 - "key=value"로 필요한 파라미터의 값을 적음

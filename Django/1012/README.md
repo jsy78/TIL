@@ -51,31 +51,31 @@ Django Auth를 활용한 회원관리(회원가입 / 회원 조회 / 로그인 /
 
 회원가입
 
-- `POST` http://127.0.0.1:8000/accounts/signup/
+- `POST` `http://127.0.0.1:8000/accounts/signup/`
 - **CustomUserCreationForm**을 활용해서 회원가입 구현
 
 회원 목록 조회
 
-- `GET` http://127.0.0.1:8000/accounts/
+- `GET` `http://127.0.0.1:8000/accounts/`
 
 회원 정보 조회
 
-- `GET` http://127.0.0.1:8000/accounts/<user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<user_pk>/`
 
 로그인
 
-- `POST` http://127.0.0.1:8000/accounts/login/
+- `POST` `http://127.0.0.1:8000/accounts/login/`
 - **AuthenticationForm**를 활용해서 로그인 구현
 
 로그아웃
 
-- `POST` http://127.0.0.1:8000/accounts/logout/
+- `POST` `http://127.0.0.1:8000/accounts/logout/`
 
 ### 화면 Template
 
 메인 페이지 
 
-- `GET` http://127.0.0.1:8000/
+- `GET` `http://127.0.0.1:8000/`
 - 회원가입 페이지 이동 버튼
 - 회원 목록 페이지 이동 버튼
 - 로그인 상태에 따라 다른 화면 출력
@@ -89,21 +89,21 @@ Django Auth를 활용한 회원관리(회원가입 / 회원 조회 / 로그인 /
 
 회원가입 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/signup/
+- `GET` `http://127.0.0.1:8000/accounts/signup/`
 - 회원가입 폼
 
 회원 목록 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/
+- `GET` `http://127.0.0.1:8000/accounts/`
 - 회원 목록 테이블
 - 회원 아이디를 클릭하면 해당 회원 조회 페이지(프로필 페이지)로 이동
 
 회원 조회 페이지(프로필 페이지)
 
-- `GET` http://127.0.0.1:8000/accounts/<user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<user_pk>/`
 
 로그인 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/login/
+- `GET` `http://127.0.0.1:8000/accounts/login/`
 - 로그인 폼
 - 회원가입 페이지 이동 버튼

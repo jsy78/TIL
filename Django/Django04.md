@@ -74,7 +74,7 @@
 
   - 대안 2로 수정을 거치면 메인 페이지의 주소가 변경됨
 
-    - http://127.0.0.1:8000/index/ -> http://127.0.0.1:8000/articles/index/
+    - `http://127.0.0.1:8000/index/` -> `http://127.0.0.1:8000/articles/index/`
 
 ### include()
 
@@ -86,15 +86,15 @@
 
 - 단일 앱의 URL을 project의 urls.py에서 관리
 
-  ![https://ibb.co/wSLmQcs](https://i.ibb.co/dPcYpmg/1.png)
+  ![./img/2.png](./img/2.png)
 
 - 여러 앱의 URL을 project의 urls.py에서 관리
 
-  ![https://ibb.co/BjTDk3h](https://i.ibb.co/jG3KtfC/2.png)
+  ![./img/3.png](./img/3.png)
 
 - 각각의 앱에서 URL을 관리
 
-  ![https://ibb.co/k4n7hyx](https://i.ibb.co/7ncfGzX/3.png)
+  ![./img/4.png](./img/4.png)
 
 ## URL namespace
 
@@ -254,7 +254,7 @@ urlpatterns = [
 
 ## Template namespace
 
-- pages app의 index url (http://127.0.0.1:8000/pages/index/)로 직접 이동해도 articles app의 index 페이지가 출력
+- pages app의 index url (`http://127.0.0.1:8000/pages/index/`)로 직접 이동해도 articles app의 index 페이지가 출력
 
   - Django는 기본적으로 app_name/templates/ 경로에 있는 템플릿 파일들만 찾을 수 있음
 

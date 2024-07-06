@@ -7,7 +7,7 @@
 
 ## 브라우저에서 할 수 있는 일
 
-![https://ibb.co/pvTFnqb](https://i.ibb.co/cc9nxqk/3.png)
+![./img/3.png](./img/3.png)
 
 - DOM 조작
   - 문서(HTML) 조작
@@ -19,7 +19,7 @@
 
 ### DOM (Document Object Model)
 
-![DOM](https://upload.wikimedia.org/wikipedia/commons/5/5a/DOM-model.svg)
+![DOM](./img/DOM-model.svg)
 
 - HTML, XML과 같은 문서를 다루기 위한 문서 프로그래밍 인터페이스
 - 문서를 구조화하고 구조화된 구성 요소를 하나의 객체로 취급하여 다루는 논리적 트리 모델
@@ -35,7 +35,7 @@
 
 ### BOM (Browser Object Model)
 
-![https://ibb.co/0ytGHsF](https://i.ibb.co/jkRrnJW/1.png)
+![./img/1.png](./img/1.png)
 
 - 자바스크립트가 브라우저와 소통하기 위한 모델
 - 브라우저의 창이나 프레임을 추상화해서 프로그래밍적으로 제어할 수 있도록 제공하는 수단
@@ -44,14 +44,14 @@
 
 ### JavaScript Core
 
-![https://ibb.co/92mtH2f](https://i.ibb.co/zbWJVbL/2.png)
+![./img/2.png](./img/2.png)
 
 - 프로그래밍 언어
 
 ## DOM 조작
 
-| ![document-window-navigator](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents/document-window-navigator.png) | ![https://ibb.co/NW8j50h](https://i.ibb.co/zPyRp3c/4.png) |
-| :----------------------------------------------------------: | :-------------------------------------------------------: |
+| ![document-window-navigator](./img/document-window-navigator.png) | ![./img/4.png](./img/4.png) |
+| :----------------------------------------------------------: | :-------------------------: |
 
 - Document는 문서 한 장(HTML)에 해당하고 이를 조작
 - DOM 조작 순서

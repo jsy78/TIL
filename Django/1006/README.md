@@ -53,15 +53,15 @@ ModelForm / Staticfiles를 활용한 영화 정보 제공 서비스를 개발합
 생성 및 수정은 ModelForm을 사용하여 구현합니다.
 
 - 영화 데이터 목록 조회
-    - `GET` http://127.0.0.1:8000/movies/
+    - `GET` `http://127.0.0.1:8000/movies/`
 - 영화 데이터 정보 조회
-    - `GET` http://127.0.0.1:8000/movies/<int:pk>/
+    - `GET` `http://127.0.0.1:8000/movies/<int:pk>/`
 - 영화 데이터 생성
-    - `POST` http://127.0.0.1:8000/movies/create/
+    - `POST` `http://127.0.0.1:8000/movies/create/`
 - 영화 데이터 수정
-    - `POST` http://127.0.0.1:8000/movies/<int:pk>/update/
+    - `POST` `http://127.0.0.1:8000/movies/<int:pk>/update/`
 - 영화 데이터 삭제
-    - `POST` http://127.0.0.1:8000/movies/<int:pk>/delete/
+    - `POST` `http://127.0.0.1:8000/movies/<int:pk>/delete/`
 
 ### 화면 Template
 
@@ -75,18 +75,18 @@ ModelForm / Staticfiles를 활용한 영화 정보 제공 서비스를 개발합
     - 추가 버튼
         - 클릭 시 정보 추가 페이지로 이동
 2. **메인 페이지**
-    - `GET` http://127.0.0.1:8000/movies/
+    - `GET` `http://127.0.0.1:8000/movies/`
     - 영화 목록 출력
     - 제목을 클릭하면 해당 영화의 정보 페이지로 이동
 3. **영화 정보 페이지**
-    - `GET` http://127.0.0.1:8000/movies/<int:pk>/
+    - `GET` `http://127.0.0.1:8000/movies/<int:pk>/`
     - 해당 영화 정보 출력
     - 수정 / 삭제 버튼
 4. **영화 작성 페이지**
-    - `GET` http://127.0.0.1:8000/movies/create/
+    - `GET` `http://127.0.0.1:8000/movies/create/`
     - 영화 정보 작성 폼
 5. **영화 수정 페이지**
-    - `GET` http://127.0.0.1:8000/movies/<int:pk>/update/
+    - `GET` `http://127.0.0.1:8000/movies/<int:pk>/update/`
     - 영화 정보 수정 폼
 - 참고 화면
 

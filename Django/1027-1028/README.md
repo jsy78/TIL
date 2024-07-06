@@ -46,74 +46,74 @@ Date: 2022년 10월 27일 → 2022년 10월 28일
 
 데이터 목록 조회
 
-- `GET` http://127.0.0.1:8000/reviews/
+- `GET` `http://127.0.0.1:8000/reviews/`
 
 데이터 정보 조회
 
-- `GET` http://127.0.0.1:8000/reviews/<int:review_pk>/
+- `GET` `http://127.0.0.1:8000/reviews/<int:review_pk>/`
 
 데이터 생성 
 
-- `POST` http://127.0.0.1:8000/reviews/create/
+- `POST` `http://127.0.0.1:8000/reviews/create/`
 - 로그인한 유저만 데이터 생성이 가능합니다.
 
 데이터 수정
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/update/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/update/`
 - 해당 리뷰 작성자만 수정할 수 있습니다.
 
 데이터 삭제
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/delete/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/delete/`
 - 해당 리뷰 작성자만 삭제할 수 있습니다.
 
 리뷰 좋아요 / 좋아요 취소
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/like/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/like/`
 - 로그인한 유저만 좋아요 기능을 사용할 수 있습니다.
 
 **댓글 comments**
 
 리뷰의 댓글 목록 조회
 
-- `GET` http://127.0.0.1:8000/reviews/<int:review_pk>/
+- `GET` `http://127.0.0.1:8000/reviews/<int:review_pk>/`
 - 해당 게시글의 댓글 목록 조회
 
 댓글 생성
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/comments/create/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/comments/create/`
 - 로그인한 유저만 댓글 생성이 가능합니다.
 
 댓글 삭제
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/comments/<int:comment_pk>/delete/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/comments/<int:comment_pk>/delete/`
 - 해당 댓글 작성자만 삭제할 수 있습니다.
 
 **회원 관리 accounts**
 
 회원 가입
 
-- `POST` http://127.0.0.1:8000/accounts/signup/
+- `POST` `http://127.0.0.1:8000/accounts/signup/`
 
 회원 목록 조회
 
-- `GET` http://127.0.0.1:8000/accounts/
+- `GET` `http://127.0.0.1:8000/accounts/`
 
 회원 정보 조회
 
-- `GET` http://127.0.0.1:8000/accounts/<int:user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<int:user_pk>/`
 
 로그인
 
-- `POST` http://127.0.0.1:8000/accounts/login/
+- `POST` `http://127.0.0.1:8000/accounts/login/`
 
 로그아웃
 
-- `POST` http://127.0.0.1:8000/accounts/logout/
+- `POST` `http://127.0.0.1:8000/accounts/logout/`
 
 팔로우
 
-- `POST` http://127.0.0.1:8000/accounts/<int:user_pk>/follow/
+- `POST` `http://127.0.0.1:8000/accounts/<int:user_pk>/follow/`
 - 로그인한 유저만 팔로우 기능을 사용할 수 있습니다.
 - 자기 자신은 팔로우 할 수 없습니다.
 
@@ -134,16 +134,16 @@ Date: 2022년 10월 27일 → 2022년 10월 28일
 
 **메인 페이지**
 
-- `GET` http://127.0.0.1:8000/
+- `GET` `http://127.0.0.1:8000/`
 - 자유 디자인
 
 **목록 페이지** 
 
-- `GET` http://127.0.0.1:8000/reviews/
+- `GET` `http://127.0.0.1:8000/reviews/`
 
 **리뷰 정보 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/<int:review_pk>/
+- `GET` `http://127.0.0.1:8000/reviews/<int:review_pk>/`
 - 해당 리뷰 정보 출력
 - 댓글 작성 폼
 - 해당 리뷰에 작성된 댓글 목록
@@ -154,27 +154,27 @@ Date: 2022년 10월 27일 → 2022년 10월 28일
 
 **리뷰 작성 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/create/
+- `GET` `http://127.0.0.1:8000/reviews/create/`
 - 리뷰 작성 폼
 
 **리뷰 수정 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/<int:review_pk>/update/
+- `GET` `http://127.0.0.1:8000/reviews/<int:review_pk>/update/`
 - 리뷰 수정 폼
 
 회원 가입 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/signup/
+- `GET` `http://127.0.0.1:8000/accounts/signup/`
 - 회원 가입 폼
 
 회원 조회 페이지(프로필 페이지)
 
-- `GET` http://127.0.0.1:8000/accounts/<int:user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<int:user_pk>/`
 - 회원이 작성한 게시글 목록 출력
 
 로그인 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/login/
+- `GET` `http://127.0.0.1:8000/accounts/login/`
 - 로그인 폼
 - 회원 가입 페이지 이동 버튼
 

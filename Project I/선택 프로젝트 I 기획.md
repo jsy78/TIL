@@ -123,7 +123,6 @@ PPT 제작자 : 프로젝트 발표회에 사용할 PPT 제작
 ```
 ERD 작성 사이트
 [https://app.diagrams.net](https://app.diagrams.net/)
-
 [https://www.erdcloud.com](https://www.erdcloud.com/)
 [https://dbdiagram.io/home?utm_source=holistics&utm_medium=rails_erd_blog](https://dbdiagram.io/home?utm_source=holistics&utm_medium=rails_erd_blog)
 

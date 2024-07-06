@@ -134,7 +134,10 @@ WHERE 컬럼1 = (
       SELECT country 
       FROM users
       WHERE last_name = '이' AND first_name = '은정');
-  
+  ```
+
+- 다중컬럼 서브쿼리
+  ```sql
   --  Q. 특정 성씨에서 가장 어린 사람들의 이름과 나이
   SELECT
       last_name,
@@ -149,5 +152,3 @@ WHERE 컬럼1 = (
       GROUP BY last_name)
   ORDER BY last_name;
   ```
-
-- 다중컬럼 서브쿼리

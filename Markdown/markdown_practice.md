@@ -4,7 +4,7 @@
 
 ## 1. 개요
 
-![Python](https://wikidocs.net/images/page/5/pahkey_KRRKrp.png)
+![Python](./pahkey_KRRKrp.png)
 
 파이썬(Python)은 1990년 암스테르담의 귀도 반 로섬(Guido Van Rossum)이 개발한 인터프리터 언어이다. 귀도는 파이썬이라는 이름을 자신이 좋아하는 코미디 쇼인 "몬티 파이썬의 날아다니는 서커스(Monty Python’s Flying Circus)"에서 따왔다고 한다.
 

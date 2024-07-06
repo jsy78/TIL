@@ -22,44 +22,44 @@
 
 ### static
 
-| ![https://ibb.co/7QVSNtq](https://i.ibb.co/W0FHpvL/1.png) | ![https://ibb.co/JmyS8Hf](https://i.ibb.co/2WspRdD/2.png) |
-| --------------------------------------------------------- | --------------------------------------------------------- |
+| ![./img/31.png](./img/31.png) | ![./img/32.png](./img/32.png) |
+| ----------------------------- | ----------------------------- |
 
 ### relative
 
-| ![https://ibb.co/SrJjBmq](https://i.ibb.co/GTF6RMg/3.png) |
-| :-------------------------------------------------------: |
+| ![./img/33.png](./img/33.png) |
+| :---------------------------: |
 
 ### absolute
 
-| ![https://ibb.co/WKxd7TV](https://i.ibb.co/2KnLRbZ/4.png) |
-| :-------------------------------------------------------: |
+| ![./img/34.png](./img/34.png) |
+| :---------------------------: |
 
 #### absolute 사용 예시
 
-![https://ibb.co/MhyK7HY](https://i.ibb.co/Qc7hMV2/12.png)
+![./img/35.png](./img/35.png)
 
 ### fixed
 
-| ![https://ibb.co/PYVrq3F](https://i.ibb.co/wL2d53B/5.png) |
-| :-------------------------------------------------------: |
+| ![./img/36.png](./img/36.png) |
+| :---------------------------: |
 
 #### fixed 사용 예시
 
-![https://ibb.co/GcDCfqy](https://i.ibb.co/Lny9D3m/13.png)
+![./img/37.png](./img/37.png)
 
 ### absolute vs relative
 
 - 형에게 top: 100px;을 적용했을 때 absolute와 relative의 차이는?
 
-| ![https://ibb.co/0st3nyG](https://i.ibb.co/NTSzF2y/6.png) | ![https://ibb.co/NKn8dNY](https://i.ibb.co/pdrtBKX/7.png) |
-| --------------------------------------------------------- | --------------------------------------------------------- |
+| ![./img/38.png](./img/38.png) | ![./img/39.png](./img/39.png) |
+| ----------------------------- | ----------------------------- |
 
-| ![https://ibb.co/pJNMZWX](https://i.ibb.co/r4qzMby/8.png) | ![https://ibb.co/93x774H](https://i.ibb.co/TqQss0M/9.png) |
-| --------------------------------------------------------- | --------------------------------------------------------- |
+| ![./img/40.png](./img/40.png) | ![./img/41.png](./img/41.png) |
+| ----------------------------- | ----------------------------- |
 
-| ![https://ibb.co/VqNWw0p](https://i.ibb.co/tJhMLwP/10.png) | ![https://ibb.co/ZWJqkCJ](https://i.ibb.co/FgWRjtW/11.png) |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| ![./img/42.png](./img/42.png) | ![./img/43.png](./img/43.png) |
+| ----------------------------- | ----------------------------- |
 
 ## CSS 원칙
 
@@ -84,21 +84,21 @@
 
 ### Float
 
-| ![https://ibb.co/NsxDJGZ](https://i.ibb.co/SPNYMZR/14.png) | ![https://ibb.co/s9bDg09](https://i.ibb.co/whBbd9h/18.png) |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| ![./img/44.png](./img/44.png) | ![./img/45.png](./img/45.png) |
+| ----------------------------- | ----------------------------- |
 
 - 박스를 왼쪽 혹은 오른쪽으로 이동시켜 텍스트를 포함 인라인요소들이 주변을 wrapping 하도록 함
 - 요소가 Normal flow를 벗어나도록 함
 
-| ![https://ibb.co/tK9RSh1](https://i.ibb.co/jfStd5j/15.png) | ![https://ibb.co/j4543Xz](https://i.ibb.co/DKbKw2Y/16.png) |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| ![./img/46.png](./img/46.png) | ![./img/47.png](./img/47.png) |
+| ----------------------------- | ----------------------------- |
 
-| ![https://ibb.co/mXjCtzg](https://i.ibb.co/txGMcCF/17.png) |
-| :--------------------------------------------------------: |
+| ![./img/48.png](./img/48.png) |
+| :---------------------------: |
 
 ### Flexbox
 
-![https://ibb.co/XSBJ8bF](https://i.ibb.co/pJDXyx4/19.png)
+![./img/49.png](./img/49.png)
 
 - 행과 열 형태로 아이템들을 배치하는 레이아웃 모델
 
@@ -109,7 +109,7 @@
 
 - flex-direction : row 
 
-  ![https://ibb.co/CVsvbqj](https://i.ibb.co/WBpFkQr/20.png)
+  ![./img/50.png](./img/50.png)
 
 - 구성 요소
 
@@ -154,14 +154,14 @@
 
 ##### Flex 속성 : flex-direction
 
-![https://ibb.co/zn7GDFS](https://i.ibb.co/h7ZDwcK/21.png)
+![./img/51.png](./img/51.png)
 
 - Main axis 기준 방향 설정
 - 역방향의 경우 HTML 태그 선언 순서와 시각적으로 다르니 유의 (웹 접근성에 영향)
 
 ##### Flex 속성 : flex-wrap
 
-![https://ibb.co/pr2jqXb](https://i.ibb.co/zHsVdfQ/22.png)
+![./img/52.png](./img/52.png)
 
 - 아이템이 컨테이너를 벗어나는 경우 해당 영역 내에 배치되도록 설정
 - 즉, 기본적으로 컨테이너 영역을 벗어나지 않도록 함
@@ -179,13 +179,13 @@
 
 ##### Flex 속성 : justify-content
 
-![https://ibb.co/5c84Rrx](https://i.ibb.co/LptRZxh/23.png)
+![./img/53.png](./img/53.png)
 
 - Main axis를 기준으로 공간 배분
 
 ##### Flex 속성 : align-content
 
-![https://ibb.co/YBbfjbJ](https://i.ibb.co/chx2TxR/24.png)
+![./img/54.png](./img/54.png)
 
 - Cross axis를 기준으로 공간 배분 (아이템이 한 줄로 배치되는 경우 확인할 수 없음)
 
@@ -201,13 +201,13 @@
 
 ##### Flex 속성 : align-items
 
-![https://ibb.co/wy0psvH](https://i.ibb.co/mJDh8xs/25.png)
+![./img/55.png](./img/55.png)
 
 - 모든 아이템을 Cross axis를 기준으로 정렬
 
 ##### Flex 속성 : align-self
 
-![https://ibb.co/B3KSxq8](https://i.ibb.co/3dYLqBt/26.png)
+![./img/56.png](./img/56.png)
 
 - 개별 아이템을 Cross axis 기준으로 정렬
   - **주의! 해당 속성은 컨테이너에 적용하는 것이 아니라 개별 아이템에 적용**
@@ -223,7 +223,7 @@
 
 ##### Flex 기타 속성
 
-![https://ibb.co/z6jgfXb](https://i.ibb.co/mN1Kz9t/27.png)
+![./img/57.png](./img/57.png)
 
 - flex-grow : 남은 영역을 아이템에 분배
 - order : 배치 순서
@@ -232,16 +232,16 @@
 
 - 수직 수평 가운데 정렬
 
-  | ![https://ibb.co/87dPw6h](https://i.ibb.co/RDBQKz5/28.png) | ![https://ibb.co/hLW4zzn](https://i.ibb.co/QpNTwwq/29.png) |
-  | ---------------------------------------------------------- | ---------------------------------------------------------- |
+  | ![./img/58.png](./img/58.png) | ![./img/59.png](./img/59.png) |
+  | ----------------------------- | ----------------------------- |
 
 - 카드 배치
 
-  | ![https://ibb.co/wWHKKWL](https://i.ibb.co/d29QQ2c/30.png) | ![https://ibb.co/YR1cMTY](https://i.ibb.co/SsMt87W/31.png) |
-  | ---------------------------------------------------------- | ---------------------------------------------------------- |
+  | ![./img/60.png](./img/60.png) | ![./img/61.png](./img/61.png) |
+  | ----------------------------- | ----------------------------- |
 
-  | ![https://ibb.co/zJ9CXXq](https://i.ibb.co/ySvK66H/32.png) | ![https://ibb.co/qxdn0WR](https://i.ibb.co/mSGBvXH/33.png) |
-  | ---------------------------------------------------------- | ---------------------------------------------------------- |
+  | ![./img/62.png](./img/62.png) | ![./img/63.png](./img/63.png) |
+  | ----------------------------- | ----------------------------- |
 
 ## 참고용 문서
 

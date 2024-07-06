@@ -49,11 +49,11 @@ $ django-admin startproject pjt .
 
 #### 1. HTML Form 제공
 
-> http://127.0.0.1:8000/articles/new/
+> `http://127.0.0.1:8000/articles/new/`
 
 #### 2. 입력받은 데이터 처리
 
-> http://127.0.0.1:8000/articles/create/
+> `http://127.0.0.1:8000/articles/create/`
 
 > 게시글 DB에 생성하고 index 페이지로 redirect
 
@@ -65,16 +65,16 @@ $ django-admin startproject pjt .
 
 > 특정한 글을 본다.
 
-> http://127.0.0.1:8000/articles/<int:pk>/
+> `http://127.0.0.1:8000/articles/<int:pk>/`
 
 ### 4. 삭제하기
 
 > 특정한 글을 삭제한다.
 
-> http://127.0.0.1:8000/articles/<int:pk>/delete/
+> `http://127.0.0.1:8000/articles/<int:pk>/delete/`
 
 ### 5. 수정하기
 
 > 특정한 글을 수정한다. => 사용자에게 수정할 수 양식을 제공하고(GET) 특정한 글을 수정한다.(POST)
 
-> http://127.0.0.1:8000/articles/<int:pk>/update/
+> `http://127.0.0.1:8000/articles/<int:pk>/update/`

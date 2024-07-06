@@ -43,15 +43,15 @@ Date: 2022년 10월 19일
 
 데이터 목록 조회
 
-- `GET` http://127.0.0.1:8000/article**s**/
+- `GET` `http://127.0.0.1:8000/articles/`
 
 데이터 정보 조회
 
-- `GET` http://127.0.0.1:8000/article**s**/<int:article_pk>/
+- `GET` `http://127.0.0.1:8000/articles/<int:article_pk>/`
 
 데이터 생성
 
-- `POST` http://127.0.0.1:8000/article**s**[/](http://127.0.0.1:8000/posts/create/)create[/](http://127.0.0.1:8000/posts/create/)
+- `POST` `http://127.0.0.1:8000/articles/create/)`
 - 로그인한 사용자만 데이터를 생성할 수 있습니다.
 
 회원 관리 accounts
@@ -60,43 +60,43 @@ Date: 2022년 10월 19일
 
 로그인
 
-- `POST` http://127.0.0.1:8000/accounts/login/
+- `POST` `http://127.0.0.1:8000/accounts/login/`
 
 로그아웃
 
-- `POST` http://127.0.0.1:8000/accounts/logout/
+- `POST` `http://127.0.0.1:8000/accounts/logout/`
 - 사용자 로그아웃
 
 회원 정보 조회
 
-- `GET` http://127.0.0.1:8000/accounts/<int:user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<int:user_pk>/`
 - 회원이 작성한 글 목록 출력
 
 ### 화면 Template
 
 게시글 목록 페이지
 
-- `GET` http://127.0.0.1:8000/article**s/**
+- `GET` `http://127.0.0.1:8000/articles/`
 
 게시글 정보 페이지
 
-- `GET` http://127.0.0.1:8000/articles/<int:article_pk>/
+- `GET` `http://127.0.0.1:8000/articles/<int:article_pk>/`
 - 해당 게시글 정보 출력
     - 게시글 작성자(username) 클릭 시 해당 회원 조회 페이지로 이동
 
 게시글 작성 페이지
 
-- `GET` http://127.0.0.1:8000/article**s**/create/
+- `GET` `http://127.0.0.1:8000/articles/create/`
 - 로그인 한 사용자만 글 작성 페이지로 진입할 수 있습니다.
 - 게시글 작성 폼
 
 로그인 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/login/
+- `GET` `http://127.0.0.1:8000/accounts/login/`
 - 로그인 폼
 - 회원가입 페이지 이동 버튼
 
 회원 조회 페이지(프로필 페이지)
 
-- `GET` http://127.0.0.1:8000/accounts/<int:user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<int:user_pk>/`
 - 회원이 작성한 게시글 목록 출력

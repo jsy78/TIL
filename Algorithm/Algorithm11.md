@@ -2,7 +2,7 @@
 
 ## 그래프의 개념
 
-![https://ibb.co/4fPn9rc](https://i.ibb.co/fS4zBwb/image.png)
+![./graph.png](./graph.png)
 
 > 정점(Vertex)과 이를 연결하는 간선(Edge)들의 집합으로 이루어진 비선형 자료구조
 
@@ -19,7 +19,7 @@
 
 ### 무방향 그래프 (Undirected graph)
 
-![https://ibb.co/cD2gbcP](https://i.ibb.co/zGPn8h1/image.png)
+![./Ugraph.png](./Ugraph.png)
 
 - 간선의 방향이 없는 가장 일반적인 그래프
 
@@ -31,7 +31,7 @@
 
 ### 방향 그래프 (Directed graph)
 
-![https://ibb.co/B64XHJY](https://i.ibb.co/n13HqyK/image.png)
+![./Dgraph.png](./Dgraph.png)
 
 - 간선의 방향이 **있는** 그래프
 
@@ -67,7 +67,7 @@
 
 - 두 정점을 연결하는 간선이 없으면 0, 있으면 1을 가지는 행렬로 표현하는 방식
 
-![https://ibb.co/4fPn9rc](https://i.ibb.co/fS4zBwb/image.png)
+![./graph.png](./graph.png)
 
 |       | **0** | **1** | **2** | **3** | **4** | **5** | **6** |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -121,7 +121,7 @@ graph = [
 
 - 리스트를 통해 각 정점에 대한 인접 정점들을 순차적으로 표현하는 방식
 
-![https://ibb.co/4fPn9rc](https://i.ibb.co/fS4zBwb/image.png)
+![./graph.png](./graph.png)
 
 | **0** |  1   |  2   |      |
 | :---: | :--: | :--: | :--: |

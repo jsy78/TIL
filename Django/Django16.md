@@ -281,8 +281,3 @@ def likes(request, article_pk):
   </script>
 {% endblock script %}
 ```
-
-
-
-
-

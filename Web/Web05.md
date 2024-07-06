@@ -4,19 +4,19 @@
 
 - table의 각 영역을 명시하기 위해 `<thead>` `<tbody>` `<tfoot>` 요소를 활용
 
-  ![https://ibb.co/Np4WnLP](https://i.ibb.co/d6hkJQq/1.png)
+  ![./img/69.png](./img/69.png)
   
 - `<tr>`로 가로 줄을 구성하고 내부에는 `<th>` 혹은 `<td>`로 셀을 구성  
 
-  ![https://ibb.co/Qbxm72j](https://i.ibb.co/BzYsHXK/2.png)
+  ![./img/70.png](./img/70.png)
   
 - `colspan`, `rowspan` 속성을 활용하여 셀 병합
 
-  ![https://ibb.co/vHVYGLp](https://i.ibb.co/W6GtwBZ/3.png)
+  ![./img/71.png](./img/71.png)
 
 - `<caption>`을 통해 표 설명 또는 제목을 나타냄
 
-  ![https://ibb.co/yqHLrCs](https://i.ibb.co/BB089Js/4.png)
+  ![./img/72.png](./img/72.png)
 
 - table 태그 기본 구성
 
@@ -79,8 +79,8 @@
     - text/plain : HTML5 디버깅 용 (잘 사용되지 않음)
 
 
-| ![https://ibb.co/v4t5DRg](https://i.ibb.co/SwLTJGW/5.png) | ![https://ibb.co/C0nMnxv](https://i.ibb.co/Qm6C6sn/6.png) |
-| --------------------------------------------------------- | --------------------------------------------------------- |
+| ![./img/73.png](./img/73.png) | ![./img/74.png](./img/74.png) |
+| ----------------------------- | ----------------------------- |
 
 ## input
 
@@ -91,8 +91,8 @@
   - required, readonly, autofocus, autocomplete, disabled 등
 
 
-| ![https://ibb.co/kydj26m](https://i.ibb.co/YWrmBT0/7.png) | ![https://ibb.co/5Mgh162](https://i.ibb.co/VjcYLt3/8.png) |
-| --------------------------------------------------------- | --------------------------------------------------------- |
+| ![./img/75.png](./img/75.png) | ![./img/76.png](./img/76.png) |
+| ----------------------------- | ----------------------------- |
 
 ### input label
 
@@ -137,11 +137,11 @@
 </body>
 ```
 
-![https://ibb.co/YXHCdWQ](https://i.ibb.co/QkygHcQ/10.png)
+![./img/77.png](./img/77.png)
 
 ### input - 일반
 
-![https://ibb.co/58SKHKf](https://i.ibb.co/ncYPJP5/11.png)
+![./img/78.png](./img/78.png)
 
 - 일반적으로 입력을 받기 위하여 제공되며 타입별로 HTML기본 검증 혹은 추가 속성을 활용할 수 있음
   - text : 일반 텍스트 입력
@@ -152,7 +152,7 @@
 
 ### input - 선택
 
-![https://ibb.co/41v5pVP](https://i.ibb.co/CPCTQHh/12.png)
+![./img/79.png](./img/79.png)
 
 - 일반적으로 label 태그와 함께 사용하여 선택 항목을 작성함
 - 동일 항목에 대하여는 name을 지정하고 선택된 항목에 대한 value를 지정해야 함
@@ -174,7 +174,7 @@
 
 ### input - 기타
 
-![https://ibb.co/Pj6TNTf](https://i.ibb.co/ZXMHVHk/13.png)
+![./img/80.png](./img/80.png)
 
 - 다양한 종류의 input을 위한 picker를 제공
   - color : color picker
@@ -184,7 +184,7 @@
 
 ## Bootstrap
 
-> ![https://ibb.co/z4ychvQ](https://i.ibb.co/nLH2sJ6/14.png)
+> ![./img/81.png](./img/81.png)
 >
 > Bootstrap으로 빠른 반응형 사이트를 구축하십시오.
 >
@@ -192,9 +192,9 @@
 >
 > **세계에서 가장 인기 있는** 프론트 엔드 오픈 소스 툴킷인 Bootstrap으로 **반응형** 모바일 우선 사이트를 **빠르게** 디자인하고 사용자 정의하십시오.
 
-![https://ibb.co/x1pf9Vg](https://i.ibb.co/tq7xjy2/15.png)
+![./img/82.png](./img/82.png)
 
-![https://ibb.co/gZ7VZSF](https://i.ibb.co/d4cg4PJ/16.png)
+![./img/83.png](./img/83.png)
 
 ### CDN
 
@@ -222,7 +222,7 @@
 <div class="mt-3 ms-5">bootstrap-spacing</div>
 ```
 
-![https://ibb.co/2Kvg6G8](https://i.ibb.co/dKPGc8b/17.png)
+![./img/84.png](./img/84.png)
 
 - Margin and padding
 - {property}{sides}-{size}
@@ -261,7 +261,7 @@
 }
 ```
 
-![https://ibb.co/mNZ0Kvr](https://i.ibb.co/8Yvbwzn/18.png)
+![./img/85.png](./img/85.png)
 
 | class name | rem  |  px  |
 | :--------: | :--: | :--: |
@@ -295,7 +295,7 @@
 /* 위, 아래 padding이 0 */
 ```
 
-![https://ibb.co/wYr1qBh](https://i.ibb.co/vDv8WV4/19.png)
+![./img/86.png](./img/86.png)
 
 ### breakpoints
 
@@ -312,8 +312,8 @@
 
 ### color
 
-| ![https://ibb.co/gmPHCL6](https://i.ibb.co/jbWBFPH/20.png) | ![https://ibb.co/688sWTS](https://i.ibb.co/9hhYr10/21.png) |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| ![./img/87.png](./img/87.png) | ![./img/88.png](./img/88.png) |
+| ----------------------------- | ----------------------------- |
 
 ```html
 <h2>Color</h2>
@@ -324,7 +324,7 @@
 <p class="text-danger">이건 빨간색 글씨</p>
 ```
 
-![https://ibb.co/KyhKdH7](https://i.ibb.co/0J2sT3Z/23.png)
+![./img/89.png](./img/89.png)
 
 ### text
 
@@ -340,7 +340,7 @@
 <p class="fst-italic">Italic text.</p>
 ```
 
-![https://ibb.co/MhzGxdN](https://i.ibb.co/QcWC30m/25.png)
+![./img/90.png](./img/90.png)
 
 ### display
 
@@ -354,7 +354,7 @@
 <div class="box bg-success d-md-none d-xl-block">보이나?? 안보이나??</div>
 ```
 
-![https://ibb.co/9NdGGwz](https://i.ibb.co/c1sxxbM/26.png)
+![./img/91.png](./img/91.png)
 
 | Screen size         | Class                             |
 | ------------------- | --------------------------------- |
@@ -381,7 +381,7 @@
 <div class="box fixed-bottom">fixed-bottom</div>
 ```
 
-![https://ibb.co/hfcwMgV](https://i.ibb.co/M6fQhg7/27.png)
+![./img/92.png](./img/92.png)
 
 ```html
 <div class="position-static">...</div>

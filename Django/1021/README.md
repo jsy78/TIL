@@ -84,12 +84,12 @@ branch account/signup
 
 기능 View 
 
-- `POST` accounts/signup/
+- `POST` `accounts/signup/`
 - CustomUserCreationForm 활용
 
 화면 Template
 
-- `GET` accounts/signup/
+- `GET` `accounts/signup/`
 - 회원가입 폼
 
 ---
@@ -100,12 +100,12 @@ branch accounts/login
 
 기능 View
 
-- `POST` accounts/signup/
+- `POST` `accounts/signup/`
 - 내장 폼 AuthenticationForm 활용
 
 화면 Template
 
-- `GET` accounts/signup/
+- `GET` `accounts/signup/`
 - 로그인 폼
 - 회원가입 페이지 이동 버튼
 
@@ -117,7 +117,7 @@ branch accounts/logout
 
 기능 View
 
-- `POST` account/logout
+- `POST` `account/logout`
 
 ---
 
@@ -148,11 +148,11 @@ branch reviews/create
 
 기능 View
 
-- `POST` reviews/create/
+- `POST` `reviews/create/`
 
 화면 Template
 
-- `GET` reviews/create/
+- `GET` `reviews/create/`
 - 리뷰 작성 폼
 
 ---
@@ -163,11 +163,11 @@ branch reviews/index
 
 **기능 View**
 
-- `GET` reviews/
+- `GET` `reviews/`
 
 **화면 Template**
 
-- `GET` reviews/
+- `GET` `reviews/`
 
 ---
 
@@ -177,11 +177,11 @@ branch reviews/detail
 
 **기능 View**
 
-- `GET` reviews/<int:review_pk>/
+- `GET` `reviews/<int:review_pk>/`
 
 **화면 Template**
 
-- `GET` reviews/<int:review_pk>/
+- `GET` `reviews/<int:review_pk>/`
 - 리뷰 수정 / 삭제 버튼
     - 수정 / 삭제 버튼은 해당 리뷰 작성자에게만 출력합니다.
 - 댓글 작성 폼
@@ -196,12 +196,12 @@ branch reviews/update
 
 **기능 View** 
 
-- `POST` reviews/<int:review_pk>/update/
+- `POST` `reviews/<int:review_pk>/update/`
 - 데이터를 생성한 사용자만 수정할 수 있습니다.
 
 **화면 Template** 
 
-- `GET` reviews/<int:review_pk>/update/
+- `GET` `reviews/<int:review_pk>/update/`
 - 리뷰 수정 폼
 
 ---
@@ -212,7 +212,7 @@ branch reviews/delete
 
 **기능 View**
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/delete/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/delete/`
 - 데이터를 생성한 사용자만 삭제할 수 있습니다.
 
 ---
@@ -238,12 +238,12 @@ reviews 앱에 구현
 
 기능 View 
 
-- `POST` reviews/<int:review_pk>/comments/
+- `POST` `reviews/<int:review_pk>/comments/`
 - 로그인한 사용자만 댓글을 생성할 수 있습니다.
 
 화면 Template 
 
-- `GET` reviews/<int:review_pk>/
+- `GET` `reviews/<int:review_pk>/`
 - 리뷰 정보 조회 페이지 하단에 댓글 작성 폼 출력
 
 ---
@@ -254,11 +254,11 @@ branch comments/index
 
 기능 View
 
-- `GET` reviwes/<int:review_pk>/
+- `GET` `reviwes/<int:review_pk>/`
 
 화면 Template
 
-- `GET` reviews/<int:review_pk>/
+- `GET` `reviews/<int:review_pk>/`
 - 리뷰 정보 조회 페이지 하단에 댓글 목록 출력
 
 ---
@@ -269,12 +269,12 @@ branch comments/delete
 
 기능 View
 
-- `POST` reviews/<int:review_pk>/comments/<int:comment_pk>/delete/
+- `POST` `reviews/<int:review_pk>/comments/<int:comment_pk>/delete/`
 - 데이터를 생성한 사용자만 삭제할 수 있습니다.
 
 화면 Template
 
-- `GET` reviews/<int:review_pk>/
+- `GET` `reviews/<int:review_pk>/`
 - 각 댓글에 리뷰 삭제 버튼 추가
     - 삭제 버튼은 해당 댓글 작성자에게만 출력합니다.
 

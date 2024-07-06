@@ -104,7 +104,7 @@
 
 ## ASCII
 
-![img](https://github.com/Jobyeongjin/TIL/raw/master/git-start.assets/ascii.png)
+![./ascii.png](./ascii.png)
 
 - **American Standard Code for Information Interchange**
 

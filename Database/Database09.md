@@ -8,5 +8,5 @@ LeetCode : [Problems - LeetCode](https://leetcode.com/problemset/database/?diffi
 
 Google Form 
 
-![https://forms.gle/hRKnzQk19Ngo9Wy8A](0826/DB_TEST.jpg)
+![https://forms.gle/hRKnzQk19Ngo9Wy8A](./0826/DB_TEST.jpg)
 

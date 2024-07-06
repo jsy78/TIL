@@ -2,7 +2,7 @@
 
 ## 시맨틱 태그
 
-![https://ibb.co/C9CJYX2](https://i.ibb.co/dpCbV3g/1.png)
+![./img/64.png](./img/64.png)
 
 - HTML 태그가 특정 목적, 역할 및 의미적 가치(semantic value)를 가지는 것
 
@@ -51,13 +51,13 @@
 
 - 시맨틱 태그 사용 예시 : 구글 뉴스
   - `<header>`
-  ![https://ibb.co/zmFdW6x](https://i.ibb.co/p1Qq6hw/2.png)
+  ![./img/65.png](./img/65.png)
   - `<article>`
-  ![https://ibb.co/gmZWS9k](https://i.ibb.co/k52D4BN/3.png)
+  ![./img/66.png](./img/66.png)
   - `<aside>`
-  ![https://ibb.co/HHcwxPg](https://i.ibb.co/P62X9WC/4.png)
+  ![./img/67.png](./img/67.png)
   - `<footer>`
-  ![https://ibb.co/BBjX3sS](https://i.ibb.co/Yh8zQjq/5.png)
+  ![./img/68.png](./img/68.png)
 
   
   

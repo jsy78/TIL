@@ -27,13 +27,13 @@ console.log(bar) // 0
 
 #### let, const
 
-| ![https://ibb.co/KDW26Vk](https://i.ibb.co/FXz568M/1.png) | ![https://ibb.co/mhPZg3F](https://i.ibb.co/SVZYGz7/2.png) |
-| :-------------------------------------------------------: | :-------------------------------------------------------: |
-|                     let (재할당 가능)                     |                   const (재할당 불가능)                   |
+| ![./img/5.png](./img/5.png) | ![./img/6.png](./img/6.png) |
+| :-------------------------: | :-------------------------: |
+|      let (재할당 가능)      |    const (재할당 불가능)    |
 
-| ![https://ibb.co/89N1VXw](https://i.ibb.co/HqB5QXy/3.png) | ![https://ibb.co/3pRMDNC](https://i.ibb.co/8rYdW57/4.png) |
-| :-------------------------------------------------------: | :-------------------------------------------------------: |
-|                    let (재선언 불가능)                    |                   const (재선언 불가능)                   |
+| ![./img/7.png](./img/7.png) | ![./img/8.png](./img/8.png) |
+| :-------------------------: | :-------------------------: |
+|     let (재선언 불가능)     |    const (재선언 불가능)    |
 
 ```javascript
 // 블록 스코프 (block scope)
@@ -108,7 +108,7 @@ const age = 50
 
 ### 데이터 타입
 
-![https://ibb.co/XFcJhVJ](https://i.ibb.co/9yQYFGY/5.png)
+![./img/9.png](./img/9.png)
 
 - 자바스크립트의 모든 값은 특정한 데이터 타입을 가짐
 - 크게 원시 타입 (Primitive type)과 참조 타입 (Reference type)으로 분류됨

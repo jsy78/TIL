@@ -4,7 +4,7 @@
 
 - 데이터베이스의 구조나 형식으로 모델 구조만 보고 어떤 데이터를 다루는지 알 수 있음
 
-![https://ibb.co/rtNy42t](https://i.ibb.co/kyvcQ2y/SQL-004.jpg)
+![./SQL-004.jpg](./SQL-004.jpg)
 
 - 개념적 데이터 모델링
   - 데이터의 요구사항을 찾고 분석하는 과정, 핵심 개체(Entity) 사이의 관계를 찾아내고 표현
@@ -13,7 +13,7 @@
 - 물리적 데이터 모델링
   - 논리적 데이터 모델이 데이터 저장소로서 어떻게 실제로 저장될 것인가
 
-![https://ibb.co/jD0SM35](https://i.ibb.co/dDCR2kc/ss.png)
+![./ss.png](./ss.png)
 
 - ERD(Entity Relation Diagram) – 개체 관계 모델
 
@@ -36,7 +36,7 @@
 
     - Crow’s feet 표기법
 
-      ![https://ibb.co/4Y4PSw9](https://i.ibb.co/QCYrH7z/Screen-Shot-2019-01-11-at-10-58-52-AM.png)
+      ![./Screen-Shot-2019-01-11-at-10-58-52-AM.png](./Screen-Shot-2019-01-11-at-10-58-52-AM.png)
 
       - 실선 : 부모 테이블의 기본키가 자식 테이블의 기본키로 사용될 때, 부모가 있어야 자식이 생기는 경우
       - 점선 : 부모 테이블의 기본키가 자식 테이블의 일반 속성으로 사용될 때, 부모가 없어도 자식이 생기는 경우

@@ -2,7 +2,7 @@
 
 ## Event 정의
 
-![https://ibb.co/L67JPk3](https://i.ibb.co/S0Cdxsz/1.png)
+![./img/10.png](./img/10.png)
 
 > "특정 이벤트가 발생하면, 할 일(함수)을 등록한다."
 
@@ -15,8 +15,8 @@
 
 ### addEventListener()
 
-| ![https://ibb.co/JsvvWrw](https://i.ibb.co/z4XXWPT/2.png) | ![https://ibb.co/Jc1QxVV](https://i.ibb.co/wdksJVV/3.png) |
-| --------------------------------------------------------- | --------------------------------------------------------- |
+| ![./img/11.png](./img/11.png) | ![./img/12.png](./img/12.png) |
+| ----------------------------- | ----------------------------- |
 
 - **`EventTarget.addEventListener(type, listener[, options])`**
 
@@ -42,7 +42,7 @@
   }
   ```
 
-  ![https://ibb.co/MG9MyRk](https://i.ibb.co/F0ngkB4/4.png)
+  ![./img/13.png](./img/13.png)
 
 - 예시 2
 
@@ -57,7 +57,7 @@
   })
   ```
 
-  ![https://ibb.co/x7DBjXN](https://i.ibb.co/tJ4vsQ9/5.png)
+  ![./img/14.png](./img/14.png)
 
 - 예시 3
 
@@ -78,7 +78,7 @@
   })
   ```
 
-  ![https://ibb.co/QFDwhfW](https://i.ibb.co/LzN7B8T/6.png)
+  ![./img/15.png](./img/15.png)
 
 - 예시 4
 
@@ -98,7 +98,7 @@
   colorInput.addEventListener('input', changeColor)
   ```
 
-  ![https://ibb.co/YfMTdmG](https://i.ibb.co/tYtP2g5/7.png)
+  ![./img/16.png](./img/16.png)
 
 ## Event 취소
 
@@ -127,7 +127,7 @@
   })
   ```
 
-  ![https://ibb.co/6bSJKMd](https://i.ibb.co/Npqn0v4/8.png)
+  ![./img/17.png](./img/17.png)
 
 - 예시 2  
 
@@ -147,7 +147,7 @@
   })
   ```
   
-  ![https://ibb.co/4gFqdKm](https://i.ibb.co/XkWQ8j2/9.png)
+  ![./img/18.png](./img/18.png)
 
 - 예시 3
 
@@ -163,7 +163,7 @@
   })
   ```
 
-  ![https://ibb.co/c87gjTd](https://i.ibb.co/X5v2qJT/10.png)
+  ![./img/19.png](./img/19.png)
 
 - 예시 4
 
@@ -174,17 +174,17 @@
   })
   ```
 
-  ![https://ibb.co/71sWtwD](https://i.ibb.co/yQHyFwC/11.png)
+  ![./img/20.png](./img/20.png)
 
 - 취소 할 수 없는 이벤트도 존재
 
   - 이벤트의 취소 가능 여부는 event.cancelable을 사용해 확인할 수 있음
 
-  ![https://ibb.co/Kmx3XmJ](https://i.ibb.co/t3pW439/12.png)
+  ![./img/21.png](./img/21.png)
 
 ## Event bubbling
 
-![https://ibb.co/Vg4r6QV](https://i.ibb.co/k4CkZ9K/13.png)
+![./img/22.png](./img/22.png)
 
 - 한 요소에 이벤트가 발생하면, 이 요소에 할당된 핸들러가 동작하고, 이어서 부모 요소의 핸들러가 동작함
 - 가장 상단의 조상 요소를 만날 때까지 이 과정이 반복되면서 요소 각각에 할당된 핸들러가 동작함

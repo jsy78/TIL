@@ -5,7 +5,7 @@
 
 ## 깊이 우선 탐색 (DFS)
 
-![depth-first-search-in-graph-data-structure](https://www.simplilearn.com/ice9/free_resources_article_thumb/Graph%20Data%20Structure%20-%20Soni/depth-first-search-in-graph-data-structure.png)
+![./depth-first-search-in-graph-data-structure.png](./depth-first-search-in-graph-data-structure.png)
 
 > 시작 정점으로부터 갈 수 있는 하위 정점까지 가장 깊게 탐색하고,  
 >
@@ -22,7 +22,7 @@
 
 1. 탐색을 진행할 그래프를 표현
 
-   ![https://ibb.co/4fPn9rc](https://i.ibb.co/fS4zBwb/image.png)
+   ![./graph.png](./graph.png)
 
    ```python
    # 인접 행렬
@@ -86,7 +86,7 @@
 
 ## 너비 우선 탐색 (BFS)
 
-![breadth-first-search-in-graph-data-structure](https://www.simplilearn.com/ice9/free_resources_article_thumb/Graph%20Data%20Structure%20-%20Soni/breadth-first-search-in-graph-data-structure.png)
+![./breadth-first-search-in-graph-data-structure.png](./breadth-first-search-in-graph-data-structure.png)
 
 > 시작 정점으로부터 인접한 정점들을 우선적으로 깊게 탐색하고,  
 >
@@ -99,7 +99,7 @@
 ### BFS 동작 과정
 1. 탐색을 진행할 그래프를 표현
 
-   ![https://ibb.co/4fPn9rc](https://i.ibb.co/fS4zBwb/image.png)
+   ![./graph.png](./graph.png)
 
    ```python
    # 인접 행렬

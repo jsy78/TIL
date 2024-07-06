@@ -88,7 +88,7 @@ urlpatterns = [
 
 ## Model
 
-![https://ibb.co/YtXpH1x](https://i.ibb.co/30vBgjn/1.png)
+![./img/5.png](./img/5.png)
 
 - Django는 Model을 통해 데이터에 접근하고 조작, 관리함
 - 사용하는 데이터들의 필수적인 필드들과 동작들을 포함

@@ -4,8 +4,8 @@
 
 ### ORM 확장 (1:N)
 
-| ![https://ibb.co/PcR0mRN](https://i.ibb.co/pfg50gx/fk.png) | ![https://ibb.co/RSRZqSG](https://i.ibb.co/4fh9Hfw/fk.png) |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| ![./fk-1.png](./fk-1.png) | ![./fk-2.png](./fk-2.png) |
+| ------------------------- | ------------------------- |
 
 ```python
 class Genre(models.Model):

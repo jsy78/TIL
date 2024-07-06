@@ -171,9 +171,9 @@ bye()
   - 요청 메소드를 기반으로 접근을 제한할 수 있음
   - 일치하지 않는 메서드 요청이라면 405 Method Not Allowed를 반환
   - 메소드 목록
-    - require_http_methods()
-    - require_POST()
-    - require_safe()
+    - `require_http_methods()`
+    - `require_POST()`
+    - `require_safe()`
 
 - View 함수가 특정한 요청 method만 허용하도록 하는 데코레이터
 

@@ -191,14 +191,14 @@ branch accounts/signup
 
 회원가입
 
-- `POST` http://127.0.0.1:8000/accounts/signup/
+- `POST` `http://127.0.0.1:8000/accounts/signup/`
 - CustomUserCreationForm을 활용해서 회원가입 구현
 
 **화면 Template**
 
 회원가입 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/signup/
+- `GET` `http://127.0.0.1:8000/accounts/signup/`
 - 회원가입 폼
 
  
@@ -230,14 +230,14 @@ branch accounts/login
 
 로그인
 
-- `POST` http://127.0.0.1:8000/accounts/login/
+- `POST` `http://127.0.0.1:8000/accounts/login/`
 - **AuthenticationForm**를 활용해서 로그인 구현
 
 **화면 Template**
 
 로그인 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/login/
+- `GET` `http://127.0.0.1:8000/accounts/login/`
 - 로그인 폼
 - 회원가입 페이지 이동 버튼
 
@@ -262,13 +262,13 @@ branch accounts/login
 
 회원 목록 조회
 
-- `GET` http://127.0.0.1:8000/accounts/
+- `GET` `http://127.0.0.1:8000/accounts/`
 
 **화면 Template**
 
 회원 목록 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/
+- `GET` `http://127.0.0.1:8000/accounts/`
 - 회원 목록 출력
 - 회원 아이디를 클릭하면 해당 회원 조회 페이지로 이동
 
@@ -292,13 +292,13 @@ branch accounts/login
 
 회원 정보 조회
 
-- `GET` http://127.0.0.1:8000/accounts/<int:user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<int:user_pk>/`
 
 **화면 Template**
 
 회원 조회 페이지(프로필 페이지)
 
-- `GET` http://127.0.0.1:8000/accounts/<int:user_pk>/
+- `GET` `http://127.0.0.1:8000/accounts/<int:user_pk>/`
 
 ```
 ❗ 위 과정 완료 후 
@@ -331,13 +331,13 @@ branch accounts/update
 
 회원 정보 수정
 
-- `POST` http://127.0.0.1:8000/accounts/update/
+- `POST` `http://127.0.0.1:8000/accounts/update/`
 
 **화면 Template**
 
 회원 정보 수정 페이지
 
-- `GET` http://127.0.0.1:8000/accounts/update/
+- `GET` `http://127.0.0.1:8000/accounts/update/`
 
 ```
 ❗ 위 과정 완료 후 
@@ -358,7 +358,7 @@ branch accounts/logout
 
 로그아웃
 
-- `POST` http://127.0.0.1:8000/accounts/logout/
+- `POST` `http://127.0.0.1:8000/accounts/logout/`
 
 ```
 ❗ 위 과정 완료 후 
@@ -432,13 +432,13 @@ branch reviews/create
 
 데이터 생성
 
-- `POST` http://127.0.0.1:8000/reviews/create/
+- `POST` `http://127.0.0.1:8000/reviews/create/`
 
 **화면 Template**
 
 **리뷰 작성 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/create/
+- `GET` `http://127.0.0.1:8000/reviews/create/`
 - 리뷰 작성 폼
 
 ```
@@ -461,13 +461,13 @@ branch reviews/index
 
 데이터 목록 조회
 
-- `POST` http://127.0.0.1:8000/reviews/
+- `POST` `http://127.0.0.1:8000/reviews/`
 
 **화면 Template**
 
 리뷰 **목록 페이지** 
 
-- `GET` http://127.0.0.1:8000/reviews/
+- `GET` `http://127.0.0.1:8000/reviews/`
 - 리뷰 목록 출력
 - 제목을 클릭하면 해당 리뷰의 정보 페이지로 이동
 
@@ -491,13 +491,13 @@ branch reviews/detail
 
 데이터 정보 조회
 
-- `GET` http://127.0.0.1:8000/reviews/<int:review_pk>/
+- `GET` `http://127.0.0.1:8000/reviews/<int:review_pk>/`
 
 **화면 Template**
 
 **리뷰 정보 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/<int:review_pk>/
+- `GET` `http://127.0.0.1:8000/reviews/<int:review_pk>/`
 - 해당 리뷰 정보 출력
 - 수정 / 삭제 버튼
 
@@ -521,13 +521,13 @@ branch reviews/update
 
 데이터 수정
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/update/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/update/`
 
 **화면 Template**
 
 **리뷰 수정 페이지**
 
-- `GET` http://127.0.0.1:8000/reviews/<int:review_pk>/update/
+- `GET` `http://127.0.0.1:8000/reviews/<int:review_pk>/update/`
 - 리뷰 수정 폼
 
 ```
@@ -550,7 +550,7 @@ branch reviews/delete
 
 데이터 삭제
 
-- `POST` http://127.0.0.1:8000/reviews/<int:review_pk>/delete/
+- `POST` `http://127.0.0.1:8000/reviews/<int:review_pk>/delete/`
 
 ```
 ❗ 위 과정 완료 후 

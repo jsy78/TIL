@@ -17,7 +17,7 @@ $ python manage.py createsuperuser
 
 ### 로그인
 
--  http://127.0.0.1:8000/admin/ 로 접속 후 로그인
+-  `http://127.0.0.1:8000/admin/` 로 접속 후 로그인
 - 계정만 만든 경우 Django 관리자 화면에서 모델 클래스는 보이지 않음
 
 ### 모델 등록
@@ -112,7 +112,7 @@ admin.site.register(Article)
   # collectstatic 명령어
   ```
 
-  ![https://ibb.co/JzdVr90](https://i.ibb.co/gD7NtxH/1.png)
+  ![./img/6.png](./img/6.png)
 
 ```django
 {% load static %}
@@ -128,15 +128,15 @@ admin.site.register(Article)
 
 ### 예시
 
-| ![https://ibb.co/gm5Wpgq](https://i.ibb.co/17DX52y/2.png) | ![https://ibb.co/cvQFYnk](https://i.ibb.co/pPdzhFb/3.png) |
-| :-------------------------------------------------------: | :-------------------------------------------------------: |
-|              정적 파일 경로 app/static/app/               |                  template에서 경로 참조                   |
+|  ![./img/7.png](./img/7.png)   | ![./img/8.png](./img/8.png) |
+| :----------------------------: | :-------------------------: |
+| 정적 파일 경로 app/static/app/ |   template에서 경로 참조    |
 
-| ![https://ibb.co/k3D7J2z](https://i.ibb.co/Jxp1qj8/4.png) | ![https://ibb.co/9TvfRdC](https://i.ibb.co/G2J1grb/5.png) |
-| :-------------------------------------------------------: | :-------------------------------------------------------: |
-|             정적 파일 위치 및 추가 경로 작성              |                  template에서 경로 참조                   |
+|   ![./img/9.png](./img/9.png)    | ![./img/10.png](./img/10.png) |
+| :------------------------------: | :---------------------------: |
+| 정적 파일 위치 및 추가 경로 작성 |    template에서 경로 참조     |
 
-![https://ibb.co/0cyHpr4](https://i.ibb.co/jTkn9D0/6.png)
+![./img/11.png](./img/11.png)
 
 ## 추가 사이트
 

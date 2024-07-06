@@ -6,7 +6,7 @@
 
 #### Colors
 
-![https://ibb.co/J3p8hKf](https://i.ibb.co/NTNf4s8/9.png)
+![./img/93.png](./img/93.png)
 
 ```html
 <p class="text-primary">.text-primary</p>
@@ -280,7 +280,7 @@
 
 ##### Fill
 
-![https://ibb.co/ZHpy9dW](https://i.ibb.co/dbwnZBG/1.png)
+![./img/94.png](./img/94.png)
 
 ```html
 <div class="d-flex">
@@ -299,7 +299,7 @@
 
 ##### Grow and Shrink
 
-![https://ibb.co/3MfJdC5](https://i.ibb.co/qW0ZjrL/2.png)
+![./img/95.png](./img/95.png)
 
 ```html
 <div class="d-flex">
@@ -309,7 +309,7 @@
 </div>
 ```
 
-![https://ibb.co/7V0WLmn](https://i.ibb.co/bLGBD9s/3.png)
+![./img/96.png](./img/96.png)
 
 ```html
 <div class="d-flex">
@@ -333,7 +333,7 @@
 
 ##### Auto margins
 
-![https://ibb.co/wsq27d9](https://i.ibb.co/DpFjY1x/4.png)
+![./img/97.png](./img/97.png)
 
 ```html
 <div class="d-flex mb-3">
@@ -357,7 +357,7 @@
 
 ###### With align-items
 
-![https://ibb.co/NYQXTYb](https://i.ibb.co/SvW2fvG/5.png)
+![./img/98.png](./img/98.png)
 
 ```html
 <div class="d-flex align-items-start flex-column mb-3" style="height: 200px;">
@@ -404,7 +404,7 @@
 
 ##### Order
 
-![https://ibb.co/7bKw5rM](https://i.ibb.co/fQHh5r6/6.png)
+![./img/99.png](./img/99.png)
 
 ```html
 <div class="d-flex flex-nowrap">
@@ -554,14 +554,14 @@
 
 ##### Aligning
 
-![https://ibb.co/87RZBg3](https://i.ibb.co/nLVJ0M2/7.png)
+![./img/100.png](./img/100.png)
 
 ```html
 <img src="..." class="rounded float-start" alt="...">
 <img src="..." class="rounded float-end" alt="...">
 ```
 
-![https://ibb.co/mS784mx](https://i.ibb.co/t35XDSd/8.png)
+![./img/101.png](./img/101.png)
 
 ```html
 <img src="..." class="rounded mx-auto d-block" alt="...">
@@ -610,7 +610,7 @@ $display-font-sizes: (
 
 ###### Unstyled
 
-![https://ibb.co/ZhSLSzF](https://i.ibb.co/vJhwh4T/10.png)
+![./img/102.png](./img/102.png)
 
 ```html
 <ul class="list-unstyled">
@@ -631,7 +631,7 @@ $display-font-sizes: (
 
 ###### Inline
 
-![https://ibb.co/JChjpMm](https://i.ibb.co/SJLwm95/11.png)
+![./img/103.png](./img/103.png)
 
 ```html
 <ul class="list-inline">
@@ -779,7 +779,7 @@ $display-font-sizes: (
 
 #### Alerts
 
-![https://ibb.co/sRcDRwQ](https://i.ibb.co/8sGRs52/12.png)
+![./img/104.png](./img/104.png)
 
 ```html
 <div class="alert alert-primary" role="alert">
@@ -808,7 +808,7 @@ $display-font-sizes: (
 </div>
 ```
 
-![https://ibb.co/8bcvxWH](https://i.ibb.co/tzXj279/13.png)
+![./img/105.png](./img/105.png)
 
 ```html
 <div class="alert alert-primary d-flex align-items-center" role="alert">
@@ -823,7 +823,7 @@ $display-font-sizes: (
 
 #### badge
 
-![https://ibb.co/bH3xRYH](https://i.ibb.co/7gzHNBg/14.png)
+![./img/106.png](./img/106.png)
 
 ```html
 <h1>Example heading <span class="badge bg-secondary">New</span></h1>
@@ -834,7 +834,7 @@ $display-font-sizes: (
 <h6>Example heading <span class="badge bg-secondary">New</span></h6>
 ```
 
-![https://ibb.co/z7dBmTD](https://i.ibb.co/mXp2RVg/15.png)
+![./img/107.png](./img/107.png)
 
 ```html
 <button type="button" class="btn btn-primary">
@@ -842,7 +842,7 @@ $display-font-sizes: (
 </button>
 ```
 
-![https://ibb.co/J7q7Qtm](https://i.ibb.co/tszsXKQ/16.png)
+![./img/108.png](./img/108.png)
 
 ```html
 <button type="button" class="btn btn-primary position-relative">
@@ -856,7 +856,7 @@ $display-font-sizes: (
 
 #### Breadcrumb
 
-![https://ibb.co/XWB4rQN](https://i.ibb.co/9pXvkDz/17.png)
+![./img/109.png](./img/109.png)
 
 ```html
 <nav aria-label="breadcrumb">
@@ -881,7 +881,7 @@ $display-font-sizes: (
 </nav>
 ```
 
-![https://ibb.co/jGB3HRQ](https://i.ibb.co/rMT5vsz/18.png)
+![./img/110.png](./img/110.png)
 
 ```html
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -896,7 +896,7 @@ $display-font-sizes: (
 
 ##### Basic
 
-![https://ibb.co/RHcbXTL](https://i.ibb.co/pXdwHjC/19.png)
+![./img/111.png](./img/111.png)
 
 ```html
 <button type="button" class="btn btn-primary">Primary</button>
@@ -916,7 +916,7 @@ $display-font-sizes: (
 
 ##### Disabled
 
-![https://ibb.co/T8zwkYQ](https://i.ibb.co/4TBF7Kb/20.png)
+![./img/112.png](./img/112.png)
 
 ```html
 <button type="button" class="btn btn-primary" disabled>Primary button</button>
@@ -1732,7 +1732,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Pagination
 
-![https://ibb.co/VTCmDWB](https://i.ibb.co/x6gHGS5/21.png)
+![./img/113.png](./img/113.png)
 
 ```html
 <nav aria-label="Page navigation example">
@@ -1746,7 +1746,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </nav>
 ```
 
-![https://ibb.co/khtQvcp](https://i.ibb.co/XzqSMJ9/22.png)
+![./img/114.png](./img/114.png)
 
 ```html
 <nav aria-label="...">
@@ -1770,7 +1770,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 - 아직 로딩 중임을 나타내는 컴포넌트
 
-![https://ibb.co/jTKBVdV](https://i.ibb.co/nb2Z3T3/23.png)
+![./img/115.png](./img/115.png)
 
 ```html
 <div class="card">
@@ -1801,7 +1801,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </div>
 ```
 
-![https://ibb.co/QH6DjD0](https://i.ibb.co/s1FWJW7/24.png)
+![./img/116.png](./img/116.png)
 
 ```html
 <span class="placeholder col-6"></span>
@@ -1823,7 +1823,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Popovers
 
-![https://ibb.co/Dbjm2Rb](https://i.ibb.co/cvsRnrv/25.png)
+![./img/117.png](./img/117.png)
 
 ```html
 <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" data-bs-title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">
@@ -1831,7 +1831,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </button>
 ```
 
-![https://ibb.co/FJf18fq](https://i.ibb.co/hHnN2n1/26.png)
+![./img/118.png](./img/118.png)
 
 ```html
 <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
@@ -1850,7 +1850,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Progress
 
-![https://ibb.co/Mkr0QPN](https://i.ibb.co/7tPmLry/27.png)
+![./img/119.png](./img/119.png)
 
 ```html
 <div class="progress">
@@ -1870,7 +1870,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </div>
 ```
 
-![https://ibb.co/DRHbHNN](https://i.ibb.co/LZXPXMM/28.png)
+![./img/120.png](./img/120.png)
 
 ```html
 <div class="progress">
@@ -1878,7 +1878,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </div>
 ```
 
-![https://ibb.co/47Ff4QQ](https://i.ibb.co/HVK2GJJ/29.png)
+![./img/121.png](./img/121.png)
 
 ```html
 <div class="progress">
@@ -1890,7 +1890,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 ##### Navbar
 
-![https://ibb.co/wc3nYT6](https://i.ibb.co/qJXHxz1/30.png)
+![./img/122.png](./img/122.png)
 
 ```html
 <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
@@ -1929,7 +1929,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 ##### Nested nav
 
-![https://ibb.co/xDHNkq5](https://i.ibb.co/FKVFr47/31.png)
+![./img/123.png](./img/123.png)
 
 ```html
 <div class="row">
@@ -1988,7 +1988,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 ##### List group
 
-![https://ibb.co/VSByRyk](https://i.ibb.co/k8cnjnP/32.png)
+![./img/124.png](./img/124.png)
 
 ```html
 <div class="row">
@@ -2017,7 +2017,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 ##### Simple anchors
 
-![https://ibb.co/n3kwrC9](https://i.ibb.co/3fhT1z2/33.png)
+![./img/125.png](./img/125.png)
 
 ```html
 <div class="row">
@@ -2148,7 +2148,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Toast
 
-![https://ibb.co/YjB0XsL](https://i.ibb.co/dK4mtY5/34.png)
+![./img/126.png](./img/126.png)
 
 ```html
 <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
@@ -2170,7 +2170,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Tooltip
 
-![https://ibb.co/DL3vnzV](https://i.ibb.co/wYDP1B0/35.png)
+![./img/127.png](./img/127.png)
 
 ```html
 <button type="button" class="btn btn-secondary"
@@ -2181,7 +2181,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </button>
 ```
 
-![https://ibb.co/pQtmHPJ](https://i.ibb.co/ypw3zRW/36.png)
+![./img/128.png](./img/128.png)
 
 ```html
 <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
@@ -2202,7 +2202,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Overview
 
-![https://ibb.co/jMqmpTV](https://i.ibb.co/swcnB25/37.png)
+![./img/129.png](./img/129.png)
 
 ```html
 <form>
@@ -2223,7 +2223,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </form>
 ```
 
-![https://ibb.co/jDTh5yc](https://i.ibb.co/x6Dhs1p/38.png)
+![./img/130.png](./img/130.png)
 
 ```html
 <form>
@@ -2256,7 +2256,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 ##### Read-Only
 
-![https://ibb.co/9pgZkMt](https://i.ibb.co/XWLYrw8/39.png)
+![./img/131.png](./img/131.png)
 
 ```html
 <input class="form-control" type="text" value="Readonly input here..." aria-label="readonly input example" readonly>
@@ -2264,7 +2264,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 ##### Read-Only plain text
 
-![https://ibb.co/XZt4KDD](https://i.ibb.co/GvRJ899/40.png)
+![./img/132.png](./img/132.png)
 
 ```html
   <div class="mb-3 row">
@@ -2283,7 +2283,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 ##### File Input
 
-![https://ibb.co/chjkyZ4](https://i.ibb.co/4RHKFXh/41.png)
+![./img/133.png](./img/133.png)
 
 ```html
 <div class="mb-3">
@@ -2331,7 +2331,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Select
 
-![https://ibb.co/YPMjGCs](https://i.ibb.co/vVGz8Fn/42.png)
+![./img/134.png](./img/134.png)
 
 ```html
 <select class="form-select" aria-label="Default select example">
@@ -2342,7 +2342,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </select>
 ```
 
-![https://ibb.co/dPpC4WC](https://i.ibb.co/ZBg4zL4/43.png)
+![./img/135.png](./img/135.png)
 
 ```html
 <select class="form-select" aria-label="Disabled select example" disabled>
@@ -2355,7 +2355,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Check
 
-![https://ibb.co/mqw57L8](https://i.ibb.co/Wywv1bt/44.png)
+![./img/136.png](./img/136.png)
 
 ```html
 <div class="form-check">
@@ -2372,7 +2372,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </div>
 ```
 
-![https://ibb.co/JmzyKkF](https://i.ibb.co/ckNC1TX/45.png)
+![./img/137.png](./img/137.png)
 
 ```html
 <div class="form-check">
@@ -2395,7 +2395,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </div>
 ```
 
-![https://ibb.co/rmm15JZ](https://i.ibb.co/377LSH0/48.png)
+![./img/138.png](./img/138.png)
 
 ```html
 <div class="form-check form-switch">
@@ -2418,7 +2418,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Radio
 
-![https://ibb.co/3yHXBN3](https://i.ibb.co/0j3NhM7/46.png)
+![./img/139.png](./img/139.png)
 
 ```html
 <div class="form-check">
@@ -2435,7 +2435,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 </div>
 ```
 
-![https://ibb.co/H2xNrZs](https://i.ibb.co/GJtsVmL/47.png)
+![./img/140.png](./img/140.png)
 
 ```html
 <div class="form-check">
@@ -2454,14 +2454,14 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Range
 
-![https://ibb.co/f4H4yLG](https://i.ibb.co/yWqWZ7B/49.png)
+![./img/141.png](./img/141.png)
 
 ```html
 <label for="customRange1" class="form-label">Example range</label>
 <input type="range" class="form-range" id="customRange1">
 ```
 
-![https://ibb.co/y4PwSH5](https://i.ibb.co/NTC8Scp/50.png)
+![./img/142.png](./img/142.png)
 
 ```html
 <label for="disabledRange" class="form-label">Disabled range</label>
@@ -2484,7 +2484,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Input Group
 
-![https://ibb.co/TwQrth7](https://i.ibb.co/zm3NZfB/51.png)
+![./img/143.png](./img/143.png)
 
 ```html
 <div class="input-group mb-3">
@@ -2523,7 +2523,7 @@ document.querySelectorAll('.btn').forEach(buttonElement => {
 
 #### Floating labels
 
-![https://ibb.co/9HsRTKn](https://i.ibb.co/yFWLyv0/52.png)
+![./img/144.png](./img/144.png)
 
 ```html
 <div class="form-floating mb-3">

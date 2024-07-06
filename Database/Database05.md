@@ -8,7 +8,7 @@
 - 일반적으로 데이터베이스에는 데이터를 여러 테이블로 나눠 저장하게 되며, 여러 테이블을 결합(Join)하여 출력하여 활용
 - 일반적으로 레코드는 기본키(PK)나 외래키(FK) 값의 관계에 의해 결합함
 
-![https://ibb.co/hcH07Xj](https://i.ibb.co/xYGZCm0/99-DD253-C5-B9-B5-BAC09.png)
+![./sql_join.png](./sql_join.png)
 
 - users
 

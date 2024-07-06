@@ -13,13 +13,13 @@
     - 웹 표준 : 웹에서 표준으로 사용되는 기술이나 규칙, 어떤 브라우저든 웹 페이지가 동일하게 보이도록 함 (크로스 브라우징)
 
 - 웹 개발 도구 : Visual Studio Code, 크롬 개발자 도구
- 
+
   - Visual Studio Code 추천 확장 프로그램
-   
+  
     - Open in browser 
-   
+  
     - Auto Rename Tag
-   
+  
     - Auto Close Tag
     
     - Intellisense for CSS class names in HTML
@@ -175,7 +175,7 @@
 
 ### Text
 
-<img src="https://i.ibb.co/28GPQ9V/11.png" alt="https://ibb.co/6vjbxM9" style="zoom:67%;" />
+<img src="./img/1111.png" alt="./img/1111.png" style="zoom:67%;" />
 
 | 태그                              | 설명                                                         |
 | --------------------------------- | ------------------------------------------------------------ |
@@ -188,7 +188,7 @@
 
 ### Group
 
-<img src="https://i.ibb.co/4PQMmtQ/22.png" alt="https://ibb.co/LnG6kRG" style="zoom:75%;" />
+<img src="./img/2222.png" alt="./img/2222.png" style="zoom:75%;" />
 
 | 태그                               | 설명                                                         |
 | ---------------------------------- | ------------------------------------------------------------ |
@@ -202,7 +202,7 @@
 
 ## DOM
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/DOM-model.svg/1200px-DOM-model.svg.png" alt="문서 객체 모델" style="zoom: 35%;" />
+<img src="./img/1200px-DOM-model.svg.png" alt="문서 객체 모델" style="zoom: 35%;" />
 
 - Document Object Model Tree
 

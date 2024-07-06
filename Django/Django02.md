@@ -2,7 +2,7 @@
 
 ## 요청과 응답
 
-![https://ibb.co/nMQ6SMW](https://i.ibb.co/jk3bFkp/1.png)
+![./img/1.png](./img/1.png)
 
 - Django에서의 코드 작성은 URL → View → Template 순으로 작성
 - URL → View → Template

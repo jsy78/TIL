@@ -37,14 +37,14 @@ Date: 2022년 10월 24일
 
 게시글 좋아요 & 좋아요 취소
 
-- `POST` http://127.0.0.1:8000/articles/<int:article_pk>/likes/
+- `POST` `http://127.0.0.1:8000/articles/<int:article_pk>/likes/`
 - 로그인한 유저만 좋아요를 할 수 있습니다.
 
 ### 화면 Template
 
 게시글 정보 페이지
 
-- `GET` http://127.0.0.1:8000/articles/<int:article_pk>/
+- `GET` `http://127.0.0.1:8000/articles/<int:article_pk>/`
 - 좋아요 버튼
   
     해당 글이 받은 좋아요 수를 표시합니다.
