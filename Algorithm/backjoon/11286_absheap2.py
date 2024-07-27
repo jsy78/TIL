@@ -14,5 +14,4 @@ for _ in range(T) :
         if len(heap) == 0 :
             print(0)
         else :
-            print(heapq.heappop(heap)[1])
-    
+            print(heapq.heappop(heap)[1])           
