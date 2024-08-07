@@ -1,5 +1,5 @@
 T = int(input())
-for i in range(1, T+1) :
+for test_case in range(1, T+1) :
     lst = list(map(int, input().split()))
     lst.sort(reverse=True)
-    print(f'#{i} {lst[0]}')
+    print(f'#{test_case} {lst[0]}')
