@@ -7,7 +7,7 @@ for test_case in range(1, T+1) :
         count = int(count)
         doc += alphabet*count
     
-    print(f'{test_case}')
+    print(f'#{test_case}')
     for i in range(len(doc)) :
         print(doc[i], end='')
         if (i+1) % 10 == 0 :
