@@ -238,10 +238,12 @@
   
   transposed_matrix = [[0] * 3 for _ in range(4)] # 전치 행렬을 담을 이차원 리스트 초기화
   											    # (행과 열의 크기가 반대)
-  
   for i in range(4):
   	for j in range(3):
   		transposed_matrix[i][j] = matrix[j][i] # 행, 열 맞바꾸기
+  
+  # transposed_matrix = [[matrix[j][i] for j in range(3)] for i in range(4)]
+  # transposed_matrix = list(map(list, zip(*matrix)))
   
   """
   transposed_matrix = [
@@ -307,7 +309,8 @@
   	for j in range(n):
   		rotated_matrix[i][j] = matrix[j][n-1-i] # 왼쪽으로 90도 회전하기 (오른쪽으로 270도 회전하기)
   
-  rotated_matrix = [[matrix[j][n-1-i] for j in range(n)] for i in range(n)]    
+  # rotated_matrix = [[matrix[j][n-1-i] for j in range(n)] for i in range(n)]    
+  # rotated_matrix = list(map(list, zip(*matrix)))[::-1]
   
   """
   rotated_matrix = [
@@ -329,9 +332,9 @@
   
   for i in range(n):
   	for j in range(n):
-  		rotated_matrix[i][j] = matrix[n-1-i][n-1-j] # 왼쪽으로 180도 회전하가 (오른쪽으로 180도 회전하기)
+  		rotated_matrix[i][j] = matrix[n-1-i][n-1-j] # 왼쪽으로 180도 회전하기 (오른쪽으로 180도 회전하기)
      
-  rotated_matrix = [[matrix[n-1-i][n-1-j] for j in range(n)] for i in range(n)]    
+  # rotated_matrix = [[matrix[n-1-i][n-1-j] for j in range(n)] for i in range(n)]    
   
   """
   rotated_matrix = [
@@ -353,9 +356,10 @@
   
   for i in range(n):
   	for j in range(n):
-  		rotated_matrix[i][j] = matrix[n-1-j][i] # 왼쪽으로 270도 회전하가 (오른쪽으로 90도 회전하기)
+  		rotated_matrix[i][j] = matrix[n-1-j][i] # 왼쪽으로 270도 회전하기 (오른쪽으로 90도 회전하기)
      
-  rotated_matrix = [[matrix[n-1-j][i] for j in range(n)] for i in range(n)]    
+  # rotated_matrix = [[matrix[n-1-j][i] for j in range(n)] for i in range(n)]    
+  # rotated_matrix = list(map(list, zip(*matrix[::-1])))
   
   """
   rotated_matrix = [
