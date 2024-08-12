@@ -11,3 +11,10 @@ for test_case in range(1, T+1) :
     S = S.replace('o', '')
     S = S.replace('u', '')
     print(f'#{test_case} {S}')
+
+# T = int(input())
+# for test_case in range(1,T+1):
+#     S = input()
+#     for x in 'aeiou':
+#         S = S.replace(x,'')
+#     print(f'#{test_case} {S}')
