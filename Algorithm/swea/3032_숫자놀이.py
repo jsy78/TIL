@@ -2,6 +2,7 @@
 # https://baeharam.github.io/posts/algorithm/extended-euclidean/
 # https://velog.io/@cjy/nkryvnjc
 # https://www.baeldung.com/cs/extended-euclidean-algorithm
+# https://namnamseo.tistory.com/entry/GCD-Extended-Euclidean-Algorithm
 
 def gcd(a, b) :
     if b == 0 :
