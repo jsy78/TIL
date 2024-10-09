@@ -11,7 +11,7 @@ def DFS(r, c) :
     for dr, dc in delta :
         nr, nc = r + dr, c + dc
         if 0 <= nr < 16 and 0 <= nc < 16 :
-            if maze[nr][nc] == 0 or maze[nr][nc] == 3 and not visited[nr][nc] :
+            if maze[nr][nc] != 1 and not visited[nr][nc] :
                 DFS(nr, nc)
     return
 
